@@ -7,7 +7,7 @@ module.exports = {
     mongo: {
         uri: 'mongodb://localhost/schejewel-dev'
     },
-    port: 7002,
+    port: 9000,
 
     seedDB: true
 };
