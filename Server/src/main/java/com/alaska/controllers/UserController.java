@@ -15,9 +15,12 @@ public class UserController {
 
     public User createUser(User user) {
         ArrayList<User> users = dao.readUsers();
-
-        //Todo: Check if the user is unique in this list of users if it is create a new user. If not send error response to the frontend.
-
+		
+		for (User u : users){
+			if (user.getEmail().equals(u.getEmail()))
+				return null;
+		}
+		
         dao.createUser(user);
         return user;
     }
