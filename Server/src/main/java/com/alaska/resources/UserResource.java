@@ -2,12 +2,12 @@ package com.alaska.resources;
 
 import com.alaska.controllers.UserController;
 import com.alaska.models.User;
+import com.alaska.utils.InvalidUserLoginException;
+import com.alaska.utils.UserExistsException;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -19,11 +19,21 @@ public class UserResource {
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createUser(User user) {
-		user = controller.createUser(user);
-		if (user == null)
-			return Response.status(304).entity("email address already in use").type("text/plain").build();
-		return Response.ok().entity(user).build();
+        try {
+            return Response.ok().entity(controller.createUser(user)).build();
+        } catch (UserExistsException e) {
+            return Response.status(409).entity(e.getMessage()).build();
+        }
     }
 
-    //Todo: Create endpoint /validate to validate users
+    @POST
+    @Path("/validate")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response validateUser(User user){
+        try {
+            return Response.ok().entity(controller.validateUser(user)).build();
+        } catch(InvalidUserLoginException e){
+            return Response.status(401).entity(e.getMessage()).build();
+        }
+    }
 }
