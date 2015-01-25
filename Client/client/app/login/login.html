@@ -1,5 +1,38 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="col-md-12">
-    This is the login view.
+<div ng-show='tried' class='well'>
+    <h1>Not yet implemented</h1>
+    <p>The form was successfully submitted, but it isn't tied to the backend yet</p>
+</div>
+
+
+<div class="container-fluid">
+    <section class="container">
+        <div class="container-page">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 well">
+                <h3 class="dark-grey">Login</h3>
+                <form ng-submit='signup()'>
+                    <div class="form-group col-lg-12">
+                        <label>Email</label>
+                        <input type="email" class="form-control" ng-model='email'>
+                    </div>
+
+                    <div class="form-group col-lg-12">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" ng-model='password'>
+                    </div>
+
+
+                    <div class="form-group col-lg-6">
+                        <button type="submit" class="btn btn-primary" ng-click='validate()'>Register</button>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-md-3"></div>
+
+
+        </div>
+    </section>
 </div>

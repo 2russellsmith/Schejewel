@@ -17,3 +17,10 @@ To run in development:
 To run in prod:
 	
 	1. command: grunt serve:dist
+
+
+
+
+Commands to know:
+
+1. yo angular-fullstack:route splash
