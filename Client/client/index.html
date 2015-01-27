@@ -13,6 +13,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
+      <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -53,6 +54,8 @@
       <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+      <script src="bower_components/moment/moment.js"></script>
+      <script src="bower_components/fullcalendar/dist/fullcalendar.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -61,14 +64,18 @@
           <!-- injector:js -->
           <script src="app/dashboard/dashboard.controller.js"></script>
           <script src="app/dashboard/dashboard.js"></script>
+          <script src="app/directives/schejewel.calendar/schejewel.calendar.directive.js"></script>
           <script src="app/directives/schejewel.event/schejewel.event.directive.js"></script>
           <script src="app/directives/schejewel.events/schejewel.events.directive.js"></script>
+          <script src="app/directives/schejewel.message/schejewel.message.directive.js"></script>
+          <script src="app/directives/schejewel.messages/schejewel.messages.directive.js"></script>
           <script src="app/login/login.controller.js"></script>
           <script src="app/login/login.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
           <script src="app/signup/signup.controller.js"></script>
           <script src="app/signup/signup.js"></script>
+          <script src="components/footer/footer.controller.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->

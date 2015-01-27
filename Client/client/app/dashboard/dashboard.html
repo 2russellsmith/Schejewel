@@ -1,7 +1,16 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class='row'>
-    <div class="col-md-3 block">
+    <div class="col-md-2 block">
         <schejewel.events events='events'></schejewel.events>
     </div>
+    <div class='col-md-6 block'>
+        <schejewel.calendar></schejewel.calendar>
+    </div>
+    <div class="col-md-4 block">
+        <schejewel.messages messages='messages'></schejewel.messages>
+    </div>
+
 </div>
+
+<div ng-include="'components/footer/footer.html'"></div>
