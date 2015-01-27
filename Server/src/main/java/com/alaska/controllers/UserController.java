@@ -3,19 +3,18 @@ package com.alaska.controllers;
 import com.alaska.daos.MySqlUserDao;
 import com.alaska.daos.UserDao;
 import com.alaska.models.User;
-import com.alaska.utils.InvalidUserLoginException;
-import com.alaska.utils.UserExistsException;
+import com.alaska.utils.exceptions.DuplicateUserException;
+import com.alaska.utils.exceptions.UserNotFoundException;
 
 import java.util.ArrayList;
 
-//the following imports are for the hashing funcitons
 import java.security.SecureRandom;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.SecretKeyFactory;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-//
+
 
 public class UserController{
     private UserDao dao;
@@ -36,32 +35,37 @@ public class UserController{
         dao = new MySqlUserDao();
     }
 
-    public User createUser(User user) throws UserExistsException{
+    public User createUser(User user) {
         ArrayList<User> users = dao.readUsers();
-	
-	//User dbUser = dao.readUser(user);
-	//if (dbUser != null) throw new UserExistsException();
-	//or does this create a sql error if the user doesn't exist?
-		
-	for (User u : users){
-		if (user.getEmail().equals(u.getEmail())){
-                	throw new UserExistsException();
-            	}
-	}
-	user.setPassword(createHash(user.getPassword()));//hoping the setPassword function exists, didn't have time to check right now
+
+		for (User u : users){
+			if (user.getEmail().equals(u.getEmail())){
+                throw new DuplicateUserException();
+            }
+		}
+
+       // user.setPassword(createHash(user.getPassword()));//hoping the setPassword function exists, didn't have time to check right now
         dao.createUser(user);
         return user;
     }
 
-    public String validateUser(User user) throws InvalidUserLoginException{
+    public User findUser(String email) throws UserNotFoundException{
+        User user = dao.readUser(email);
+        user.setRoles(dao.readUserRoles(user));
+        return user;
+    }
+
+
+    /*public String validateUser(User user) throws InvalidUserLoginException {
         User dbUser = dao.readUser(user);
-        if(validatePassword(user.getPassword(), dbUser.getPassword())){//dbUser.getPassword needs to return the hash built by this classes createHash function
+        if (validatePassword(user.getPassword(), dbUser.getPassword())) {//dbUser.getPassword needs to return the hash built by this classes createHash function
             String token = "valid";
             return token;
-        }else{
-            throw new  InvalidUserLoginException();
+        } else {
+            throw new InvalidUserLoginException();
         }
     }
+
     private static String createHash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException{
         // Generate a random salt
         SecureRandom random = new SecureRandom();
@@ -112,5 +116,5 @@ public class UserController{
             return String.format("%0" + paddingLength + "d", 0) + hex;
         else
             return hex;
-    }
+    }*/
 }
