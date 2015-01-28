@@ -4,7 +4,7 @@
 angular.module('schejewelApp')
     .controller('LoginCtrl', function($scope, $http, $location) {
         $scope.validate = function() {
-            // if ($scope.email && $scope.password) {
+            if ($scope.email && $scope.password) {
                 $http.get('http://104.131.170.128:8080/alaska-excursions/api/login', {
                     headers: {
                         'Authorization': 'Basic ZW5jcnlwdEBnbWFpbC5jb206MTIzNA=='
@@ -15,7 +15,6 @@ angular.module('schejewelApp')
                 }).error(function(data, status) {
                     console.log('data', data);
                 });
-            // }
-
+            }
         };
     });
