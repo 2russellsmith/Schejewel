@@ -1,4 +1,4 @@
-package com.alaska.filters;
+package com.alaska.utils.filters;
 
 import java.io.IOException;
 
@@ -13,6 +13,7 @@ import javax.ws.rs.ext.Provider;
 import com.alaska.controllers.UserController;
 import com.alaska.models.User;
 import com.alaska.utils.exceptions.AuthenticationException;
+import com.alaska.utils.security.Authenticator;
 import com.alaska.utils.security.Authorizer;
 import com.alaska.utils.exceptions.UserNotFoundException;
 import org.glassfish.jersey.internal.util.Base64;
@@ -36,12 +37,11 @@ public class SecurityFilter implements ContainerRequestFilter {
         try{
             //Try to find the user in the database
             UserController controller = new UserController();
-
+            Authenticator authenticate = new Authenticator();
             User user = controller.findUser(email);
 
-            //Todo: This will have to change to being salted and hashed and compared
             //Validate the user
-            if (!user.getPassword().equals(password)) {
+            if (!authenticate.validatePassword(password,user.getPassword())) {
                 throw new AuthenticationException("Invalid username or password\r\n");
             }
             return user;

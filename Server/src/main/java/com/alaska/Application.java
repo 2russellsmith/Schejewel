@@ -1,6 +1,6 @@
 package com.alaska;
 
-import com.alaska.filters.SecurityFilter;
+import com.alaska.utils.filters.SecurityFilter;
 import com.alaska.resources.AuthenticationResource;
 import com.alaska.resources.UserResource;
 import org.glassfish.jersey.server.ResourceConfig;

@@ -19,7 +19,13 @@ public class UserPrincipal implements Principal {
 
     @Override
     public boolean implies(Subject subject) {
-        //Todo: What should go in this method?
+        if(subject != null){
+            for(Principal principal : subject.getPrincipals()){
+                if(principal.equals(this)){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }

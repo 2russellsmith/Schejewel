@@ -2,7 +2,6 @@ package com.alaska.resources;
 
 import com.alaska.controllers.UserController;
 import com.alaska.models.User;
-import com.alaska.utils.exceptions.DuplicateUserException;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.POST;

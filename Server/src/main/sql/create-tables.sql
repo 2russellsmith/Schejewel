@@ -24,7 +24,8 @@ CREATE TABLE user(
   password VARCHAR(255) NOT NULL,
   company_id INT(11),
   PRIMARY KEY (id),
-  FOREIGN KEY (company_id) REFERENCES company(id)
+  FOREIGN KEY (company_id) REFERENCES company(id),
+  CONSTRAINT unique_user UNIQUE (email)
 );
 
 CREATE TABLE tour_type(
