@@ -1,10 +1,12 @@
 package com.alaska.daos;
 
 import com.alaska.models.User;
+import com.alaska.utils.exceptions.UserNotFoundException;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 public interface UserDao {
     public User createUser(User user);
-    public ArrayList<User> readUsers();
+    public User readUser(String email) throws UserNotFoundException;
+    public Set<String> readUserRoles(User user);
 }

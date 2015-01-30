@@ -10,6 +10,4 @@
                 password="alaska"
                 driverClassName="com.mysql.jdbc.Driver"
                 url="jdbc:mysql://localhost:3306/alaska"/>
-        <!-- When deploying to the server make sure that the url is jdbc:mysql://localhost:3306/alaska -->
-        <!-- Todo: Set up mysql server with remote access to enable local development -->
 </Context>

@@ -6,6 +6,14 @@
  * App-wide Styles
  */
 
+body {
+    color: #666;
+    background: #fbfbfb;
+}
+.row {
+    margin: 0px;
+    padding: 10px;
+}
 .browsehappy {
     margin: 0.2em 0;
     background: #ccc;
@@ -13,27 +21,31 @@
     padding: 0.2em 0;
 }
 .form-title {
-    padding-left: 15px;   
+    padding-left: 15px;
     font-weight: bold;
 }
 .container-page {
     padding-top: 100px;
 }
-.navbar-default .navbar-brand {
-    color: #8BA7FF;
-    letter-spacing: -1px;
-    font-weight: bold;
-}
-.navbar-default .navbar-nav .active a {
-    background-color: #A3B9FF;
-}
 .accompany-text {
     margin-top: 37px;
+}
+.right {
+    float: right;
 }
 /*  Green #06BA12 Blue #8BA7FF */
 
 // injector
+@import 'dashboard/dashboard.less';
+@import 'day/chrono/chrono.less';
+@import 'directives/schejewel.calendar/schejewel.calendar.less';
+@import 'directives/schejewel.event/schejewel.event.less';
+@import 'directives/schejewel.events/schejewel.events.less';
+@import 'directives/schejewel.message/schejewel.message.less';
+@import 'directives/schejewel.messages/schejewel.messages.less';
 @import 'login/login.less';
 @import 'main/main.less';
 @import 'signup/signup.less';
+@import 'footer/footer.less';
+@import 'navbar/navbar.less';
 // endinjector

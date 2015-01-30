@@ -3,10 +3,10 @@ package com.alaska.controllers;
 import com.alaska.daos.MySqlUserDao;
 import com.alaska.daos.UserDao;
 import com.alaska.models.User;
+import com.alaska.utils.exceptions.UserNotFoundException;
+import com.alaska.utils.security.Authenticator;
 
-import java.util.ArrayList;
-
-public class UserController {
+public class UserController{
     private UserDao dao;
 
     public UserController() {
@@ -14,20 +14,15 @@ public class UserController {
     }
 
     public User createUser(User user) {
-        ArrayList<User> users = dao.readUsers();
-		
-		for (User u : users){
-			if (user.getEmail().equals(u.getEmail()))
-				return null;
-		}
-		
+        Authenticator authenticate = new Authenticator();
+        user.setPassword(authenticate.createHash(user.getPassword()));
         dao.createUser(user);
         return user;
     }
 
-    public Boolean validateUser(User user){
-        ArrayList<User> users = dao.readUsers();
-        //Todo: Check if the user exists in this list and validate the users password.
-        return false;
+    public User findUser(String email) throws UserNotFoundException{
+        User user = dao.readUser(email);
+        user.setRoles(dao.readUserRoles(user));
+        return user;
     }
 }
