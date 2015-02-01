@@ -6,8 +6,19 @@ $(document).ready(function() {
 
     // page is now ready, initialize the calendar...
     $('#calendar').fullCalendar({
+        header:{
+            right: 'month,agendaDay'
+        },
+        allDaySlot: false,
         // put your options and callbacks here
+        dayClick: function(date, allDay, jsEvent, view) {
+            //Request from server the json object with all of this days events
+            console.log($('#calendar').fullCalendar('getDate'));
+            var dateString = $('#calendar').fullCalendar('getDate');
+            console.log(dateString);
+             $('#calendar').fullCalendar('gotoDate', date);
+             $('#calendar').fullCalendar('changeView', 'agendaDay');
+        }
     });
-
 });
 </script>
