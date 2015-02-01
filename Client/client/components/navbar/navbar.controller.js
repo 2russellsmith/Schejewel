@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('schejewelApp')
-    .controller('NavbarCtrl', function($scope, $location) {
+    .controller('NavbarCtrl', function($scope, $location, Auth) {
+        $scope.user = Auth.getCurrentUser();
+
         $scope.menu = [{
             'title': 'Home',
             'link': '/'
@@ -23,5 +25,10 @@ angular.module('schejewelApp')
 
         $scope.isActive = function(route) {
             return route === $location.path();
+        };
+
+        $scope.logout = function() {
+            Auth.logout();
+
         };
     });
