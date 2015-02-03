@@ -9,5 +9,5 @@
                 username="root"
                 password="alaska"
                 driverClassName="com.mysql.jdbc.Driver"
-                url="jdbc:mysql://localhost:3306/alaska"/>
+                url="jdbc:mysql://localhost:3306/alaska_prod"/>
 </Context>
