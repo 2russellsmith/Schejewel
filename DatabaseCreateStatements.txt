@@ -59,7 +59,7 @@ CREATE TABLE resource_type(
 
 CREATE TABLE resource_resource_type(
   resource_id INT(11) NOT NULL,
-  resource_type_id INT(11) NOT NULL
+  resource_type_id INT(11) NOT NULL,
   FOREIGN KEY (resource_id) REFERENCES resource(id)
        ON DELETE CASCADE
        ON UPDATE CASCADE,
@@ -86,7 +86,7 @@ CREATE TABLE resource_schedule(
   tour_id INT(11) NOT NULL,
   start_time TIMESTAMP NOT NULL,
   duration INT(11) NOT NULL,
-  FORIEGN KEY (resource_id) REFERENCES resource(id)
+  FOREIGN KEY (resource_id) REFERENCES resource(id)
        ON DELETE CASCADE
        ON UPDATE CASCADE,
   FOREIGN KEY (tour_id) REFERENCES tour(id)
