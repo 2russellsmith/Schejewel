@@ -11,6 +11,8 @@ CREATE TABLE user(
   company_id INT(11),
   PRIMARY KEY (id),
   FOREIGN KEY (company_id) REFERENCES company(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE
 );
 
 CREATE TABLE tour_type(
@@ -19,6 +21,8 @@ CREATE TABLE tour_type(
   owner_id INT(11) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (owner_id) REFERENCES company(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE
 );
 
 CREATE TABLE tour(
@@ -28,8 +32,12 @@ CREATE TABLE tour(
   end_time TIMESTAMP,
   tour_type_id INT(11),
   PRIMARY KEY (id),
-  FOREIGN KEY (tour_type_id) REFERENCES tour_type(id),
+  FOREIGN KEY (tour_type_id) REFERENCES tour_type(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE,
   FOREIGN KEY (owner_id) REFERENCES company(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE
 );
 
 CREATE TABLE resource(
@@ -39,6 +47,8 @@ CREATE TABLE resource(
   owner_id INT(11),
   PRIMARY KEY (id),
   FOREIGN KEY (owner_id) REFERENCES company(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE
 );
 
 CREATE TABLE resource_type(
@@ -50,6 +60,12 @@ CREATE TABLE resource_type(
 CREATE TABLE resource_resource_type(
   resource_id INT(11) NOT NULL,
   resource_type_id INT(11) NOT NULL
+  FOREIGN KEY (resource_id) REFERENCES resource(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE,
+  FOREIGN KEY (resource_type_id) REFERENCES resource_type(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE
 );
 
 CREATE TABLE tour_type_resource(
@@ -57,8 +73,12 @@ CREATE TABLE tour_type_resource(
   resource_type_id INT(11) NOT NULL,
   order_number INT(11) NOT NULL,
   duration INT(11) NOT NULL,
-  FOREIGN KEY (tour_type_id) REFERENCES tour_type(id),
+  FOREIGN KEY (tour_type_id) REFERENCES tour_type(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE,
   FOREIGN KEY (resource_type_id) REFERENCES resource_type(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE
 );
 
 CREATE TABLE resource_schedule(
@@ -66,8 +86,12 @@ CREATE TABLE resource_schedule(
   tour_id INT(11) NOT NULL,
   start_time TIMESTAMP NOT NULL,
   duration INT(11) NOT NULL,
-  FORIEGN KEY (resource_id) REFERENCES resource(id),
+  FORIEGN KEY (resource_id) REFERENCES resource(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE,
   FOREIGN KEY (tour_id) REFERENCES tour(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE
 );
 
 CREATE TABLE cruise_line(
@@ -81,6 +105,8 @@ CREATE TABLE cruise_ship(
   cruise_line_id INT(11) NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY (cruise_line_id) REFERENCES cruise_line(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE
 );
 
 CREATE TABLE portage(
@@ -95,15 +121,23 @@ CREATE TABLE portage(
   voyage VARCHAR(255),
   PRIMARY KEY (id),
   FOREIGN KEY (cruise_ship_id) REFERENCES cruise_ship(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE
 );
 
 CREATE TABLE tour_group(
   id INT(11) NOT NULL,
   portage_id INT(11) NOT NULL,
+  tour_id INT(11) NOT NULL,
   group_size INT(11) NOT NULL,
   settled TINYINT(1),
   PRIMARY KEY(id),
   FOREIGN KEY (portage_id) REFERENCES portage(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE,
+  FOREIGN KEY (tour_id) REFERENCES tour(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE
 );
 
 CREATE TABLE privilege(
@@ -115,6 +149,10 @@ CREATE TABLE privilege(
 CREATE TABLE user_privileges(
   user_id INT(11) NOT NULL,
   privilege_id INT(11) NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (user_id) REFERENCES user(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE,
   FOREIGN KEY (privilege_id) REFERENCES privilege(id)
+       ON DELETE CASCADE
+       ON UPDATE CASCADE
 );
