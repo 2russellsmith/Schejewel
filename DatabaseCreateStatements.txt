@@ -68,7 +68,7 @@ CREATE TABLE resource_schedule(
   duration INT(11) NOT NULL,
   FORIEGN KEY (resource_id) REFERENCES resource(id),
   FOREIGN KEY (tour_id) REFERENCES tour(id)
-)
+);
 
 CREATE TABLE cruise_line(
   id INT(11) NOT NULL,
