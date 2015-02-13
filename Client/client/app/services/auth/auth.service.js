@@ -21,7 +21,7 @@ angular.module('schejewelApp')
 
                 var deferred = $q.defer();
 
-                $http.get('http://104.131.170.128:8080/alaska-excursions/api/login', {
+                $http.get('https://104.131.170.128:8443/alaska-excursions/api/login', {
                     headers: {
                         'Authorization': 'Basic ZW5jcnlwdEBnbWFpbC5jb206MTIzNA=='
                     }
