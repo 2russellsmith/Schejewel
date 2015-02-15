@@ -2,9 +2,12 @@ package excursions.models;
 
 import java.util.Date;
 
+//commented out variables were ones that I couldn't understand even after looking at the database
 public class Tour {
     private Date StartDate;
     private Date EndDate;
+    private int TourTypes;// from my best understanding of the database
+    //groups //tourtypeid + ownerid//from the database
     
     //we can change the granularity of the time we set it with.
     //default is milliseconds, but I don't think we need that kind
@@ -30,5 +33,12 @@ public class Tour {
     }
     public Date getEndDate(){
         return EndDate;
+    }
+    
+    public void setTourTypes(int TourTypes){
+        this.TourTypes = TourTypes;
+    }
+    public int getTourTypes(){
+        return TourTypes;
     }
 }
