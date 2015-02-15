@@ -13,6 +13,7 @@ public class TourGroup {
     //from groups
     private String Purchaser;//this might need to be a class based on the schema
     private int PeopleCount;
+    //the database also includes settled here
     
     public String getName() {
 		return Name;
