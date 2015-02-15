@@ -2,9 +2,12 @@ package excursions.models;
 
 import java.util.Date;
 
+//commented out variables are ones that I was unable to understand
 public class Tour {
     private Date StartDate;
     private Date EndDate;
+    //tourtypes
+    //groups
     
     //we can change the granularity of the time we set it with.
     //default is milliseconds, but I don't think we need that kind
