@@ -11,10 +11,41 @@ angular.module('schejewelApp')
             var decoded = Base64.decode(token);
             decoded = decoded.substr(0, decoded.indexOf('}') + 1);
             currentUser = JSON.parse(decoded);
-        }
+        };
 
-        // Create Base64 Object
+        var setupCookie = function(token) {
+            if (!token) {
+                var token = $cookieStore.get('token');
+                var decoded = Base64.decode(token);
+                decoded = decoded.substr(0, decoded.indexOf('}') + 1);
+                currentUser = JSON.parse(decoded);
+            } else {
+                $cookieStore.put('token', token);
 
+                var decoded = Base64.decode(token);
+                decoded = decoded.substr(0, decoded.indexOf('}') + 1);
+                currentUser = JSON.parse(decoded);
+            }
+        };
+
+        var login = function(username, password) {
+            var deferred = $q.defer();
+
+            $http.post(api_url + 'login', {
+                'username': username,
+                'password': password
+            }).
+            success(function(data, status, headers, config) {
+                var token = headers()['x-auth-token'];
+                setupCookie(token);
+                deferred.resolve(currentUser);
+            }).
+            error(function(err) {
+                deferred.reject(err);
+            }.bind(this));
+
+            return deferred.promise;
+        };
 
         return {
 
@@ -26,30 +57,7 @@ angular.module('schejewelApp')
              * @return {Promise}
              */
             login: function(username, password) {
-
-                var deferred = $q.defer();
-
-                $http.post(api_url + 'login', {
-                    'username': username,
-                    'password': password
-                }).
-                success(function(data, status, headers, config) {
-                    var token = headers()['x-auth-token'];
-                    $cookieStore.put('token', token);
-
-                    var decoded = Base64.decode(token);
-                    decoded = decoded.substr(0, decoded.indexOf('}') + 1);
-                    currentUser = JSON.parse(decoded);
-
-
-                    deferred.resolve(currentUser);
-                }).
-                error(function(err) {
-                    this.logout();
-                    deferred.reject(err);
-                }.bind(this));
-
-                return deferred.promise;
+                return login(username, password);
             },
 
             /**
@@ -63,6 +71,25 @@ angular.module('schejewelApp')
                 $location.path('/login');
             },
 
+
+
+            register: function(username, password) {
+                var deferred = $q.defer();
+
+                $http.post(api_url + 'user', {
+                    'username': username,
+                    'password': password
+                }).
+                success(function(data, status, headers, config) {
+                    deferred.resolve(login(username, password));
+                }).
+                error(function(err) {
+                    this.logout();
+                    deferred.reject(err);
+                }.bind(this));
+
+                return deferred.promise;
+            },
 
 
             /**
