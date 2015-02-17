@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('schejewelApp')
-    .controller('NavbarCtrl', function($scope, $location, Auth) {
+    .controller('NavbarCtrl', function($scope, $rootScope, $location, Auth) {
         $scope.user = Auth.getCurrentUser();
-
+        $rootScope.$on('action.loggedIn', function() {
+            $scope.user = Auth.getCurrentUser();
+        });
         $scope.menu = [{
             'title': 'Home',
             'link': '/'

@@ -14,12 +14,10 @@ angular.module('schejewelApp', [
     .run(function($rootScope, $location, Auth) {
         // Redirect to login if route requires auth and you're not logged in
         $rootScope.$on('$stateChangeStart', function(event, next) {
-            // Auth.isLoggedIn().then(function(loggedIn) {
-            //     console.log('loggedIn', loggedIn);
-            //     console.log('next', next.authenticate);
-            //     if (next.authenticate && !loggedIn) {
-            //         $location.path('/login');
-            //     }
-            // });
+            Auth.isLoggedIn().then(function(loggedIn) {
+                if (next.authenticate && !loggedIn) {
+                    $location.path('/login');
+                }
+            });
         });
     });
