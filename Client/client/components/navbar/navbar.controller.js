@@ -13,8 +13,8 @@ angular.module('schejewelApp')
             'title': 'Dashboard',
             'link': '/dashboard'
         }, {
-            'title': 'Item 2',
-            'link': '/item2'
+            'title': 'Admin',
+            'link': '/admin'
         }, {
             'title': 'Item 3',
             'link': '/item3'
