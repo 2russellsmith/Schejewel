@@ -1,12 +1,12 @@
 CREATE TABLE company(
-  id INT(11) NOT NULL,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE user(
-  id INT(11) NOT NULL,
-  name VARCHAR(255),
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  username VARCHAR(255),
   password VARCHAR(255) NOT NULL,
   company_id INT(11),
   PRIMARY KEY (id),
@@ -16,7 +16,7 @@ CREATE TABLE user(
 );
 
 CREATE TABLE tour_type(
-  id INT(11) NOT NULL,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   owner_id INT(11) NOT NULL,
   PRIMARY KEY (id),
@@ -26,7 +26,7 @@ CREATE TABLE tour_type(
 );
 
 CREATE TABLE tour(
-  id INT(11) NOT NULL,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   owner_id INT(11) NOT NULL,
   start_time TIMESTAMP,
   end_time TIMESTAMP,
@@ -41,7 +41,7 @@ CREATE TABLE tour(
 );
 
 CREATE TABLE resource(
-  id INT(11) NOT NULL,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL, 
   capacity INT(11),
   owner_id INT(11),
@@ -52,7 +52,7 @@ CREATE TABLE resource(
 );
 
 CREATE TABLE resource_type(
-  id INT(11) NOT NULL,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
@@ -95,13 +95,13 @@ CREATE TABLE resource_schedule(
 );
 
 CREATE TABLE cruise_line(
-  id INT(11) NOT NULL,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE cruise_ship(
-  id INT(11) NOT NULL,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   cruise_line_id INT(11) NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY (cruise_line_id) REFERENCES cruise_line(id)
@@ -110,7 +110,7 @@ CREATE TABLE cruise_ship(
 );
 
 CREATE TABLE portage(
-  id INT(11) NOT NULL,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   cruise_ship_id INT(11) NOT NULL,
   arrival TIMESTAMP NOT NULL,
   departure TIMESTAMP NOT NULL,
@@ -126,7 +126,7 @@ CREATE TABLE portage(
 );
 
 CREATE TABLE tour_group(
-  id INT(11) NOT NULL,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   portage_id INT(11) NOT NULL,
   tour_id INT(11) NOT NULL,
   group_size INT(11) NOT NULL,
@@ -141,7 +141,7 @@ CREATE TABLE tour_group(
 );
 
 CREATE TABLE privilege(
-  id INT(11) NOT NULL,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   description VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
