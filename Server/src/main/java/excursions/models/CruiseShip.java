@@ -1,15 +1,14 @@
 package excursions.models;
 
-import java.util.Date;
 import java.util.Calendar;
 
 public class CruiseShip {
     private int CruiseLine; // from my best understanding of the database
-    private Date ArrivalDate;
-    private Date DepartureDate;
+    private Calendar ArrivalDate;
+    private Calendar DepartureDate;
     private String Name;
     private int PassengerCount;
-    private Date AllAboard;
+    private Calendar AllAboard;
     private int Dock;// from my best understanding of the database
     private String Voyage;// from my best understanding of the database
     private boolean Settled;
@@ -35,38 +34,35 @@ public class CruiseShip {
     	return Voyage;
     }
     
-    public Date getArrivalDate() {
+    public Calendar getArrivalDate() {
 	return ArrivalDate;
     }
     public void setArrivalDate(int year, int month, int day, int hour, int minute) {
         //numbers roll over, they don't throw errors.  i.e. 74 minutes will be 
         //translated to 1 more hour and 14 minutes
-        Calendar toSet = Calendar.getInstance();
+        ArrivalDate = Calendar.getInstance();
         
-        toSet.set(Calendar.YEAR, year);
-	toSet.set(Calendar.MONTH, month);//0 based.  0 - 11
-	toSet.set(Calendar.DATE, day);
-	toSet.set(Calendar.HOUR_OF_DAY, hour);//24 hour clock. 0 - 23.
-	toSet.set(Calendar.MINUTE, minute);
-	
-	ArrivalDate = toSet.getTime();
+        ArrivalDate.set(Calendar.YEAR, year);
+	ArrivalDate.set(Calendar.MONTH, month);//0 based.  0 - 11
+	ArrivalDate.set(Calendar.DATE, day);
+	ArrivalDate.set(Calendar.HOUR_OF_DAY, hour);//24 hour clock. 0 - 23.
+	ArrivalDate.set(Calendar.MINUTE, minute);
     }
 	
-    public Date getDepartureDate() {
-	return DepartureDate;
+    public Calendar getDepartureDate() {
+	return DepartureDate;//.getTimeInMillis(); if you'd rather get just a number, also for storing in the db
+	//there is a corresponding .setTimeInMillis(long); for setting the time pulled from the db stored in such a manner
     }
     public void setDepartureDate(int year, int month, int day, int hour, int minute) {
         //numbers roll over, they don't throw errors.  i.e. 74 minutes will be 
         //translated to 1 more hour and 14 minutes
-        Calendar toSet = Calendar.getInstance();
+        DepartureDate = Calendar.getInstance();
         
-        toSet.set(Calendar.YEAR, year);
-	toSet.set(Calendar.MONTH, month);//0 based.  0 - 11
-	toSet.set(Calendar.DATE, day);
-	toSet.set(Calendar.HOUR_OF_DAY, hour);//24 hour clock. 0 - 23.
-	toSet.set(Calendar.MINUTE, minute);
-	
-	DepartureDate = toSet.getTime();
+        DepartureDate.set(Calendar.YEAR, year);
+	DepartureDate.set(Calendar.MONTH, month);//0 based.  0 - 11
+	DepartureDate.set(Calendar.DATE, day);
+	DepartureDate.set(Calendar.HOUR_OF_DAY, hour);//24 hour clock. 0 - 23.
+	DepartureDate.set(Calendar.MINUTE, minute);
 		//if(ArrivalDate.compareTo(DepartureDate) != -1) //then error.  start date should be before end date    
     }
     public String getName() {
@@ -83,12 +79,17 @@ public class CruiseShip {
 	this.PassengerCount = PassengerCount;
     }
 	
-    public Date getAllAboard() {
+    public Calendar getAllAboard() {
 	return AllAboard;
     }
-    public void setAllAboard(int seconds) {
-	this.AllAboard = new Date(seconds);//from departure?  from arrival? database unclear
-	//holding off switching to calendar for now
+    public void setAllAboard(int year, int month, int day, int hour, int minute) {
+	AllAboard = Calendar.getInstance();//what does AllAboard mean? database unclear
+	
+        AllAboard.set(Calendar.YEAR, year);
+	AllAboard.set(Calendar.MONTH, month);//0 based.  0 - 11
+	AllAboard.set(Calendar.DATE, day);
+	AllAboard.set(Calendar.HOUR_OF_DAY, hour);//24 hour clock. 0 - 23.
+	AllAboard.set(Calendar.MINUTE, minute);
     }
 	
     public boolean getSettled() {
