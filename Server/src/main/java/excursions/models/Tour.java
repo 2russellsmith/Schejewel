@@ -18,7 +18,7 @@ public class Tour {
         toSet.set(Calendar.YEAR, year);
 	toSet.set(Calendar.MONTH, month);//0 based.  0 - 11
 	toSet.set(Calendar.DATE, day);
-	toSet.set(Calendar.HOUR_OF_DAY, hour);
+	toSet.set(Calendar.HOUR_OF_DAY, hour);//24 hour clock. 0 - 23.
 	toSet.set(Calendar.MINUTE, minute);
 		
 	StartDate = toSet.getTime();
@@ -35,7 +35,7 @@ public class Tour {
         toSet.set(Calendar.YEAR, year);
 	toSet.set(Calendar.MONTH, month);//0 based.  0 - 11
 	toSet.set(Calendar.DATE, day);
-	toSet.set(Calendar.HOUR_OF_DAY, hour);
+	toSet.set(Calendar.HOUR_OF_DAY, hour);//24 hour clock. 0 - 23.
 	toSet.set(Calendar.MINUTE, minute);
 	
 	EndDate = toSet.getTime();
