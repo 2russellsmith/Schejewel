@@ -37,18 +37,37 @@ public class CruiseShip {
     public Date getArrivalDate() {
 	return ArrivalDate;
     }
-    public void setArrivalDate(int seconds) {
-	Date today = new Date();
-	this.ArrivalDate = new Date(today.getTime() + seconds * 1000);
+    public void setArrivalDate(int year, int month, int day, int hour, int minute) {
+        //numbers roll over, they don't throw errors.  i.e. 74 minutes will be 
+        //translated to 1 more hour and 14 minutes
+        Calendar toSet = Calendar.getInstance();
+        
+        toSet.set(Calendar.YEAR, year);
+	toSet.set(Calendar.MONTH, month);//0 based.  0 - 11
+	toSet.set(Calendar.DATE, day);
+	toSet.set(Calendar.HOUR_OF_DAY, hour);
+	toSet.set(Calendar.MINUTE, minute);
+	
+	ArrivalDate = toSet.getTime();
     }
 	
     public Date getDepartureDate() {
 	return DepartureDate;
     }
-    public void setDepartureDate(int seconds) {
-	this.DepartureDate = new Date(ArrivalDate.getTime() + seconds * 1000);
-    }
+    public void setDepartureDate(int year, int month, int day, int hour, int minute) {
+        //numbers roll over, they don't throw errors.  i.e. 74 minutes will be 
+        //translated to 1 more hour and 14 minutes
+        Calendar toSet = Calendar.getInstance();
+        
+        toSet.set(Calendar.YEAR, year);
+	toSet.set(Calendar.MONTH, month);//0 based.  0 - 11
+	toSet.set(Calendar.DATE, day);
+	toSet.set(Calendar.HOUR_OF_DAY, hour);
+	toSet.set(Calendar.MINUTE, minute);
 	
+	DepartureDate = toSet.getTime();
+		//if(ArrivalDate.compareTo(DepartureDate) != -1) //then error.  start date should be before end date    
+    }
     public String getName() {
 	return Name;
     }
@@ -68,6 +87,7 @@ public class CruiseShip {
     }
     public void setAllAboard(int seconds) {
 	this.AllAboard = new Date(seconds);//from departure?  from arrival? database unclear
+	//holding off switching to calendar for now
     }
 	
     public boolean getSettled() {
