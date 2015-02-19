@@ -1,47 +1,42 @@
 package excursions.models;
 
-import java.util.Date;
 import java.util.Calendar;
 
 //commented out variables were ones that I couldn't understand even after looking at the database
 public class Tour {
-    private Date StartDate;
-    private Date EndDate;
+    private Calendar StartDate;
+    private Calendar EndDate;
     private int TourTypes;// from my best understanding of the database
     //groups //tourtypeid + ownerid//from the database
     
     public void setStartDate(int year, int month, int day, int hour, int minute){
         //numbers roll over, they don't throw errors.  i.e. 74 minutes will be 
         //translated to 1 more hour and 14 minutes
-        Calendar toSet = Calendar.getInstance();
+        StartDate = Calendar.getInstance();
         
-        toSet.set(Calendar.YEAR, year);
-	toSet.set(Calendar.MONTH, month);//0 based.  0 - 11
-	toSet.set(Calendar.DATE, day);
-	toSet.set(Calendar.HOUR_OF_DAY, hour);//24 hour clock. 0 - 23.
-	toSet.set(Calendar.MINUTE, minute);
-		
-	StartDate = toSet.getTime();
+        StartDate.set(Calendar.YEAR, year);
+	StartDate.set(Calendar.MONTH, month);//0 based.  0 - 11
+	StartDate.set(Calendar.DATE, day);
+	StartDate.set(Calendar.HOUR_OF_DAY, hour);//24 hour clock. 0 - 23.
+	StartDate.set(Calendar.MINUTE, minute);
     }
-    public Date getStartDate(){
+    public Calendar getStartDate(){//can also return a long representing milliseconds if that's more convienient
         return StartDate;
     }
 
     public void setEndDate(int year, int month, int day, int hour, int minute){
         //numbers roll over, they don't throw errors.  i.e. 74 minutes will be 
         //translated to 1 more hour and 14 minutes
-        Calendar toSet = Calendar.getInstance();
+        EndDate = Calendar.getInstance();
         
-        toSet.set(Calendar.YEAR, year);
-	toSet.set(Calendar.MONTH, month);//0 based.  0 - 11
-	toSet.set(Calendar.DATE, day);
-	toSet.set(Calendar.HOUR_OF_DAY, hour);//24 hour clock. 0 - 23.
-	toSet.set(Calendar.MINUTE, minute);
-	
-	EndDate = toSet.getTime();
+        EndDate.set(Calendar.YEAR, year);
+	EndDate.set(Calendar.MONTH, month);//0 based.  0 - 11
+	EndDate.set(Calendar.DATE, day);
+	EndDate.set(Calendar.HOUR_OF_DAY, hour);//24 hour clock. 0 - 23.
+	EndDate.set(Calendar.MINUTE, minute);
 		//if(StartDate.compareTo(EndDate) != -1) //then error.  start date should be before end date
     }
-    public Date getEndDate(){
+    public Calendar getEndDate(){//can also return a long representing milliseconds if that's more convienient
         return EndDate;
     }
     
