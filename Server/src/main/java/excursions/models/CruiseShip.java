@@ -1,6 +1,7 @@
 package excursions.models;
 
 import java.util.Date;
+import java.util.Calendar;
 
 public class CruiseShip {
     private int CruiseLine; // from my best understanding of the database
