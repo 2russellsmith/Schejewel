@@ -16,12 +16,12 @@ public class Tour {
         Calendar toSet = Calendar.getInstance();
         
         toSet.set(Calendar.YEAR, year);
-		toSet.set(Calendar.MONTH, month);//0 based.  0 - 11
-		toSet.set(Calendar.DATE, day);
-		toSet.set(Calendar.HOUR_OF_DAY, hour);
-		toSet.set(Calendar.MINUTE, minute);
+	toSet.set(Calendar.MONTH, month);//0 based.  0 - 11
+	toSet.set(Calendar.DATE, day);
+	toSet.set(Calendar.HOUR_OF_DAY, hour);
+	toSet.set(Calendar.MINUTE, minute);
 		
-		StartDate = toSet.getTime();
+	StartDate = toSet.getTime();
     }
     public Date getStartDate(){
         return StartDate;
@@ -33,12 +33,12 @@ public class Tour {
         Calendar toSet = Calendar.getInstance();
         
         toSet.set(Calendar.YEAR, year);
-		toSet.set(Calendar.MONTH, month);//0 based.  0 - 11
-		toSet.set(Calendar.DATE, day);
-		toSet.set(Calendar.HOUR_OF_DAY, hour);
-		toSet.set(Calendar.MINUTE, minute);
-		
-		EndDate = toSet.getTime();
+	toSet.set(Calendar.MONTH, month);//0 based.  0 - 11
+	toSet.set(Calendar.DATE, day);
+	toSet.set(Calendar.HOUR_OF_DAY, hour);
+	toSet.set(Calendar.MINUTE, minute);
+	
+	EndDate = toSet.getTime();
 		//if(StartDate.compareTo(EndDate) != -1) //then error.  start date should be before end date
     }
     public Date getEndDate(){
