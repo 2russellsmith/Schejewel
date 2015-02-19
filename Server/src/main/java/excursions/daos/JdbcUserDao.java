@@ -2,6 +2,7 @@ package excursions.daos;
 
 import excursions.daos.interfaces.UserDao;
 import excursions.models.User;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -14,7 +15,13 @@ import org.springframework.stereotype.Repository;
 public class JdbcUserDao implements UserDao {
     @Autowired
     private NamedParameterJdbcTemplate jdbc;
-
+	
+	//set DataSource when testing
+	@Override
+	public void setDataSource(DataSource ds) {
+		jdbc = new NamedParameterJdbcTemplate(ds);
+	}
+	
     @Override
     public User findUserByUsername(String username) {
         MapSqlParameterSource params = new MapSqlParameterSource();
