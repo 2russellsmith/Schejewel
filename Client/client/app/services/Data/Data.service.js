@@ -18,7 +18,7 @@ angular.module('schejewelApp')
                     name: 'Airplane'
                 }]);
 
-                return deferred.promise;
+                return deferred.promisae;
             }
         };
     });
