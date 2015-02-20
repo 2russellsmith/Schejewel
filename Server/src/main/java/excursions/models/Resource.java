@@ -1,16 +1,16 @@
 package excursions.models;
 
 public class Resource {
-    private String ID;
+    private int ResourceId;
     private String Name;
     private int Capacity;
-    private String Owner;
+    private int OwnerId;
     
-    public void setID(String ID){
-        this.ID = ID;
+    public void setResourceId(int ResourceId){
+        this.ResourceId = ResourceId;
     }
-    public String getID(){
-        return ID;
+    public int getResourceId(){
+        return ResourceId;
     }
     
     public void setName(String Name){
@@ -27,10 +27,10 @@ public class Resource {
         return Capacity;
     }
     
-    public void setOwner(String Owner){
-        this.Owner = Owner;
+    public void setOwnerId(int OwnerId){
+        this.OwnerId = OwnerId;
     }
-    public String getOwner(){
-        return Owner;
+    public int getOwnerId(){
+        return OwnerId;
     }
 }

@@ -1,9 +1,7 @@
 package excursions.models;
 
-//this wasn't in the schema, and looking at the data base,
-//this seems to just be a name
-
 public class CruiseLine {
+	private int CruiseLineId;
     private String Name;
     
     public void setName(String Name){
@@ -11,5 +9,12 @@ public class CruiseLine {
     }
     public String getName(){
         return Name;
+    }
+    
+    public void setCruiseLineId(int CruiseLineId){
+        this.CruiseLineId = CruiseLineId;
+    }
+    public int getCruiseLineId(){
+        return CruiseLineId;
     }
 }
