@@ -1,7 +1,5 @@
 package excursions.models;
 
-import java.util.Calendar;
-
 public class CruiseShip {
 	private int CruiseShipId;
 	private int CruiseLineId;//or a CruiseLine

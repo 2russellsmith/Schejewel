@@ -1,7 +1,5 @@
 package excursions.models;
 
-import java.util.ArrayList;
-
 public class TourGroup {
 	private int TourGroupId;
 	private int PortageId;//or Portage
@@ -23,10 +21,10 @@ public class TourGroup {
     	return PortageId;
     }
     
-    public setTourId(int TourId){
+    public void setTourId(int TourId){
     	this.TourId = TourId;
     }
-    public getTourId(){
+    public int getTourId(){
     	return TourId;
     }
     
