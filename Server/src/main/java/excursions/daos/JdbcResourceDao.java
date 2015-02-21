@@ -56,33 +56,33 @@ public class JdbcResourceDao implements ResourceDao {
 	}
 
 	@Override
-	public boolean updateResource(Resource toUpdate) {
+	public Resource updateResource(Resource toUpdate) {
         BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(toUpdate);
         String sql = "UPDATE resource SET name = :name, capacity = :capacity WHERE id = :id";
 
         jdbc.update(sql,params);
         //if(error) return false;
-		return true;
+		return toUpdate;
 	}
 
 	@Override
-	public boolean deleteResource(int ResourceId) {
+	public Resource deleteResource(int ResourceId) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id",ResourceId);
         String sql = "DELETE FROM resource WHERE id = :id";
 
         jdbc.update(sql,params);
         //if(error) return false;
-		return true;
+		return null;
 	}
 
 	@Override
-	public boolean createResource(Resource toCreate) {
+	public Resource createResource(Resource toCreate) {
         BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(toCreate);
         String sql = "INSERT INTO resource(id,name,capacity,owner_id) VALUES(:id,:name,:capacity,:owner_id)";
 
         jdbc.update(sql,params);
         //if(error) return false;
-		return true;
+		return toCreate;
 	}
 }

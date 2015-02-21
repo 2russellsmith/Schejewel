@@ -10,8 +10,8 @@ public interface ResourceDao {
 	public void setDataSource(DataSource ds);
 	public List<Resource> getResources();
 	public Resource getResource(int ResourceId);
-	public boolean updateResource(Resource toUpdate);
-	public boolean deleteResource(int ResourceId);
-	public boolean createResource(Resource toCreate);
+	public Resource updateResource(Resource toUpdate);
+	public Resource deleteResource(int ResourceId);
+	public Resource createResource(Resource toCreate);
 	
 }

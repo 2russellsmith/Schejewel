@@ -20,13 +20,13 @@ public class ResourceController {
     public Resource getResource(int ResourceId){
     	return resourceDao.getResource(ResourceId);
     }
-    public boolean updateResource(Resource toUpdate){
+    public Resource updateResource(Resource toUpdate){
     	return resourceDao.updateResource(toUpdate);
     }
-    public boolean deleteResource(int ResourceId){
+    public Resource deleteResource(int ResourceId){
     	return resourceDao.deleteResource(ResourceId);
     }
-    public boolean createResrouce(Resource toCreate){
+    public Resource createResrouce(Resource toCreate){
     	return resourceDao.createResource(toCreate);
     }
 }
