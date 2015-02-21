@@ -1,5 +1,7 @@
 package excursions.controllers;
 
+import java.util.List;
+
 import excursions.daos.JdbcResourceDao;
 import excursions.daos.interfaces.ResourceDao;
 import excursions.models.Resource;
@@ -12,6 +14,9 @@ public class ResourceController {
     @Autowired
     private ResourceDao resourceDao = new JdbcResourceDao();
     
+    public List<Resource> getResources(){
+    	return resourceDao.getResources();
+    }
     public Resource getResource(int ResourceId){
     	return resourceDao.getResource(ResourceId);
     }
