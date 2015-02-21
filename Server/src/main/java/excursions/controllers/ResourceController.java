@@ -26,7 +26,7 @@ public class ResourceController {
     public Resource deleteResource(int ResourceId){
     	return resourceDao.deleteResource(ResourceId);
     }
-    public Resource createResrouce(Resource toCreate){
+    public Resource createResource(Resource toCreate){
     	return resourceDao.createResource(toCreate);
     }
 }
