@@ -15,5 +15,5 @@ public class JdbcResourceDao implements ResourceDao {
 		jdbc = new NamedParameterJdbcTemplate(ds);
 	}
 	
-    //Todo: This needs to be implemented will commit work this time?
+    //Todo: This needs to be implemented. WORK!
 }
