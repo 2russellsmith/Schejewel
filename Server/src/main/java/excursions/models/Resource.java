@@ -1,36 +1,35 @@
 package excursions.models;
 
 public class Resource {
-    private int ResourceId;
-    private String Name;
-    private int Capacity;
-    private int OwnerId;
+    private int id;
+    private String name;
+    private int capacity;
+    private int owner_id;
     
-    public void setResourceId(int ResourceId){
-        this.ResourceId = ResourceId;
-    }
-    public int getResourceId(){
-        return ResourceId;
-    }
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getCapacity() {
+		return capacity;
+	}
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+	public int getOwner_id() {
+		return owner_id;
+	}
+	public void setOwner_id(int owner_id) {
+		this.owner_id = owner_id;
+	}
     
-    public void setName(String Name){
-        this.Name = Name;
-    }
-    public String getName(){
-        return Name;
-    }
-    
-    public void setCapacity(int Capacity){
-        this.Capacity = Capacity;
-    }
-    public int getCapacity(){
-        return Capacity;
-    }
-    
-    public void setOwnerId(int OwnerId){
-        this.OwnerId = OwnerId;
-    }
-    public int getOwnerId(){
-        return OwnerId;
-    }
+
 }
