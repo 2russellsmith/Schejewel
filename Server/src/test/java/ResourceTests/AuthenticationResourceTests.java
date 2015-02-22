@@ -36,7 +36,8 @@ public class AuthenticationResourceTests {
 	@After
 	public void tearDown() {
 	}
-
+	/*
     @Test
 	public void hello() {}
+	*/
 }

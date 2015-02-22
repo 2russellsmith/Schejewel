@@ -36,7 +36,8 @@ public class UserResourceTests {
 	@After
 	public void tearDown() {
 	}
-
+	/*
     @Test
 	public void hello() {}
+	*/
 }

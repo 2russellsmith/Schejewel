@@ -37,8 +37,10 @@ public class UserControllerTests {
 	public void tearDown() {
 	}
 	
+	/*
 	@Test
 	public void testSomething() {
 		assert(true);
 	}
+	*/
 }

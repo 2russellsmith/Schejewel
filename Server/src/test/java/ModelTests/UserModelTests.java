@@ -36,7 +36,8 @@ public class UserModelTests {
 	@After
 	public void tearDown() {
 	}
-
+	/*
     @Test
 	public void hello() {}
+	*/
 }
