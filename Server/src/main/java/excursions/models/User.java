@@ -8,10 +8,12 @@ import java.util.Set;
 
 public class User implements UserDetails {
     private long expires;
-    private String username;
     private Set<UserAuthority> authorities;
+    private int id;
+    private String username;
+    private int companyId;
+    @JsonIgnore
     private String password;
-
     @JsonIgnore
     private boolean accountExpired;
     @JsonIgnore
@@ -53,6 +55,22 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 
     @Override

@@ -4,6 +4,8 @@ import java.util.List;
 import excursions.daos.JdbcResourceDao;
 import excursions.daos.interfaces.ResourceDao;
 import excursions.models.Resource;
+import excursions.models.User;
+import excursions.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -13,9 +15,8 @@ public class ResourceController {
     private ResourceDao resourceDao = new JdbcResourceDao();
     
     public List<Resource> getResources(String token){
-    	//Todo: Get the companyId from the token
-        int companyId = 0;
-        return resourceDao.getResources(companyId);
+        User user = Converter.fromJSON(Converter.fromBase64(token));
+        return resourceDao.getResources(user.getCompanyId());
     }
     public Resource getResource(int ResourceId){
     	return resourceDao.getResource(ResourceId);
