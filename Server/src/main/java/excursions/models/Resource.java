@@ -30,6 +30,4 @@ public class Resource {
 	public void setOwner_id(int owner_id) {
 		this.owner_id = owner_id;
 	}
-    
-
 }

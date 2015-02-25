@@ -1,11 +1,9 @@
 package excursions.controllers;
 
 import java.util.List;
-
 import excursions.daos.JdbcResourceDao;
 import excursions.daos.interfaces.ResourceDao;
 import excursions.models.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -14,8 +12,10 @@ public class ResourceController {
     @Autowired
     private ResourceDao resourceDao = new JdbcResourceDao();
     
-    public List<Resource> getResources(){
-    	return resourceDao.getResources();
+    public List<Resource> getResources(String token){
+    	//Todo: Get the companyId from the token
+        int companyId = 0;
+        return resourceDao.getResources(companyId);
     }
     public Resource getResource(int ResourceId){
     	return resourceDao.getResource(ResourceId);
