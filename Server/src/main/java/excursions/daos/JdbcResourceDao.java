@@ -2,6 +2,7 @@ package excursions.daos;
 
 import excursions.daos.interfaces.ResourceDao;
 import excursions.models.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -10,6 +11,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Repository
@@ -67,11 +70,16 @@ public class JdbcResourceDao implements ResourceDao {
 
 	@Override
 	public List<Resource> getResources(int companyId, long startTime, long endTime) {
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		String startDate = format1.format(startTime);
+		String endDate = format1.format(endTime);
+		
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("companyId", companyId);
-        params.addValue("startTime", startTime);//TODO: convert this to something that MySQL will recognize
-        params.addValue("endTime", endTime);//TODO: convert this to something that MySQL will recognize
+        params.addValue("startTime", startDate);
+        params.addValue("endTime", endDate);
         String sql = "SELECT * FROM resource WHERE companyid = :companyId";//TODO:and startTime < booked < endTime
+        
         List<Resource> resources = jdbc.queryForList(sql, params, Resource.class);
         return resources;
 
