@@ -18,6 +18,10 @@ public class ResourceController {
         User user = Converter.fromJSON(Converter.fromBase64(token));
         return resourceDao.getResources(user.getCompanyId());
     }
+    public List<Resource> getResources(String token, long startTime, long endTime){
+        User user = Converter.fromJSON(Converter.fromBase64(token));
+        return resourceDao.getResources(user.getCompanyId(), startTime, endTime);
+    }    
     public Resource getResource(int ResourceId){
     	return resourceDao.getResource(ResourceId);
     }

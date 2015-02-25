@@ -18,6 +18,14 @@ public class ResourceResource {
     public ResponseEntity<List<Resource>> getResources(@RequestHeader(value="X-AUTH-TOKEN") String token){
         return new ResponseEntity<List<Resource>>(resourceController.getResources(token), HttpStatus.FOUND);
     }
+    //or they could just pass us one value and we would assume that they only meant for that day.
+    //this just feels more robust
+    @RequestMapping(value = "/api/resource", method = RequestMethod.GET)
+    public ResponseEntity<List<Resource>> getResources(@RequestHeader(value="X-AUTH-TOKEN") String token, 
+    													@RequestParam(value = "startTime") long startTime,
+    													@RequestParam(value = "endTime") long endTime){
+        return new ResponseEntity<List<Resource>>(resourceController.getResources(token, startTime, endTime), HttpStatus.FOUND);
+    }
     @RequestMapping(value = "/api/resource", params = {"ResourceId"}, method = RequestMethod.GET)
     public ResponseEntity<Resource> getResource(@RequestParam(value = "ResourceId") int ResourceId){
         return new ResponseEntity<Resource>(resourceController.getResource(ResourceId), HttpStatus.FOUND);

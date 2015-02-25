@@ -64,4 +64,16 @@ public class JdbcResourceDao implements ResourceDao {
         jdbc.update(sql, params);
         return toCreate;
     }
+
+	@Override
+	public List<Resource> getResources(int companyId, long startTime, long endTime) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("companyId", companyId);
+        params.addValue("startTime", startTime);//TODO: convert this to something that MySQL will recognize
+        params.addValue("endTime", endTime);//TODO: convert this to something that MySQL will recognize
+        String sql = "SELECT * FROM resource WHERE companyid = :companyId";//TODO:and startTime < booked < endTime
+        List<Resource> resources = jdbc.queryForList(sql, params, Resource.class);
+        return resources;
+
+	}
 }
