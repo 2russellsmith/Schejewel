@@ -8,4 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class CruiseShipResource {
     @Autowired
     private CruiseShipController cruiseShipController = new CruiseShipController();
+
+    //Todo: Create Cruise Ship
+
+    //Todo: Get Cruise Ship
+
+    //Todo: Update Cruise Ship
+
+    //Todo: Delete Cruise Ship
 }

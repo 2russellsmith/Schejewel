@@ -69,6 +69,7 @@ public class JdbcResourceDao implements ResourceDao {
     }
 
 	@Override
+    //Todo: change the startTime to startDate and remove endTime
 	public List<Resource> getResources(int companyId, long startTime, long endTime) {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String startDate = format1.format(startTime);
@@ -79,9 +80,7 @@ public class JdbcResourceDao implements ResourceDao {
         params.addValue("startTime", startDate);
         params.addValue("endTime", endDate);
         String sql = "SELECT * FROM resource WHERE companyid = :companyId";//TODO:and startTime < booked < endTime
-        
         List<Resource> resources = jdbc.queryForList(sql, params, Resource.class);
         return resources;
-
 	}
 }

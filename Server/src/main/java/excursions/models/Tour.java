@@ -1,6 +1,7 @@
 package excursions.models;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class Tour {
     private Calendar StartDate;
@@ -8,6 +9,7 @@ public class Tour {
     private int TourTypes;//or could be a TourType
     private int OwnerId;
     private int TourId;
+    private List<Resource> resources;
     
     public void setStartDate(long millis){
         StartDate = Calendar.getInstance();
@@ -19,7 +21,7 @@ public class Tour {
 
     public void setEndDate(long millis){
         EndDate = Calendar.getInstance();
-        EndDate.setTimeInMillis(millis);;
+        EndDate.setTimeInMillis(millis);
 		//if(StartDate.compareTo(EndDate) != -1) //then error.  start date should be before end date
     }
     public long getEndDate(){//can also return a long representing milliseconds if that's more convienient
@@ -45,5 +47,21 @@ public class Tour {
     }
     public int getTourId(){
     	return TourId;
+    }
+
+    public void setStartDate(Calendar startDate) {
+        StartDate = startDate;
+    }
+
+    public void setEndDate(Calendar endDate) {
+        EndDate = endDate;
+    }
+
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<Resource> resources) {
+        this.resources = resources;
     }
 }
