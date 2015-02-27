@@ -26,7 +26,7 @@ CREATE TABLE tour_type(
 );
 
 CREATE TABLE status(
-    id INT(11) NOT NULL,
+    id INT(11) NOT NULL AUTO_INCREMENT,
     description VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
