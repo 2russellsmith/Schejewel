@@ -121,7 +121,7 @@ public class JdbcCompanyDaoTests {
 	public void testGetCompany() {
 		company1 = companyDao.createCompany(company1);
 		company2 = companyDao.createCompany(company2);
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!! " + company1.getCompanyId());
+		
 		//test getCompany on companies that exist
 		Company a = companyDao.getCompany(company1.getCompanyId());
 		assertEquals(company1.getCompanyId(), a.getCompanyId());
