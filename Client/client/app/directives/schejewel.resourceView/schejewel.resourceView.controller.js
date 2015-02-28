@@ -34,7 +34,7 @@ angular.module('schejewelApp')
         $scope.calculateTimeStart = function( start){
             var a = start.split(':'); // split it at the colons
 
-            var minutes = (+a[0]) * 60 + (+a[1]) - 6*60+21; 
+            var minutes = (+a[0]) * 60 + (+a[1]) - 6*60+19; 
             return minutes;
         };
         $scope.calculateTimeDuration = function( start,  end){
