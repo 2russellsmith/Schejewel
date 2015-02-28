@@ -20,4 +20,7 @@ angular.module('schejewelApp', [
                 }
             });
         });
+        $rootScope.$on('handleEmit', function(event, args) {
+            $rootScope.$broadcast('handleBroadcast', args);
+        });
     });

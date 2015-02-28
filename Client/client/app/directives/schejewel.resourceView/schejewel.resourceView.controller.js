@@ -56,4 +56,8 @@ angular.module('schejewelApp')
             $scope.hidden = !$scope.hidden; 
              $scope.$apply();
         };
+        $scope.$on('handleBroadcast', function (event, data) {
+            console.log(data);
+            $scope.hidden = data.message;
+        });
 }]);
