@@ -4,15 +4,17 @@
             <div style="width: 300px; float: left; text-align:center"> Time 
                 <div style="width: 300px; height: 835px; border-style: solid; border-width: 1px; float: left">
                   <div ng-repeat="n in dummyData">
-                    <div style=" line-height: 27px; border-bottom:  dotted 1px; height: 29px;" :data-ng-model="modal.data.answer[n].text"  >{{n}}</div>
+                    <div style=" line-height: 27px; border-bottom:  dotted 1px; height: 30px;" :data-ng-model="modal.data.answer[n].text"  >{{n}}</div>
                   </div>
                 </div>
             </div>
             <div style="float: left" ng-repeat="m in Columns">
                 <div style="width: 300px; text-align:center" data-ng-model="modal.data.answer[m].text"> {{m.resourceType}} </div>
                 <div style="width: 300px; height: 835px; border-style: solid; border-width: 1px;" > 
-                    <div ng-repeat="n in dummyData" style=" border-bottom:  dotted 1px; height: 29px;" :data-ng-model="modal.data.answer[n].text"  ></div>
+                    <div ng-repeat="n in dummyData" style=" border-bottom:  dotted 1px; height: 30px;" :data-ng-model="modal.data.answer[n].text"  ></div>
                 </div>
-                <div style ="background-color: blue; height: 30px; position: absolute; top: 30px" ng-style="{{getStyle(r.startTime, r.endTime)}}" ng-repeat="r in m.useTimes">                          {{r.startTime}} </div>
+                <div class="resourceItem" ng-style="{{getStyle(r.startTime, r.endTime)}}" ng-repeat="r in m.useTimes">
+                    <p class = resourceText>{{r.startTime}}</p>
+                </div>
         </div>
     </div>

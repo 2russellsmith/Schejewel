@@ -1,7 +1,9 @@
 
-    <div id="buttonNav" style="position: relative" ng-app="myApp"  ng-controller="ButtonController as buttons">
-        <button type="button" ng-click="Calendar()">Calendar</button>
-        <button type="button" ng-click="TripView()">Trip View</button>
-        <button type="button" ng-click="ResourceView()">Resource View</button>
-        <button type="button" >Add Tour (does nothing right now)</button>
+    <div id="buttonNav" class="navbar navbar-default navbar-static-top" style="position: relative" ng-app="myApp"  ng-controller="ButtonController as buttons">
+        <ul class="nav navbar-nav">
+        <li><a  class="navbar-default .navbar-nav" ng-click="Calendar()">Calendar</a></li>
+        <li><a  class="navbar-default .navbar-nav" ng-click="TripView()">Trip View</a></li>
+        <li><a  class="navbar-default .navbar-nav" ng-click="ResourceView()">Resource View</a></li>
+        <li><a  class="navbar-default .navbar-nav" >Add Tour (does nothing right now)</a></li>
+        </ul>
     </div>
