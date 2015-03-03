@@ -28,8 +28,8 @@ public class JdbcResourceDao implements ResourceDao {
     public List<Resource> getResources(int companyId) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("companyId", companyId);
-        String sql = "SELECT * FROM resource WHERE companyid = :companyId";
-        List<Resource> resources = jdbc.queryForList(sql, params, Resource.class);
+        String sql = "SELECT * FROM resource WHERE owner_id = :companyId";
+        List<Resource> resources = jdbc.query(sql, params, new BeanPropertyRowMapper<>(Resource.class));
         return resources;
     }
 

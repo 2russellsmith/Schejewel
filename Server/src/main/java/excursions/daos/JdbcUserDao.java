@@ -40,7 +40,7 @@ public class JdbcUserDao implements UserDao {
 
         //Set params attributes from user and execute the sql
         BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(user);
-        String sql = "INSERT INTO user(username,password) VALUES(:username,:password)";
+        String sql = "INSERT INTO user(username,password,company_id) VALUES(:username,:password,:companyId)";
 
         jdbc.update(sql,params);
         return user;

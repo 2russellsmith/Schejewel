@@ -12,7 +12,6 @@ public class User implements UserDetails {
     private int id;
     private String username;
     private int companyId;
-    @JsonIgnore
     private String password;
     @JsonIgnore
     private boolean accountExpired;

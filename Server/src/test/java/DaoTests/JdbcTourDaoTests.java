@@ -6,7 +6,6 @@
 package DaoTests;
 
 import TestSuite.TestDatabaseInfo;
-import excursions.daos.JdbcTestDao;
 import excursions.daos.JdbcTourDao;
 import excursions.daos.interfaces.TourDao;
 import excursions.models.Tour;

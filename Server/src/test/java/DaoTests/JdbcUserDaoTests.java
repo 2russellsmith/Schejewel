@@ -7,7 +7,6 @@ package DaoTests;
 
 import TestSuite.TestDatabaseInfo;
 import excursions.daos.JdbcUserDao;
-import excursions.daos.JdbcTestDao;
 import excursions.daos.interfaces.UserDao;
 import excursions.models.User;
 import javax.sql.DataSource;
