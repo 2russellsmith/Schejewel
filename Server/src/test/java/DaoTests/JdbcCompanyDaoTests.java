@@ -5,6 +5,7 @@
  */
 package DaoTests;
 
+import TestSuite.JdbcTestDao;
 import TestSuite.TestDatabaseInfo;
 import excursions.daos.JdbcCompanyDao;
 import excursions.daos.interfaces.CompanyDao;

@@ -5,9 +5,9 @@
  */
 package DaoTests;
 
+import TestSuite.JdbcTestDao;
 import TestSuite.TestDatabaseInfo;
 import excursions.daos.JdbcStatusDao;
-import excursions.daos.JdbcTestDao;
 import excursions.daos.interfaces.StatusDao;
 import excursions.models.Status;
 import javax.sql.DataSource;

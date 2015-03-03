@@ -1,4 +1,4 @@
-package DaoTests;
+package TestSuite;
 
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
