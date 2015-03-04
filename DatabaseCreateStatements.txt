@@ -34,10 +34,9 @@ CREATE TABLE status(
 CREATE TABLE tour(
   id INT(11) NOT NULL AUTO_INCREMENT,
   owner_id INT(11) NOT NULL,
-  start_date DATE NOT NULL,
-  start_time TIME NOT NULL,
+  start_time LONG NOT NULL,
   tour_type_id INT(11) NOT NULL,
-  status INT(11) NOT NULL,
+  status_id INT(11) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (tour_type_id) REFERENCES tour_type(id)
        ON DELETE CASCADE
@@ -45,7 +44,7 @@ CREATE TABLE tour(
   FOREIGN KEY (owner_id) REFERENCES company(id)
        ON DELETE CASCADE
        ON UPDATE CASCADE,
-  FOREIGN KEY (status) REFERENCES status(id)
+  FOREIGN KEY (status_id) REFERENCES status(id)
        ON DELETE CASCADE
        ON UPDATE CASCADE
 );
