@@ -52,7 +52,7 @@ public class JdbcCompanyDaoTests {
 		testDao.clearDataBase();
 		company1 = new Company();
 		company1.setName("company1");
-		company1.setCompaynId(-1);
+		company1.setCompanyId(-1);
 		company2 = new Company();
 		company2.setName("company2");
 		badCompany = new Company();
@@ -82,7 +82,7 @@ public class JdbcCompanyDaoTests {
 	@Test
 	public void testUpdateCompany() {
 		company1 = companyDao.createCompany(company1);
-		company2.setCompaynId(company1.getCompanyId());
+		company2.setCompanyId(company1.getCompanyId());
 		
 		//test that update works
 		company2 = companyDao.updateCompany(company2);
@@ -90,7 +90,7 @@ public class JdbcCompanyDaoTests {
 		assertEquals(company2.getName(), "company2");
 		
 		//test update on company that doesn't exist
-		badCompany.setCompaynId(-1);
+		badCompany.setCompanyId(-1);
 		badCompany.setName("name");
 		badCompany = companyDao.updateCompany(badCompany);//doesn't throw exception
 	}

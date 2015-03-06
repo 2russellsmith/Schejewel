@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package DaoTests;
 
 import TestSuite.JdbcTestDao;
@@ -25,10 +21,6 @@ import org.junit.rules.ExpectedException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-/**
- *
- * @author Ivy Bridge
- */
 public class JdbcTourTypeDaoTests {
 	static TourTypeDao tourTypeDao;
 	static JdbcCompanyDao companyDao;

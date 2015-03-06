@@ -4,7 +4,7 @@ public class Company {
     private int CompanyId;
     private String Name;
     
-    public void setCompaynId(int CompanyId){
+    public void setCompanyId(int CompanyId){
         this.CompanyId = CompanyId;
     }
     public int getCompanyId(){

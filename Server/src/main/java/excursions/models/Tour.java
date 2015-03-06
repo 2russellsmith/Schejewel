@@ -1,62 +1,51 @@
 package excursions.models;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class Tour {
-    private Calendar StartDate;
-    private Calendar EndDate;
-    private int TourTypes;//or could be a TourType
-    private int OwnerId;
-    private int TourId;
+	private int id;
+	private int owner_id;
+	private long start_time;
+    private int tour_type_id;
+	private int status_id;
     private List<Resource> resources;
     
-    public void setStartDate(long millis){
-        StartDate = Calendar.getInstance();
-        StartDate.setTimeInMillis(millis);
+    public void setStartTime(long millis){
+        start_time = millis;
     }
-    public long getStartDate(){
-        return StartDate.getTimeInMillis();
-    }
-
-    public void setEndDate(long millis){
-        EndDate = Calendar.getInstance();
-        EndDate.setTimeInMillis(millis);
-		//if(StartDate.compareTo(EndDate) != -1) //then error.  start date should be before end date
-    }
-    public long getEndDate(){//can also return a long representing milliseconds if that's more convienient
-        return EndDate.getTimeInMillis();
+    public long getStartTime(){
+        return start_time;
     }
     
-    public void setTourTypes(int TourTypes){
-        this.TourTypes = TourTypes;
+    public void setTourTypeId(int id){
+        tour_type_id = id;
     }
-    public int getTourTypes(){
-        return TourTypes;
+    public int getTourTypeId(){
+        return tour_type_id;
     }
     
-    public void setOwnerId(int OwnerId){
-    	this.OwnerId = OwnerId;
+    public void setOwnerId(int id){
+    	owner_id = id;
     }
     public int getOwnerId(){
-    	return OwnerId;
+    	return owner_id;
     }
     
     public void setTourId(int TourId){
-    	this.TourId = TourId;
+    	this.id = TourId;
     }
     public int getTourId(){
-    	return TourId;
+    	return id;
     }
 
-    public void setStartDate(Calendar startDate) {
-        StartDate = startDate;
-    }
-
-    public void setEndDate(Calendar endDate) {
-        EndDate = endDate;
-    }
-
+	public int getStatusId() {
+		return status_id;
+	}
+	
+	public void setStatusId(int id) {
+		status_id = id;
+	}
+	
     public List<Resource> getResources() {
         return resources;
     }

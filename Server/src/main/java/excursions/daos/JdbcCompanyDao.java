@@ -27,7 +27,7 @@ public class JdbcCompanyDao implements CompanyDao {
         params.addValue("id",companyid);
         String sql = "SELECT * FROM company WHERE id = :id";
         Company company = jdbc.queryForObject(sql, params, new BeanPropertyRowMapper<>(Company.class));
-		company.setCompaynId(companyid);
+		company.setCompanyId(companyid);
         return company;
 	}
 
@@ -57,7 +57,7 @@ public class JdbcCompanyDao implements CompanyDao {
 			+ " VALUES(:name)";
 		KeyHolder kh = new GeneratedKeyHolder();
 		jdbc.update(sql, params, kh);
-		company.setCompaynId(kh.getKey().intValue());
+		company.setCompanyId(kh.getKey().intValue());
 		return company;
 	}
 }
