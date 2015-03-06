@@ -24,11 +24,19 @@ angular.module('schejewelApp')
             $scope.HideCalendarView();
         }
         $scope.HideResourceView = function(){
-            var msg = true;
+            var msg = { resourceHide : true }
             $scope.$emit('handleEmit', {message: msg});
         }
         $scope.ShowResourceView = function(){
-            var msg = false;
+            var msg = { resourceHide : false }
+            $scope.$emit('handleEmit', {message: msg});
+        }
+        $scope.HideMessages = function(){
+            var msg = { resourceHide : true }
+            $scope.$emit('handleEmit', {message: msg});
+        }
+        $scope.ShowMessages = function(){
+            var msg = { resourceHide : false }
             $scope.$emit('handleEmit', {message: msg});
         }
         $scope.HideTripView = function(){

@@ -6,7 +6,9 @@ angular.module('schejewelApp')
             templateUrl: 'app/directives/schejewel.messages/schejewel.messages.html',
             restrict: 'EA',
             scope: {
-                'messages': '='
+                'messages': '=',
+                'hide': '=',
+                'value': '='
             },
             link: function($scope) {}
         };

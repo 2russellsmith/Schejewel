@@ -25,7 +25,7 @@ angular.module('schejewelApp')
         $scope.messages = [{
             from: 'Joe',
             subject: 'Flat tire on bus',
-            message: 'Hey, I\'m just following up on the flat tire on the bus.  Any progress on that?',
+            message: 'Hey, I\'m just following up on the flat tire on the bus.  Any progress for that?',
             datetime: '1428333624006'
         }, {
             from: 'Jim',
@@ -38,4 +38,11 @@ angular.module('schejewelApp')
             message: 'This is a reminder about the company party.  It is this friday at Jim\'s house.  It starts at 7.  Make sure to bring the food item you were assigned',
             datetime: '1438333624006'
         }];
+        $scope.value = "LOLZERS";
+        $scope.hide = true;
+    
+        $scope.$on('handleBroadcast', function (event, data) {
+            console.log(data);
+            $scope.hide = data.message;
+        });
     });

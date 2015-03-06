@@ -51,13 +51,15 @@ angular.module('schejewelApp')
                          'height': $scope.calculateTimeDuration(start, end)+'px'};
                     return response;
         };
+        
         $scope.hidden = true;
-         $scope.appear = function(){
+        
+        $scope.appear = function(){
             $scope.hidden = !$scope.hidden; 
-             $scope.$apply();
+            $scope.$apply();
         };
+        
         $scope.$on('handleBroadcast', function (event, data) {
-            console.log(data);
             $scope.hidden = data.message;
         });
 }]);
