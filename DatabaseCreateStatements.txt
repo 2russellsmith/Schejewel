@@ -6,7 +6,7 @@ CREATE TABLE company(
 
 CREATE TABLE user(
   id INT(11) NOT NULL AUTO_INCREMENT,
-  username VARCHAR(255),
+  username VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
   company_id INT(11),
   PRIMARY KEY (id),
