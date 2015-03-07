@@ -24,6 +24,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 
 public class JdbcStatusDaoTests {
+    /*
 	static StatusDao statusDao;
 	static JdbcTestDao testDao;
 	Status status1, status2, badStatus;
@@ -131,5 +132,5 @@ public class JdbcStatusDaoTests {
 		thrown.expect(EmptyResultDataAccessException.class);
 		Status c = statusDao.getStatus(status2.getStatusId() + 1);
 		
-	}
+	}*/
 }

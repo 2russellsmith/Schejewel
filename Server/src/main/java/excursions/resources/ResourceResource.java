@@ -17,8 +17,6 @@ public class ResourceResource {
         return resourceController.getResources(token);
     }
 
-    //or they could just pass us one value and we would assume that they only meant for that day.
-    //this just feels more robust
     @RequestMapping(value = "/api/resource/{startTime}/{endTime}", method = RequestMethod.GET)
     public @ResponseBody List<Resource> getResources(@RequestHeader(value="X-AUTH-TOKEN") String token, @RequestParam(value = "startTime") long startTime, @RequestParam(value = "endTime") long endTime){
         return resourceController.getResources(token, startTime, endTime);
