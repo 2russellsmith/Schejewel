@@ -1,20 +1,36 @@
 package excursions.models;
 
 public class CruiseShip {
-	private int CruiseShipId;
-	private int CruiseLineId;//or a CruiseLine
+	private int id;
+	private String name;
+	private int capacity;
+	private int cruise_line_id;
 	
-	public void setCruiseShipId(int CruiseShipId){
-		this.CruiseShipId = CruiseShipId;
+	public void setId(int CruiseShipId){
+		this.id = CruiseShipId;
 	}
-	public int getCruiseShipId(){
-		return CruiseShipId;
+	public int getId(){
+		return id;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getName() {
+		return name;
+	}
+	
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+	public int getCapacity() {
+		return capacity;
 	}
 	
 	public void setCruiseLineId(int CruiseLineId){
-		this.CruiseLineId = CruiseLineId;
+		this.cruise_line_id = CruiseLineId;
 	}
 	public int getCruiseLineId(){
-		return CruiseLineId;
+		return cruise_line_id;
 	}
 }

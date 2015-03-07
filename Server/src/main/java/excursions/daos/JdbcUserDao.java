@@ -1,14 +1,12 @@
 package excursions.daos;
 
 import excursions.daos.interfaces.UserDao;
-import excursions.models.Tour;
 import excursions.models.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -64,17 +62,37 @@ public class JdbcUserDao implements UserDao {
 
 	@Override
 	public List<User> getUsers(int companyid) {
-		return null;
+		MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("company_id",companyid);
+        String sql = "SELECT * FROM user WHERE company_id = :company_id";
+        List<User> users = jdbc.query(sql, params, new UserRowMapper());
+        return users;
 	}
 
 	@Override
 	public void deleteUser(int userid) {
-		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id",userid);
+		String sql = "DELETE FROM user WHERE id=:id";
+		jdbc.update(sql, params);
 	}
 
 	@Override
 	public User updateUser(User user) {
-		return null;
+		//Create a hash from the user's password
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String password = passwordEncoder.encode(user.getPassword());
+        user.setPassword(password);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("id", user.getId());
+        params.addValue("username",user.getUsername());
+		params.addValue("password", user.getPassword());
+		params.addValue("company_id", user.getCompanyId());
+		String sql = "UPDATE user SET username=:username, password=:password, "
+			+ "company_id=:company_id WHERE id=:id";
+		jdbc.update(sql, params);
+		return user;
 	}
 	
 	public class UserRowMapper implements RowMapper {

@@ -11,10 +11,10 @@ public class CruiseLine {
         return Name;
     }
     
-    public void setCruiseLineId(int CruiseLineId){
+    public void setId(int CruiseLineId){
         this.CruiseLineId = CruiseLineId;
     }
-    public int getCruiseLineId(){
+    public int getId(){
         return CruiseLineId;
     }
 }

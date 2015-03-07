@@ -5,7 +5,6 @@
  */
 package DaoTests;
 
-import static DaoTests.JdbcCompanyDaoTests.companyDao;
 import TestSuite.JdbcTestDao;
 import TestSuite.TestDatabaseInfo;
 import excursions.daos.JdbcCompanyDao;
@@ -14,6 +13,7 @@ import excursions.daos.interfaces.CompanyDao;
 import excursions.daos.interfaces.UserDao;
 import excursions.models.Company;
 import excursions.models.User;
+import java.util.List;
 import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -144,21 +144,86 @@ public class JdbcUserDaoTests {
 	
 	@Test
 	public void testGetUser() {
+		user1 = userDao.createUser(user1);
+		user2 = userDao.createUser(user2);
 		
+		//test getUser on users that exist
+		User newUser = userDao.getUser(user1.getId());
+		assertEquals(user1.getUsername(), newUser.getUsername());
+		assertEquals(user1.getPassword(), newUser.getPassword());
+		assertEquals(user1.getCompanyId(), newUser.getCompanyId());
+		
+		newUser = userDao.getUser(user2.getId());
+		assertEquals(user2.getUsername(), newUser.getUsername());
+		assertEquals(user2.getPassword(), newUser.getPassword());
+		assertEquals(user2.getCompanyId(), newUser.getCompanyId());
+		
+		//test getUser on user that doesn't exist
+		thrown.expect(EmptyResultDataAccessException.class);
+		newUser = userDao.getUser(user2.getId() + 1);
 	}
 	
 	@Test
 	public void testGetUsers() {
+		user1.setCompanyId(company2.getCompanyId());
+		user1 = userDao.createUser(user1);
+		user2 = userDao.createUser(user2);
 		
+		List<User> users = userDao.getUsers(company2.getCompanyId());
+		assertEquals(users.size(), 2);
+		
+		User newUser = users.get(0);
+		assertEquals(user1.getUsername(), newUser.getUsername());
+		assertEquals(user1.getPassword(), newUser.getPassword());
+		assertEquals(user1.getCompanyId(), newUser.getCompanyId());
+		
+		newUser = users.get(1);
+		assertEquals(user2.getUsername(), newUser.getUsername());
+		assertEquals(user2.getPassword(), newUser.getPassword());
+		assertEquals(user2.getCompanyId(), newUser.getCompanyId());
+		
+		users = userDao.getUsers(company1.getCompanyId());
+		assertEquals(users.size(), 0);
 	}
 	
 	@Test
 	public void testDeleteUser() {
+		//test for successful deletion
+		user1 = userDao.createUser(user1);
+		int user1id = user1.getId();
+		user2 = userDao.createUser(user2);
+		int user2id = user2.getId();
+		userDao.deleteUser(user1id);
 		
+		//try to get deleted user
+		thrown.expect(EmptyResultDataAccessException.class);
+		user1 = userDao.getUser(user1id);
+		
+		//try to get non-deleted user
+		User newUser = userDao.getUser(user2id);
+		assertEquals(user2.getUsername(), newUser.getUsername());
+		assertEquals(user2.getPassword(), newUser.getPassword());
+		assertEquals(user2.getCompanyId(), newUser.getCompanyId());
+		
+		//try to delete already deleted company - this doesn't throw an exception
+		companyDao.deleteCompany(user1id);
 	}
 	
 	@Test
 	public void testUpdateUser() {
+		user1 = userDao.createUser(user1);
+		user2.setId(user1.getId());
 		
+		//test that update works
+		user2 = userDao.updateUser(user2);
+		assertEquals(user1.getId(), user2.getId());
+		assertEquals(user2.getUsername(), "user2");
+		
+		//test update on user that doesn't exist
+		badUser.setId(user1.getId() + 1);
+		badUser.setUsername("name");
+		badUser.setPassword("pwd");
+		badUser.setCompanyId(company2.getCompanyId());
+		badUser = userDao.updateUser(badUser);//doesn't throw exception
 	}
 }
