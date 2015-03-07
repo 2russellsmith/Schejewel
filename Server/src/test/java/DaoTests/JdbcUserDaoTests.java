@@ -93,7 +93,7 @@ public class JdbcUserDaoTests {
 		//test creation of user
 		user1 = userDao.createUser(user1);
 		assert(user1 != null);
-		User newUser = userDao.getUser(user1.getId());
+		User newUser = userDao.getUser(user1.getUserId());
 		assertEquals(user1.getUsername(), newUser.getUsername());
 		assertEquals(user1.getPassword(), newUser.getPassword());
 		assertEquals(user1.getCompanyId(), newUser.getCompanyId());
@@ -117,7 +117,7 @@ public class JdbcUserDaoTests {
 		
 		badUser.setCompanyId(company1.getCompanyId());
 		badUser = userDao.createUser(badUser);
-		newUser = userDao.getUser(badUser.getId());
+		newUser = userDao.getUser(badUser.getUserId());
 		assertEquals(badUser.getUsername(), newUser.getUsername());
 		assertEquals(badUser.getPassword(), newUser.getPassword());
 		assertEquals(badUser.getCompanyId(), newUser.getCompanyId());
@@ -148,19 +148,19 @@ public class JdbcUserDaoTests {
 		user2 = userDao.createUser(user2);
 		
 		//test getUser on users that exist
-		User newUser = userDao.getUser(user1.getId());
+		User newUser = userDao.getUser(user1.getUserId());
 		assertEquals(user1.getUsername(), newUser.getUsername());
 		assertEquals(user1.getPassword(), newUser.getPassword());
 		assertEquals(user1.getCompanyId(), newUser.getCompanyId());
 		
-		newUser = userDao.getUser(user2.getId());
+		newUser = userDao.getUser(user2.getUserId());
 		assertEquals(user2.getUsername(), newUser.getUsername());
 		assertEquals(user2.getPassword(), newUser.getPassword());
 		assertEquals(user2.getCompanyId(), newUser.getCompanyId());
 		
 		//test getUser on user that doesn't exist
 		thrown.expect(EmptyResultDataAccessException.class);
-		newUser = userDao.getUser(user2.getId() + 1);
+		newUser = userDao.getUser(user2.getUserId() + 1);
 	}
 	
 	@Test
@@ -190,9 +190,9 @@ public class JdbcUserDaoTests {
 	public void testDeleteUser() {
 		//test for successful deletion
 		user1 = userDao.createUser(user1);
-		int user1id = user1.getId();
+		int user1id = user1.getUserId();
 		user2 = userDao.createUser(user2);
-		int user2id = user2.getId();
+		int user2id = user2.getUserId();
 		userDao.deleteUser(user1id);
 		
 		//try to get deleted user
@@ -212,15 +212,15 @@ public class JdbcUserDaoTests {
 	@Test
 	public void testUpdateUser() {
 		user1 = userDao.createUser(user1);
-		user2.setId(user1.getId());
+		user2.setUserId(user1.getUserId());
 		
 		//test that update works
 		user2 = userDao.updateUser(user2);
-		assertEquals(user1.getId(), user2.getId());
+		assertEquals(user1.getUserId(), user2.getUserId());
 		assertEquals(user2.getUsername(), "user2");
 		
 		//test update on user that doesn't exist
-		badUser.setId(user1.getId() + 1);
+		badUser.setUserId(user1.getUserId() + 1);
 		badUser.setUsername("name");
 		badUser.setPassword("pwd");
 		badUser.setCompanyId(company2.getCompanyId());

@@ -45,7 +45,7 @@ public class JdbcCruiseLineDaoTests {
 		testDao.clearDataBase();
 		cruiseLine1 = new CruiseLine();
 		cruiseLine1.setName("cruiseLine1");
-		cruiseLine1.setId(-1);
+		cruiseLine1.setCruiseLineId(-1);
 		cruiseLine2 = new CruiseLine();
 		cruiseLine2.setName("cruiseLine2");
 		badCruiseLine = new CruiseLine();
@@ -63,8 +63,8 @@ public class JdbcCruiseLineDaoTests {
 		//test creation of cruiseLine
 		cruiseLine1 = cruiseLineDao.createCruiseLine(cruiseLine1);
 		assert(cruiseLine1 != null);
-		assert(cruiseLine1.getId() != -1);
-		assert(cruiseLine1.getId() >= 0);
+		assert(cruiseLine1.getCruiseLineId() != -1);
+		assert(cruiseLine1.getCruiseLineId() >= 0);
 		assertEquals(cruiseLine1.getName(), "cruiseLine1");
 		
 		//test creation of cruiseLine with null name
@@ -75,15 +75,15 @@ public class JdbcCruiseLineDaoTests {
 	@Test
 	public void testUpdateCruiseLine() {
 		cruiseLine1 = cruiseLineDao.createCruiseLine(cruiseLine1);
-		cruiseLine2.setId(cruiseLine1.getId());
+		cruiseLine2.setCruiseLineId(cruiseLine1.getCruiseLineId());
 		
 		//test that update works
 		cruiseLine2 = cruiseLineDao.updateCruiseLine(cruiseLine2);
-		assertEquals(cruiseLine1.getId(), cruiseLine2.getId());
+		assertEquals(cruiseLine1.getCruiseLineId(), cruiseLine2.getCruiseLineId());
 		assertEquals(cruiseLine2.getName(), "cruiseLine2");
 		
 		//test update on cruiseLine that doesn't exist
-		badCruiseLine.setId(-1);
+		badCruiseLine.setCruiseLineId(-1);
 		badCruiseLine.setName("name");
 		badCruiseLine = cruiseLineDao.updateCruiseLine(badCruiseLine);//doesn't throw exception
 	}
@@ -92,18 +92,18 @@ public class JdbcCruiseLineDaoTests {
 	public void testDeleteCruiseLine() {
 		//test for successful deletion
 		cruiseLine1 = cruiseLineDao.createCruiseLine(cruiseLine1);
-		int comp1id = cruiseLine1.getId();
+		int comp1id = cruiseLine1.getCruiseLineId();
 		cruiseLine2 = cruiseLineDao.createCruiseLine(cruiseLine2);
-		int comp2id = cruiseLine2.getId();
-		cruiseLineDao.deleteCruiseLine(cruiseLine1.getId());
+		int comp2id = cruiseLine2.getCruiseLineId();
+		cruiseLineDao.deleteCruiseLine(cruiseLine1.getCruiseLineId());
 		
 		//try to get deleted cruiseLine
 		thrown.expect(EmptyResultDataAccessException.class);
-		cruiseLine1 = cruiseLineDao.getCruiseLine(cruiseLine1.getId());
+		cruiseLine1 = cruiseLineDao.getCruiseLine(cruiseLine1.getCruiseLineId());
 		
 		//try to get non-deleted cruiseLine
-		cruiseLine2 = cruiseLineDao.getCruiseLine(cruiseLine2.getId());
-		assertEquals(cruiseLine2.getId(), comp2id);
+		cruiseLine2 = cruiseLineDao.getCruiseLine(cruiseLine2.getCruiseLineId());
+		assertEquals(cruiseLine2.getCruiseLineId(), comp2id);
 		assertEquals(cruiseLine2.getName(), "cruiseLine2");
 		
 		//try to delete already deleted cruiseLine - this doesn't throw an exception
@@ -116,16 +116,16 @@ public class JdbcCruiseLineDaoTests {
 		cruiseLine2 = cruiseLineDao.createCruiseLine(cruiseLine2);
 		
 		//test getCruiseLine on cruiseLines that exist
-		CruiseLine a = cruiseLineDao.getCruiseLine(cruiseLine1.getId());
-		assertEquals(cruiseLine1.getId(), a.getId());
+		CruiseLine a = cruiseLineDao.getCruiseLine(cruiseLine1.getCruiseLineId());
+		assertEquals(cruiseLine1.getCruiseLineId(), a.getCruiseLineId());
 		assertEquals(cruiseLine1.getName(), a.getName());
-		CruiseLine b = cruiseLineDao.getCruiseLine(cruiseLine2.getId());
-		assertEquals(cruiseLine2.getId(), b.getId());
+		CruiseLine b = cruiseLineDao.getCruiseLine(cruiseLine2.getCruiseLineId());
+		assertEquals(cruiseLine2.getCruiseLineId(), b.getCruiseLineId());
 		assertEquals(cruiseLine2.getName(), b.getName());
 		
 		//test getCruiseLine on cruiseLine that doesn't exist
 		thrown.expect(EmptyResultDataAccessException.class);
-		CruiseLine c = cruiseLineDao.getCruiseLine(cruiseLine2.getId() + 1);
+		CruiseLine c = cruiseLineDao.getCruiseLine(cruiseLine2.getCruiseLineId() + 1);
 		
 	}
 }

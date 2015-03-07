@@ -6,10 +6,10 @@ public class Resource {
     private int capacity;
     private int owner_id;
     
-	public int getId() {
+	public int getResourceId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setResourceId(int id) {
 		this.id = id;
 	}
 	public String getName() {

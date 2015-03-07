@@ -4,10 +4,10 @@ import excursions.daos.interfaces.TourDao;
 import excursions.models.Tour;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -38,8 +38,8 @@ public class JdbcTourDao implements TourDao {
 	public List<Tour> getToursByDateRange(int companyid, long beginDate, long endDate) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("owner_id",companyid);
-		params.addValue("begin",beginDate);
-		params.addValue("end", endDate);
+		params.addValue("begin",new Timestamp(beginDate));
+		params.addValue("end", new Timestamp(endDate));
 		String sql = "SELECT * FROM tour WHERE owner_id = :owner_id AND start_time BETWEEN "
 			+ ":begin AND :end";
 		List<Tour> tours = jdbc.query(sql, params, new TourRowMapper());
@@ -61,7 +61,7 @@ public class JdbcTourDao implements TourDao {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("id", tour.getTourId());
         params.addValue("owner_id",tour.getOwnerId());
-		params.addValue("start_time", tour.getStartTime());
+		params.addValue("start_time", tour.getStartTimeSQL());
 		params.addValue("tour_type_id", tour.getTourTypeId());
 		params.addValue("status_id", tour.getStatusId());
 		String sql = "UPDATE tour SET owner_id=:owner_id, start_time=:start_time, "
@@ -83,7 +83,7 @@ public class JdbcTourDao implements TourDao {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("id", tour.getTourId());
         params.addValue("owner_id",tour.getOwnerId());
-		params.addValue("start_time", tour.getStartTime());
+		params.addValue("start_time", tour.getStartTimeSQL());
 		params.addValue("tour_type_id", tour.getTourTypeId());
 		params.addValue("status_id", tour.getStatusId());
 		String sql = "INSERT INTO tour(owner_id, start_time, tour_type_id, status_id)"
@@ -99,7 +99,7 @@ public class JdbcTourDao implements TourDao {
 			Tour tour = new Tour();
 			tour.setTourId(rs.getInt("id"));
 			tour.setOwnerId(rs.getInt("owner_id"));
-			tour.setStartTime(rs.getLong("start_time"));
+			tour.setStartTimeSQL(rs.getTimestamp("start_time"));
 			tour.setTourTypeId(rs.getInt("tour_type_id"));
 			tour.setStatusId(rs.getInt("status_id"));
 			return tour;

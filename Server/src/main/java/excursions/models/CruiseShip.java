@@ -6,10 +6,10 @@ public class CruiseShip {
 	private int capacity;
 	private int cruise_line_id;
 	
-	public void setId(int CruiseShipId){
+	public void setCruiseShipId(int CruiseShipId){
 		this.id = CruiseShipId;
 	}
-	public int getId(){
+	public int getCruiseShipId(){
 		return id;
 	}
 	

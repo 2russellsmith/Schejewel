@@ -26,13 +26,14 @@ public class JdbcCruiseLineDao implements CruiseLineDao {
         params.addValue("id",cruiseLineId);
         String sql = "SELECT * FROM cruise_line WHERE id = :id";
         CruiseLine cruiseLine = jdbc.queryForObject(sql, params, new BeanPropertyRowMapper<>(CruiseLine.class));
+		cruiseLine.setCruiseLineId(cruiseLineId);
         return cruiseLine;
 	}
 
 	@Override
 	public CruiseLine updateCruiseLine(CruiseLine cruiseLine) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("id",cruiseLine.getId());
+		params.addValue("id",cruiseLine.getCruiseLineId());
         params.addValue("name",cruiseLine.getName());
 		String sql = "UPDATE cruise_line SET name=:name WHERE id=:id";
 		jdbc.update(sql, params);
@@ -55,7 +56,7 @@ public class JdbcCruiseLineDao implements CruiseLineDao {
 			+ " VALUES(:name)";
 		KeyHolder kh = new GeneratedKeyHolder();
 		jdbc.update(sql, params, kh);
-		cruiseLine.setId(kh.getKey().intValue());
+		cruiseLine.setCruiseLineId(kh.getKey().intValue());
 		return cruiseLine;
 	}
 }

@@ -1,9 +1,6 @@
 
 package DaoTests;
 
-import static DaoTests.JdbcCompanyDaoTests.companyDao;
-import static DaoTests.JdbcStatusDaoTests.statusDao;
-import static DaoTests.JdbcTourTypeDaoTests.companyDao;
 import TestSuite.JdbcTestDao;
 import TestSuite.TestDatabaseInfo;
 import excursions.daos.JdbcCompanyDao;
@@ -18,7 +15,6 @@ import excursions.models.Company;
 import excursions.models.Status;
 import excursions.models.Tour;
 import excursions.models.TourType;
-import java.util.Calendar;
 import java.util.List;
 import javax.sql.DataSource;
 import org.junit.After;
@@ -99,9 +95,7 @@ public class JdbcTourDaoTests {
 		
 		tour1 = new Tour();
 		tour1.setOwnerId(company1.getCompanyId());
-		Calendar cal = Calendar.getInstance();
-		time = cal.getTimeInMillis();
-		tour1.setStartTime(time);
+		tour1.setStartTime(5000000000l);
 		tour1.setTourTypeId(tourType1.getTourTypeId());
 		tour1.setStatusId(status1.getStatusId());
 		

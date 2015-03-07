@@ -47,7 +47,7 @@ public class JdbcUserDao implements UserDao {
         String sql = "INSERT INTO user(username,password,company_id) VALUES(:username,:password,:companyId)";
 		KeyHolder kh = new GeneratedKeyHolder();
 		jdbc.update(sql, params, kh);
-		user.setId(kh.getKey().intValue());
+		user.setUserId(kh.getKey().intValue());
         return user;
     }
 
@@ -85,7 +85,7 @@ public class JdbcUserDao implements UserDao {
         user.setPassword(password);
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("id", user.getId());
+		params.addValue("id", user.getUserId());
         params.addValue("username",user.getUsername());
 		params.addValue("password", user.getPassword());
 		params.addValue("company_id", user.getCompanyId());
@@ -98,7 +98,7 @@ public class JdbcUserDao implements UserDao {
 	public class UserRowMapper implements RowMapper {
 		public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 			User user = new User();
-			user.setId(rs.getInt("id"));
+			user.setUserId(rs.getInt("id"));
 			user.setUsername(rs.getString("username"));
 			user.setPassword(rs.getString("password"));
 			user.setCompanyId(rs.getInt("company_id"));

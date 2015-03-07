@@ -1,6 +1,7 @@
 package excursions.models;
 
 import java.util.List;
+import java.sql.Timestamp;
 
 public class Tour {
 	private int id;
@@ -13,9 +14,16 @@ public class Tour {
     public void setStartTime(long millis){
         start_time = millis;
     }
+	public void setStartTimeSQL(Timestamp ts) {
+		start_time = ts.getTime();
+	}
     public long getStartTime(){
         return start_time;
     }
+	public Timestamp getStartTimeSQL() {
+		Timestamp ts = new Timestamp(start_time);
+		return ts;
+	}
     
     public void setTourTypeId(int id){
         tour_type_id = id;

@@ -56,11 +56,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public int getId() {
+    public int getUserId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setUserId(int id) {
         this.id = id;
     }
 
