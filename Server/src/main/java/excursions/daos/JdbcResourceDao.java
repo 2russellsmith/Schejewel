@@ -2,6 +2,9 @@ package excursions.daos;
 
 import excursions.daos.interfaces.ResourceDao;
 import excursions.models.Resource;
+import excursions.models.Tour;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -14,12 +17,16 @@ import javax.sql.DataSource;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 @Repository
 public class JdbcResourceDao implements ResourceDao {
     @Autowired
     private NamedParameterJdbcTemplate jdbc;
 
+	@Override
     public void setDataSource(DataSource ds) {
         jdbc = new NamedParameterJdbcTemplate(ds);
     }
@@ -29,7 +36,7 @@ public class JdbcResourceDao implements ResourceDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("companyId", companyId);
         String sql = "SELECT * FROM resource WHERE owner_id = :companyId";
-        List<Resource> resources = jdbc.query(sql, params, new BeanPropertyRowMapper<>(Resource.class));
+        List<Resource> resources = jdbc.query(sql, params, new ResourceRowMapper());
         return resources;
     }
 
@@ -38,15 +45,19 @@ public class JdbcResourceDao implements ResourceDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", resourceId);
         String sql = "SELECT * FROM resource WHERE id = :id";
-
-        Resource resource = jdbc.queryForObject(sql, params, new BeanPropertyRowMapper<>(Resource.class));
+        Resource resource = (Resource)jdbc.queryForObject(sql, params, new ResourceRowMapper());
         return resource;
     }
 
     @Override
     public Resource updateResource(Resource toUpdate) {
-        BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(toUpdate);
-        String sql = "UPDATE resource SET name = :name, capacity = :capacity WHERE id = :id";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("id", toUpdate.getResourceId());
+		params.addValue("name", toUpdate.getName());
+		params.addValue("capacity", toUpdate.getCapacity());
+        params.addValue("owner_id", toUpdate.getOwnerId());
+        String sql = "UPDATE resource SET name = :name, capacity = :capacity, owner_id = :owner_id"
+			+ " WHERE id = :id";
         jdbc.update(sql, params);
         return toUpdate;
     }
@@ -62,10 +73,16 @@ public class JdbcResourceDao implements ResourceDao {
 
     @Override
     public Resource createResource(Resource toCreate) {
-        BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(toCreate);
-        String sql = "INSERT INTO resource(id,name,capacity,owner_id) VALUES(:id,:name,:capacity,:owner_id)";
-        jdbc.update(sql, params);
-        return toCreate;
+        MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("name", toCreate.getName());
+		params.addValue("capacity", toCreate.getCapacity());
+        params.addValue("owner_id", toCreate.getOwnerId());
+        String sql = "INSERT INTO resource(name,capacity,owner_id) VALUES(:name,:capacity,:owner_id)";
+		
+		KeyHolder kh = new GeneratedKeyHolder();
+		jdbc.update(sql, params, kh);
+		toCreate.setResourceId(kh.getKey().intValue());
+		return toCreate;
     }
 
 	@Override
@@ -82,5 +99,20 @@ public class JdbcResourceDao implements ResourceDao {
         String sql = "SELECT * FROM resource WHERE companyid = :companyId";//TODO:and startTime < booked < endTime
         List<Resource> resources = jdbc.queryForList(sql, params, Resource.class);
         return resources;
+	}
+	
+	public class ResourceRowMapper implements RowMapper {
+		public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Resource resource = new Resource();
+			resource.setResourceId(rs.getInt("id"));
+			resource.setName(rs.getString("name"));
+			int capacity = rs.getInt("capacity");
+			if (rs.wasNull())
+				resource.setCapacity(null);
+			else
+				resource.setCapacity(capacity);
+			resource.setOwnerId(rs.getInt("owner_id"));
+			return resource;
+		}
 	}
 }

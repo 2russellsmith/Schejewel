@@ -3,7 +3,7 @@ package excursions.models;
 public class Resource {
     private int id;
     private String name;
-    private int capacity;
+    private Integer capacity = null;
     private int owner_id;
     
 	public int getResourceId() {
@@ -18,16 +18,16 @@ public class Resource {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getCapacity() {
+	public Integer getCapacity() {
 		return capacity;
 	}
-	public void setCapacity(int capacity) {
+	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
-	public int getOwner_id() {
+	public int getOwnerId() {
 		return owner_id;
 	}
-	public void setOwner_id(int owner_id) {
+	public void setOwnerId(int owner_id) {
 		this.owner_id = owner_id;
 	}
 }

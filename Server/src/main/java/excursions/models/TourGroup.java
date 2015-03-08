@@ -2,10 +2,10 @@ package excursions.models;
 
 public class TourGroup {
 	private int TourGroupId;
-	private int PortageId;//or Portage
-	private int TourId;//or Tour
+	private int PortageId;
+	private int TourId;
     private int GroupSize;
-    private boolean Settled;
+    private Boolean Settled = null;
     
     public void setTourGroupId(int TourGroupId){
     	this.TourGroupId = TourGroupId;
@@ -35,10 +35,10 @@ public class TourGroup {
 	    return GroupSize;
 	}
 	
-    public boolean getSettled() {
+    public Boolean getSettled() {
     	return Settled;
     }
-    public void setSettled(boolean Settled) {
+    public void setSettled(Boolean Settled) {
     	this.Settled = Settled;
     }
 }
