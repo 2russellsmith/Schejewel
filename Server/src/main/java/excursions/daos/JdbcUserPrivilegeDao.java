@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 
 public class JdbcUserPrivilegeDao implements UserPrivilegeDao {
-@Autowired
+	@Autowired
     private NamedParameterJdbcTemplate jdbc;
 	
 	@Override

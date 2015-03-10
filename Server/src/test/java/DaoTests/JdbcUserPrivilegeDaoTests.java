@@ -5,9 +5,6 @@
  */
 package DaoTests;
 
-import static DaoTests.JdbcPrivilegeDaoTests.privilegeDao;
-import static DaoTests.JdbcPrivilegeDaoTests.testDao;
-import static DaoTests.JdbcUserDaoTests.companyDao;
 import TestSuite.JdbcTestDao;
 import TestSuite.TestDatabaseInfo;
 import excursions.daos.JdbcCompanyDao;
@@ -33,7 +30,6 @@ import static org.junit.Assert.*;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
  *
