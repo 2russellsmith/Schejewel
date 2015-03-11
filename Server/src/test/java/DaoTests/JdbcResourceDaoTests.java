@@ -3,17 +3,29 @@ package DaoTests;
 
 import static DaoTests.JdbcResourceDaoTests.resourceDao;
 import static DaoTests.JdbcResourceDaoTests.testDao;
-import static DaoTests.JdbcTourGroupDaoTests.companyDao;
-import static DaoTests.JdbcTourGroupDaoTests.tourGroupDao;
+import static DaoTests.JdbcResourceScheduleDaoTests.resourceScheduleDao;
+import static DaoTests.JdbcResourceScheduleDaoTests.tourTypeDao;
 import TestSuite.JdbcTestDao;
 import TestSuite.TestDatabaseInfo;
 import excursions.daos.JdbcCompanyDao;
 import excursions.daos.JdbcResourceDao;
+import excursions.daos.JdbcResourceScheduleDao;
+import excursions.daos.JdbcStatusDao;
+import excursions.daos.JdbcTourDao;
+import excursions.daos.JdbcTourTypeDao;
 import excursions.daos.interfaces.CompanyDao;
 import excursions.daos.interfaces.ResourceDao;
+import excursions.daos.interfaces.ResourceScheduleDao;
+import excursions.daos.interfaces.StatusDao;
+import excursions.daos.interfaces.TourDao;
+import excursions.daos.interfaces.TourTypeDao;
 import excursions.models.Company;
 import excursions.models.Resource;
-import excursions.models.TourGroup;
+import excursions.models.ResourceSchedule;
+import excursions.models.ResourceType;
+import excursions.models.Status;
+import excursions.models.Tour;
+import excursions.models.TourType;
 import java.util.List;
 import javax.sql.DataSource;
 import org.junit.After;
@@ -28,17 +40,34 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 public class JdbcResourceDaoTests {
+	static ResourceScheduleDao resourceScheduleDao;
+	static TourDao tourDao;
+	static TourTypeDao tourTypeDao;
 	static ResourceDao resourceDao;
+	static StatusDao statusDao;
 	static CompanyDao companyDao;
 	static JdbcTestDao testDao;
 	Resource resource1, resource2, badResource;
 	Company company1, company2;
+	ResourceType resourceType1, resourceType2;
+	Status status1, status2;
+	ResourceSchedule resourceSchedule1, resourceSchedule2;
+	Tour tour1, tour2;
+	TourType tourType1, tourType2;
 	
 	public JdbcResourceDaoTests() {
 		TestDatabaseInfo tdi = new TestDatabaseInfo();
 		DataSource ds = tdi.getDataSource();
+		resourceScheduleDao = new JdbcResourceScheduleDao();
+		resourceScheduleDao.setDataSource(ds);
+		tourDao = new JdbcTourDao();
+		tourDao.setDataSource(ds);
+		tourTypeDao = new JdbcTourTypeDao();
+		tourTypeDao.setDataSource(ds);
 		resourceDao = new JdbcResourceDao();
 		resourceDao.setDataSource(ds);
+		statusDao = new JdbcStatusDao();
+		statusDao.setDataSource(ds);
 		companyDao = new JdbcCompanyDao();
 		companyDao.setDataSource(ds);
 		testDao = new JdbcTestDao(ds);
@@ -63,6 +92,38 @@ public class JdbcResourceDaoTests {
 		company2 = new Company();
 		company2.setName("company2");
 		company2 = companyDao.createCompany(company2);
+		
+		tourType1 = new TourType();
+		tourType1.setName("tourType1");
+		tourType1.setCompanyId(company1.getCompanyId());
+		tourType1 = tourTypeDao.createTourType(tourType1);
+		
+		tourType2 = new TourType();
+		tourType2.setName("tourType2");
+		tourType2.setCompanyId(company2.getCompanyId());
+		tourType2 = tourTypeDao.createTourType(tourType2);
+		
+		status1 = new Status();
+		status1.setDescription("status1");
+		status1 = statusDao.createStatus(status1);
+		
+		status2 = new Status();
+		status2.setDescription("status2");
+		status2 = statusDao.createStatus(status2);
+		
+		tour1 = new Tour();
+		tour1.setOwnerId(company1.getCompanyId());
+		tour1.setStartTime(5000000000l);
+		tour1.setTourTypeId(tourType1.getTourTypeId());
+		tour1.setStatusId(status1.getStatusId());
+		tour1 = tourDao.createTour(tour1);
+		
+		tour2 = new Tour();
+		tour2.setOwnerId(company2.getCompanyId());
+		tour2.setStartTime(1000000000);
+		tour2.setTourTypeId(tourType2.getTourTypeId());
+		tour2.setStatusId(status2.getStatusId());
+		tour2 = tourDao.createTour(tour2);
 		
 		resource1 = new Resource();
 		resource1.setName("resource1");
@@ -169,7 +230,7 @@ public class JdbcResourceDaoTests {
 	}
 	
 	@Test
-	public void testGetTourGroups() {
+	public void testGetResources() {
 		resource1 = resourceDao.createResource(resource1);
 		resource2 = resourceDao.createResource(resource2);
 		
@@ -180,6 +241,50 @@ public class JdbcResourceDaoTests {
 		resource3 = resourceDao.createResource(resource3);
 		
 		List<Resource> resources = resourceDao.getResources(company1.getCompanyId());
+		assertEquals(resources.size(), 2);
+		
+		Resource newResource = resources.get(0);
+		assertEquals(resource1.getResourceId(), newResource.getResourceId());
+		assertEquals(resource1.getName(), newResource.getName());
+		assertEquals(resource1.getCapacity(), newResource.getCapacity());
+		assertEquals(resource1.getOwnerId(), newResource.getOwnerId());
+		
+		newResource = resources.get(1);
+		assertEquals(resource3.getResourceId(), newResource.getResourceId());
+		assertEquals(resource3.getName(), newResource.getName());
+		assertEquals(resource3.getCapacity(), newResource.getCapacity());
+		assertEquals(resource3.getOwnerId(), newResource.getOwnerId());
+	}
+	
+	@Test
+	public void testGetResources2() {//tests with companyId and date range
+		resource1 = resourceDao.createResource(resource1);
+		resource2 = resourceDao.createResource(resource2);
+		
+		resourceSchedule1 = new ResourceSchedule();
+		resourceSchedule1.setResourceId(resource1.getResourceId());
+		resourceSchedule1.setTourId(tour1.getTourId());
+		resourceSchedule1.setStartTime(1000000000);
+		resourceSchedule1.setDuration(100);
+		resourceSchedule1.setStatusId(status1.getStatusId());
+		resourceSchedule1 = resourceScheduleDao.createResourceSchedule(resourceSchedule1);
+		
+		Resource resource3 = new Resource();
+		resource3.setName("resource3");
+		resource3.setCapacity(30);
+		resource3.setOwnerId(company1.getCompanyId());
+		resource3 = resourceDao.createResource(resource3);
+		
+		resourceSchedule2 = new ResourceSchedule();
+		resourceSchedule2.setResourceId(resource3.getResourceId());
+		resourceSchedule2.setTourId(tour2.getTourId());
+		resourceSchedule2.setStartTime(2000000000);
+		resourceSchedule2.setDuration(200);
+		resourceSchedule2.setStatusId(status2.getStatusId());
+		resourceSchedule2 = resourceScheduleDao.createResourceSchedule(resourceSchedule2);
+		
+		List<Resource> resources = resourceDao.getResources(company1.getCompanyId(), 
+			1000000000, 2000000000);
 		assertEquals(resources.size(), 2);
 		
 		Resource newResource = resources.get(0);

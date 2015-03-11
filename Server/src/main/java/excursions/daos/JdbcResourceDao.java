@@ -4,6 +4,7 @@ import excursions.daos.interfaces.ResourceDao;
 import excursions.models.Resource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -83,18 +83,15 @@ public class JdbcResourceDao implements ResourceDao {
     }
 
 	@Override
-    //Todo: change the startTime to startDate and remove endTime
 	public List<Resource> getResources(int companyId, long startTime, long endTime) {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-		String startDate = format1.format(startTime);
-		String endDate = format1.format(endTime);
-		
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("companyId", companyId);
-        params.addValue("startTime", startDate);
-        params.addValue("endTime", endDate);
-        String sql = "SELECT * FROM resource WHERE companyid = :companyId";//TODO:and startTime < booked < endTime
-        List<Resource> resources = jdbc.queryForList(sql, params, Resource.class);
+        params.addValue("owner_id", companyId);
+        params.addValue("startTime", new Timestamp(startTime));
+        params.addValue("endTime", new Timestamp(endTime));
+        String sql = "SELECT resource.* FROM resource JOIN resource_schedule ON resource.id = "
+			+ "resource_schedule.resource_id WHERE resource.owner_id = :owner_id AND "
+			+ "resource_schedule.start BETWEEN :startTime AND :endTime";
+        List<Resource> resources = jdbc.query(sql, params, new ResourceRowMapper());
         return resources;
 	}
 	
