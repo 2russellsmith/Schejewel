@@ -93,8 +93,7 @@ CREATE TABLE tour_type_resource(
 CREATE TABLE resource_schedule(
   resource_id INT(11) NOT NULL,
   tour_id INT(11) NOT NULL,
-  start_date DATE NOT NULL,
-  start_time TIME NOT NULL,
+  start DATETIME NOT NULL,
   duration INT(11) NOT NULL,
   status INT(11) NOT NULL,
   FOREIGN KEY (resource_id) REFERENCES resource(id)
