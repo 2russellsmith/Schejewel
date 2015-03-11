@@ -2,7 +2,6 @@
 package excursions.daos;
 
 import excursions.daos.interfaces.TourTypeResourceDao;
-import excursions.models.Tour;
 import excursions.models.TourTypeResource;
 import java.sql.ResultSet;
 import java.sql.SQLException;

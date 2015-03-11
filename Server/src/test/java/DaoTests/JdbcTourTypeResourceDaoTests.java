@@ -148,30 +148,68 @@ public class JdbcTourTypeResourceDaoTests {
 		//try to delete already deleted tourTypeResource - this doesn't throw an exception
 		tourTypeResourceDao.deleteTourTypeResource(tourTypeResource1);
 	}
-	/* not fixed yet
+	
 	@Test
-	public void testGetTourTypeTourTypes() {
-		tourTypeTourType1 = tourTypeTourTypeDao.createTourTypeTourType(tourTypeTourType1);
-		tourTypeTourType2 = tourTypeTourTypeDao.createTourTypeTourType(tourTypeTourType2);
+	public void testGetTourTypeResourcesByTourTypeId() {
+		tourTypeResource1 = tourTypeResourceDao.createTourTypeResource(tourTypeResource1);
+		tourTypeResource2 = tourTypeResourceDao.createTourTypeResource(tourTypeResource2);
 		
-		TourTypeTourType tourTypeTourType3 = new TourTypeTourType();
-		tourTypeTourType3.setTourTypeId(tourType1.getTourTypeId());
-		tourTypeTourType3.setTourTypeTypeId(resourceType2.getTourTypeTypeId());
-		tourTypeTourType3 = tourTypeTourTypeDao.createTourTypeTourType(tourTypeTourType3);
+		TourTypeResource tourTypeResource3 = new TourTypeResource();
+		tourTypeResource3.setTourTypeId(tourType1.getTourTypeId());
+		tourTypeResource3.setResourceTypeId(resourceType2.getResourceTypeId());
+		tourTypeResource3 = tourTypeResourceDao.createTourTypeResource(tourTypeResource3);
 		
 		//test getTourTypeTourTypes on tourTypeTourTypes that exist
-		List<Integer> tourTypeTourTypes = tourTypeTourTypeDao.getTourTypeTypes(tourType1.getTourTypeId());
-		assertEquals(tourTypeTourTypes.size(), 2);
+		List<TourTypeResource> tourTypeResources = tourTypeResourceDao.getTourTypeResourcesByTourTypeId(
+			tourType1.getTourTypeId());
+		assertEquals(tourTypeResources.size(), 2);
 		
-		int a = tourTypeTourTypes.get(0);
-		assertEquals(tourTypeTourType1.getTourTypeTypeId(), a);
-		int b = tourTypeTourTypes.get(1);
-		assertEquals(tourTypeTourType3.getTourTypeTypeId(), b);
+		TourTypeResource a = tourTypeResources.get(0);
+		assertEquals(tourTypeResource1.getTourTypeId(), a.getTourTypeId());
+		assertEquals(tourTypeResource1.getResourceTypeId(), a.getResourceTypeId());
+		assertEquals(tourTypeResource1.getOrderNumber(), a.getOrderNumber());
+		assertEquals(tourTypeResource1.getDuration(), a.getDuration());
+		TourTypeResource b = tourTypeResources.get(1);
+		assertEquals(tourTypeResource3.getTourTypeId(), b.getTourTypeId());
+		assertEquals(tourTypeResource3.getResourceTypeId(), b.getResourceTypeId());
+		assertEquals(tourTypeResource3.getOrderNumber(), b.getOrderNumber());
+		assertEquals(tourTypeResource3.getDuration(), b.getDuration());
 		
 		//test getTourTypeTourTypes on tourTypeTourType that doesn't exist
-		tourTypeTourTypes = tourTypeTourTypeDao.getTourTypeTypes(tourType2.getTourTypeId() + 1);
-		assertEquals(tourTypeTourTypes.size(), 0);
-		
+		tourTypeResources = tourTypeResourceDao.getTourTypeResourcesByTourTypeId(
+			tourType2.getTourTypeId() + 1);
+		assertEquals(tourTypeResources.size(), 0);	
 	}
-	*/
+	
+	@Test
+	public void testGetTourTypeResourcesByResourceTypeId() {
+		tourTypeResource1 = tourTypeResourceDao.createTourTypeResource(tourTypeResource1);
+		tourTypeResource2 = tourTypeResourceDao.createTourTypeResource(tourTypeResource2);
+		
+		TourTypeResource tourTypeResource3 = new TourTypeResource();
+		tourTypeResource3.setTourTypeId(tourType1.getTourTypeId());
+		tourTypeResource3.setResourceTypeId(resourceType1.getResourceTypeId());
+		tourTypeResource3 = tourTypeResourceDao.createTourTypeResource(tourTypeResource3);
+		
+		//test getTourTypeTourTypes on tourTypeTourTypes that exist
+		List<TourTypeResource> tourTypeResources = tourTypeResourceDao.getTourTypeResourcesByResourceTypeId(
+			resourceType1.getResourceTypeId());
+		assertEquals(tourTypeResources.size(), 2);
+		
+		TourTypeResource a = tourTypeResources.get(0);
+		assertEquals(tourTypeResource1.getTourTypeId(), a.getTourTypeId());
+		assertEquals(tourTypeResource1.getResourceTypeId(), a.getResourceTypeId());
+		assertEquals(tourTypeResource1.getOrderNumber(), a.getOrderNumber());
+		assertEquals(tourTypeResource1.getDuration(), a.getDuration());
+		TourTypeResource b = tourTypeResources.get(1);
+		assertEquals(tourTypeResource3.getTourTypeId(), b.getTourTypeId());
+		assertEquals(tourTypeResource3.getResourceTypeId(), b.getResourceTypeId());
+		assertEquals(tourTypeResource3.getOrderNumber(), b.getOrderNumber());
+		assertEquals(tourTypeResource3.getDuration(), b.getDuration());
+		
+		//test getTourTypeTourTypes on tourTypeTourType that doesn't exist
+		tourTypeResources = tourTypeResourceDao.getTourTypeResourcesByResourceTypeId(
+			resourceType2.getResourceTypeId() + 1);
+		assertEquals(tourTypeResources.size(), 0);	
+	}
 }
