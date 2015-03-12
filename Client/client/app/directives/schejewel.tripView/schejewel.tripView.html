@@ -1,0 +1,14 @@
+<div class='row'>
+    <div class='col-md-1 hours'>
+        <div ng-repeat='hour in dayHours' ng-style='hourStyle($index)'>
+            {{hour}}
+        </div>
+    </div>
+    <div ng-repeat='tour in tours | orderBy:events[0]["dateTime"] | limitTo:5' class='col-md-2 tour'>
+        <b class='title'>{{tour.title}}</b>
+        <div class='event' ng-repeat='event in tour.events | orderBy:startTime' ng-style='fadeStyle($index, tour.events)'>
+            {{event.title}}
+            <br/> ({{event.startTime | date:'shortTime'}} - {{event.endTime | date:'shortTime'}})
+        </div>
+    </div>
+</div>

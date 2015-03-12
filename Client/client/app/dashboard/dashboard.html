@@ -1,16 +1,16 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class='row'>
-    <div class='col-md-8 block'>
-        <schejewel.button-nav>        </schejewel.button-nav>
-        <schejewel.calendar></schejewel.calendar>
-            <!-- tour view goes here -->
-        <schejewel.resource-view></schejewel.resource-view>
+    <div class='col-md-8'>
+        <schejewel.button-nav visible-directive='visibleDirective'></schejewel.button-nav>
+        <schejewel.calendar ng-show='visibleDirective == "calendar"'></schejewel.calendar>
+        <schejewel.trip-view ng-show='visibleDirective == "trip"'></schejewel.trip-view>
+        <schejewel.resource-view ng-show='visibleDirective == "resource"'></schejewel.resource-view>
     </div>
-    <div class="col-md-4 block">
-        <schejewel.messages messages='messages' hide = 'hide'></schejewel.messages>
+    <div class="col-md-4">
+        <schejewel.messages messages='messages' hide='hide'></schejewel.messages>
     </div>
 
 </div>
 
-<div ng-include="'components/footer/footer.html'"></div>
+<!-- <div ng-include="'components/footer/footer.html'"></div> -->

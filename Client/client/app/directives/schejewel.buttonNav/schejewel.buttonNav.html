@@ -1,6 +1,6 @@
-<div id="buttonNav" style="position: relative" ng-app="myApp" ng-controller="ButtonController as buttons">
-    <button type="button" class='btn btn-primary' ng-click="Calendar()">Calendar</button>
-    <button type="button" class='btn btn-primary' ng-click="TripView()">Trip View</button>
-    <button type="button" class='btn btn-primary' ng-click="ResourceView()">Resource View</button>
-    <button type="button" class='btn btn-primary'>Add Tour (does nothing right now)</button>
+<div id="buttonNav" style="position: relative">
+    <button type="button" class='btn btn-primary' ng-click="setVisible('calendar')">Calendar</button>
+    <button type="button" class='btn btn-primary' ng-click="setVisible('trip')">Trip View</button>
+    <button type="button" class='btn btn-primary' ng-click="setVisible('resource')">Resource View</button>
+    <button type="button" class='btn btn-primary' ng-click="setVisible('tour')">Add Tour (does nothing right now)</button>
 </div>

@@ -5,6 +5,13 @@ angular.module('schejewelApp')
 		return {
 			templateUrl: 'app/directives/schejewel.buttonNav/schejewel.buttonNav.html',
 			restrict: 'EA',
-			link: function (scope, element, attrs) {}
+			scope: {
+				visibleDirective: '='
+			},
+			link: function ($scope) {
+				$scope.setVisible = function (directiveName) {
+					$scope.visibleDirective = directiveName;
+				};
+			}
 		};
 	});

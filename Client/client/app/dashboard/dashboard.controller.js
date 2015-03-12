@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('schejewelApp')
-    .controller('DashboardCtrl', function($scope) {
+    .controller('DashboardCtrl', function ($scope) {
         $scope.events = [{
             title: 'Pick up group',
             datetime: '1428333624006'
@@ -39,10 +39,7 @@ angular.module('schejewelApp')
             datetime: '1438333624006'
         }];
         $scope.value = "LOLZERS";
-        $scope.hide = true;
-    
-        $scope.$on('handleBroadcast', function (event, data) {
-            console.log(data);
-            $scope.hide = data.message;
-        });
+
+        $scope.visibleDirective = 'calendar';
+
     });
