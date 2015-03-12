@@ -11,6 +11,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class JdbcCompanyDao implements CompanyDao {
     @Autowired
@@ -60,4 +62,9 @@ public class JdbcCompanyDao implements CompanyDao {
 		company.setCompanyId(kh.getKey().intValue());
 		return company;
 	}
+
+    @Override
+    public List<Company> getCompanies() {
+        return null;
+    }
 }

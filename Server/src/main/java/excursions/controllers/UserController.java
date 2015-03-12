@@ -14,4 +14,12 @@ public class UserController {
     public User createUser(User user){
         return userDao.createUser(user);
     }
+
+    public User updateUser(User user){
+        return userDao.updateUser(user);
+    }
+
+    public void deleteUser(int userId){
+        userDao.deleteUser(userId);
+    }
 }

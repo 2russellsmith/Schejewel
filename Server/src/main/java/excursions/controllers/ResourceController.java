@@ -22,16 +22,16 @@ public class ResourceController {
         User user = Converter.fromJSON(Converter.fromBase64(token));
         return resourceDao.getResources(user.getCompanyId(), startTime, endTime);
     }    
-    public Resource getResource(int ResourceId){
-    	return resourceDao.getResource(ResourceId);
+    public Resource getResource(int resourceId){
+    	return resourceDao.getResource(resourceId);
     }
-    public Resource updateResource(Resource toUpdate){
-    	return resourceDao.updateResource(toUpdate);
+    public Resource updateResource(Resource resource){
+    	return resourceDao.updateResource(resource);
     }
-    public Resource deleteResource(int ResourceId){
-    	return resourceDao.deleteResource(ResourceId);
+    public Resource deleteResource(int resourceId){
+    	return resourceDao.deleteResource(resourceId);
     }
-    public Resource createResource(Resource toCreate){
-    	return resourceDao.createResource(toCreate);
+    public Resource createResource(Resource resource){
+    	return resourceDao.createResource(resource);
     }
 }

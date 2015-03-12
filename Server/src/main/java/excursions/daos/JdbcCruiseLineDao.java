@@ -11,6 +11,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class JdbcCruiseLineDao implements CruiseLineDao {
     @Autowired
@@ -59,4 +61,9 @@ public class JdbcCruiseLineDao implements CruiseLineDao {
 		cruiseLine.setCruiseLineId(kh.getKey().intValue());
 		return cruiseLine;
 	}
+
+    @Override
+    public List<CruiseLine> getCruiseLines() {
+        return null;
+    }
 }

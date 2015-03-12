@@ -17,16 +17,16 @@ public class TourController {
 		return tourDao.getTours(0/*company id here*/);
 	}
 
-	public Tour getTour(int tourid) {
-		return tourDao.getTour(tourid);
+	public Tour getTour(int tourId) {
+		return tourDao.getTour(tourId);
 	}
 
 	public Tour updateTour(Tour tour) {
 		return tourDao.updateTour(tour);
 	}
 
-	public void deleteTour(int tourid) {
-		tourDao.deleteTour(tourid);
+	public void deleteTour(int tourId) {
+		tourDao.deleteTour(tourId);
 	}
 
 	public Tour createTour(Tour tour) {

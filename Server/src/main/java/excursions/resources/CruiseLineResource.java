@@ -13,8 +13,7 @@ public class CruiseLineResource {
     private CruiseLineController cruiseLineController = new CruiseLineController();
 
     @RequestMapping(value = "/api/cruiseline", method = RequestMethod.GET)
-    public @ResponseBody
-    List<CruiseLine> getCrusieLines(){
+    public @ResponseBody List<CruiseLine> getCrusieLines(){
         return cruiseLineController.getCruiseLines();
     }
 
@@ -30,7 +29,7 @@ public class CruiseLineResource {
 
     @RequestMapping(value = "/api/cruiseline/{cruiselineid}", method = RequestMethod.DELETE)
     public @ResponseBody void deleteCruiseLine(@RequestParam(value="cruiselineid") int cruiseLineId){
-        cruiseLineController.deleteTour(cruiseLineId);
+        cruiseLineController.deleteCruiseLine(cruiseLineId);
     }
 
     @RequestMapping(value = "/api/cruiseline", method = RequestMethod.POST)

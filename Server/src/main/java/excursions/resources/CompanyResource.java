@@ -24,7 +24,7 @@ public class CompanyResource {
     }
 
     @RequestMapping(value = "/api/company", method = RequestMethod.PUT)
-    public @ResponseBody Tour updateCompany(@RequestBody Company company){
+    public @ResponseBody Company updateCompany(@RequestBody Company company){
         return companyController.updateCompany(company);
     }
 
@@ -34,7 +34,7 @@ public class CompanyResource {
     }
 
     @RequestMapping(value = "/api/company", method = RequestMethod.POST)
-    public @ResponseBody Tour createCompany(@RequestBody Company company){
+    public @ResponseBody Company createCompany(@RequestBody Company company){
         return companyController.createCompany(company);
     }
 }

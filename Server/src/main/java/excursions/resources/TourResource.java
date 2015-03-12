@@ -17,8 +17,8 @@ public class TourResource {
     }
 	
 	@RequestMapping(value = "/api/tour/{tourid}", method = RequestMethod.GET)
-    public @ResponseBody Tour getTour(@RequestParam(value="tourid")int tourid){
-        return tourController.getTour(tourid);
+    public @ResponseBody Tour getTour(@RequestParam(value="tourid")int tourId){
+        return tourController.getTour(tourId);
     }
 	
 	@RequestMapping(value = "/api/tour", method = RequestMethod.PUT)
@@ -27,8 +27,8 @@ public class TourResource {
     }
 	
 	@RequestMapping(value = "/api/tour/{tourid}", method = RequestMethod.DELETE)
-    public @ResponseBody void deleteTour(@RequestParam(value="tourid") int tourid){
-		tourController.deleteTour(tourid);
+    public @ResponseBody void deleteTour(@RequestParam(value="tourid") int tourId){
+		tourController.deleteTour(tourId);
     }
 	
 	@RequestMapping(value = "/api/tour", method = RequestMethod.POST)

@@ -15,4 +15,14 @@ public class UserResource {
     public @ResponseBody User createUser(@RequestBody User user){
         return userController.createUser(user);
     }
+
+    @RequestMapping(value = "/api/user", method = RequestMethod.PUT)
+    public @ResponseBody User updateUser(@RequestBody User user){
+        return userController.updateUser(user);
+    }
+
+    @RequestMapping(value = "/api/user/{userid}", method = RequestMethod.DELETE)
+    public @ResponseBody void deleteUser(@RequestParam(value="userid") int userId){
+        userController.deleteUser(userId);
+    }
 }

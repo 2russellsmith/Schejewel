@@ -1,7 +1,6 @@
 package excursions.resources;
 
 import excursions.controllers.CruiseShipController;
-import excursions.models.CruiseLine;
 import excursions.models.CruiseShip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
