@@ -14,8 +14,17 @@ angular.module('schejewelApp')
 				function getMinutesSince6(d) {
 					var e = new Date(d);
 					e.setHours(6);
+					e.setMinutes(0);
 					return Math.abs((e - d)) / 1000 / 60;
 				}
+
+				$scope.currentTimeStyle = function () {
+					var top = getMinutesSince6(new Date()) + 83; //this 83 is the offset that the line needs to line up with the top of the page.  Probably not the best way to do it :/
+					return {
+						position: 'absolute',
+						top: top
+					};
+				};
 
 				$scope.fadeStyle = function (index, events) {
 					var r = 200 - (index * 10);
