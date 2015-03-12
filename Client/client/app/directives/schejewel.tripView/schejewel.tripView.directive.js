@@ -16,6 +16,7 @@ angular.module('schejewelApp')
 					e.setHours(6);
 					return Math.abs((e - d)) / 1000 / 60;
 				}
+
 				$scope.fadeStyle = function (index, events) {
 					var r = 200 - (index * 10);
 					var g = 0 + (index * 25);
@@ -43,7 +44,6 @@ angular.module('schejewelApp')
 
 				$scope.hourStyle = function (index) {
 					var top = (index * 30);
-
 
 					return {
 						position: 'absolute',
