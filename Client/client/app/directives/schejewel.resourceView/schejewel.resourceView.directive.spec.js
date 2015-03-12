@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: schejewel.resourceView', function() {
+describe('Directive: schejewel.resourceView', function () {
 
     // load the directive's module and view
     beforeEach(module('schejewelApp'));
@@ -8,11 +8,11 @@ describe('Directive: schejewel.resourceView', function() {
 
     var element, scope;
 
-    beforeEach(inject(function($rootScope) {
+    beforeEach(inject(function ($rootScope) {
         scope = $rootScope.$new();
     }));
 
-    it('should make hidden element visible', inject(function($compile) {
+    it('should make hidden element visible', inject(function ($compile) {
         element = angular.element('<schejewel.resource-view></schejewel.resource-view>');
         element = $compile(element)(scope);
         scope.$apply();

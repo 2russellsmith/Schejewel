@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: schejewel.buttonNav', function() {
+describe('Directive: schejewel.buttonNav', function () {
 
     // load the directive's module and view
     beforeEach(module('schejewelApp'));
@@ -8,11 +8,11 @@ describe('Directive: schejewel.buttonNav', function() {
 
     var element, scope;
 
-    beforeEach(inject(function($rootScope) {
+    beforeEach(inject(function ($rootScope) {
         scope = $rootScope.$new();
     }));
 
-    it('should make hidden element visible', inject(function($compile) {
+    it('should make hidden element visible', inject(function ($compile) {
         element = angular.element('<schejewel.button-nav></schejewel.button-nav>');
         element = $compile(element)(scope);
         scope.$apply();

@@ -1,54 +1,86 @@
 'use strict';
 
 angular.module('schejewelApp')
-    .controller('ButtonController', ['$scope', function($scope) {
+    .controller('ButtonController', ['$scope', function ($scope) {
 
         $scope.hidden = true;
-        $scope.appear = function(){
-            $scope.hidden = !$scope.hidden; 
-             $scope.$apply();
+        $scope.appear = function () {
+            $scope.hidden = !$scope.hidden;
+            $scope.$apply();
         };
-        $scope.Calendar = function(){
+
+        $scope.Calendar = function () {
             $scope.ShowCalendarView();
             $scope.HideTripView();
             $scope.HideResourceView();
-        }
-        $scope.ResourceView = function(){
+        };
+
+        $scope.ResourceView = function () {
             $scope.ShowResourceView();
             $scope.HideTripView();
             $scope.HideCalendarView();
-        }
-        $scope.TripView = function(){
+        };
+
+        $scope.TripView = function () {
             $scope.ShowTripView();
             $scope.HideResourceView();
             $scope.HideCalendarView();
-        }
-        $scope.HideResourceView = function(){
-            var msg = { resourceHide : true }
-            $scope.$emit('handleEmit', {message: msg});
-        }
-        $scope.ShowResourceView = function(){
-            var msg = { resourceHide : false }
-            $scope.$emit('handleEmit', {message: msg});
-        }
-        $scope.HideMessages = function(){
-            var msg = { resourceHide : true }
-            $scope.$emit('handleEmit', {message: msg});
-        }
-        $scope.ShowMessages = function(){
-            var msg = { resourceHide : false }
-            $scope.$emit('handleEmit', {message: msg});
-        }
-        $scope.HideTripView = function(){
+        };
 
-        }
-        $scope.ShowTripView = function(){
+        $scope.HideResourceView = function () {
+            var msg = {
+                resourceHide: true
+            };
 
-        }
-        $scope.HideCalendarView = function(){
+            $scope.$emit('handleEmit', {
+                message: msg
+            });
+        };
+
+        $scope.ShowResourceView = function () {
+            var msg = {
+                resourceHide: false
+            };
+
+            $scope.$emit('handleEmit', {
+                message: msg
+            });
+        };
+
+        $scope.HideMessages = function () {
+            var msg = {
+                resourceHide: true
+            };
+
+            $scope.$emit('handleEmit', {
+                message: msg
+            });
+        };
+
+        $scope.ShowMessages = function () {
+            var msg = {
+                resourceHide: false
+            };
+
+            $scope.$emit('handleEmit', {
+                message: msg
+            });
+        };
+
+        $scope.HideTripView = function () {
+
+        };
+
+        $scope.ShowTripView = function () {
+
+        };
+
+        $scope.HideCalendarView = function () {
             $('#calendar').hide();
-        }
-        $scope.ShowCalendarView = function(){
+        };
+
+        $scope.ShowCalendarView = function () {
             $('#calendar').show();
-        }
-}]);
+        };
+
+    }]);
