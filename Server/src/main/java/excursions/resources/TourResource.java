@@ -12,12 +12,12 @@ public class TourResource {
     private final TourController tourController = new TourController();
 	
 	@RequestMapping(value = "/api/tour", method = RequestMethod.GET)
-    public @ResponseBody List<Tour> getTours(){
-        return tourController.getTours();
+    public @ResponseBody List<Tour> getTours(@RequestHeader(value="X-AUTH-TOKEN") String token){
+        return tourController.getTours(token);
     }
 	
 	@RequestMapping(value = "/api/tour/{tourid}", method = RequestMethod.GET)
-    public @ResponseBody Tour getTour(@RequestParam(value="tourid")int tourId){
+    public @ResponseBody Tour getTour(@PathVariable(value="tourid")int tourId){
         return tourController.getTour(tourId);
     }
 	
@@ -27,7 +27,7 @@ public class TourResource {
     }
 	
 	@RequestMapping(value = "/api/tour/{tourid}", method = RequestMethod.DELETE)
-    public @ResponseBody void deleteTour(@RequestParam(value="tourid") int tourId){
+    public @ResponseBody void deleteTour(@PathVariable(value="tourid") int tourId){
 		tourController.deleteTour(tourId);
     }
 	

@@ -63,7 +63,7 @@ public class JdbcCruiseLineDao implements CruiseLineDao {
 	}
 
     @Override
-    public List<CruiseLine> getCruiseLines() {
+    public List<CruiseLine> getCruiseLines(int companyId) {
         return null;
     }
 }

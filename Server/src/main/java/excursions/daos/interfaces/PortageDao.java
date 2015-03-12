@@ -8,6 +8,7 @@ public interface PortageDao {
 	public void setDataSource(DataSource ds);
 	public Portage createPortage(Portage portage);
 	public Portage getPortage(int portageId);
+    public List<Portage> getPortages(int companyId);
 	public List<Portage> getPortageByCruiseShipId(int cruiseShipId);
 	public List<Portage> getPortageByCruiseLineId(int cruiseLineId);
 	public List<Portage> getPortageByArrivalRange(long beginDate, long endDate);

@@ -64,7 +64,7 @@ public class JdbcCompanyDao implements CompanyDao {
 	}
 
     @Override
-    public List<Company> getCompanies() {
+    public List<Company> getCompanies(int companyId) {
         return null;
     }
 }

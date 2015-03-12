@@ -18,11 +18,11 @@ public class ResourceResource {
     }
 
     @RequestMapping(value = "/api/resource/{startTime}/{endTime}", method = RequestMethod.GET)
-    public @ResponseBody List<Resource> getResources(@RequestHeader(value="X-AUTH-TOKEN") String token, @RequestParam(value = "startTime") long startTime, @RequestParam(value = "endTime") long endTime){
+    public @ResponseBody List<Resource> getResources(@RequestHeader(value="X-AUTH-TOKEN") String token, @PathVariable(value = "startTime") long startTime, @PathVariable(value = "endTime") long endTime){
         return resourceController.getResources(token, startTime, endTime);
     }
     @RequestMapping(value = "/api/resource/{resourceId}", method = RequestMethod.GET)
-    public @ResponseBody Resource getResource(@RequestParam(value = "resourceId") int ResourceId){
+    public @ResponseBody Resource getResource(@PathVariable(value = "resourceId") int ResourceId){
         return resourceController.getResource(ResourceId);
     } 
     @RequestMapping(value = "/api/resource", method = RequestMethod.PUT)
@@ -30,7 +30,7 @@ public class ResourceResource {
         return resourceController.updateResource(toUpdate);
     }
     @RequestMapping(value = "/api/resource{resourceId}", method = RequestMethod.DELETE)
-    public @ResponseBody Resource deleteResource(@RequestParam(value = "resourceId") int ResourceId){
+    public @ResponseBody Resource deleteResource(@PathVariable(value = "resourceId") int ResourceId){
         return resourceController.deleteResource(ResourceId);//this is null as of now.  don't try to access what this returns
     }
     @RequestMapping(value = "/api/resource", method = RequestMethod.POST)

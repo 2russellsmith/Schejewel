@@ -14,12 +14,12 @@ public class CompanyResource {
     private CompanyController companyController = new CompanyController();
 
     @RequestMapping(value = "/api/company", method = RequestMethod.GET)
-    public @ResponseBody List<Company> getCompanies(){
-        return companyController.getCompanies();
+    public @ResponseBody List<Company> getCompanies(@RequestHeader(value="X-AUTH-TOKEN") String token){
+        return companyController.getCompanies(token);
     }
 
     @RequestMapping(value = "/api/company/{companyid}", method = RequestMethod.GET)
-    public @ResponseBody Company getCompany(@RequestParam(value="companyid")int companyid){
+    public @ResponseBody Company getCompany(@PathVariable(value="companyid")int companyid){
         return companyController.getCompany(companyid);
     }
 
@@ -29,7 +29,7 @@ public class CompanyResource {
     }
 
     @RequestMapping(value = "/api/company/{companyid}", method = RequestMethod.DELETE)
-    public @ResponseBody void deleteCompany(@RequestParam(value="companyid") int companyid){
+    public @ResponseBody void deleteCompany(@PathVariable(value="companyid") int companyid){
         companyController.deleteCompany(companyid);
     }
 

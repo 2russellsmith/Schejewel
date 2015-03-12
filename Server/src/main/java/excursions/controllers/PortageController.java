@@ -3,6 +3,8 @@ package excursions.controllers;
 import excursions.daos.JdbcPortageDao;
 import excursions.daos.interfaces.PortageDao;
 import excursions.models.Portage;
+import excursions.models.User;
+import excursions.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -13,8 +15,9 @@ public class PortageController {
     @Autowired
     private PortageDao portageDao = new JdbcPortageDao();
 
-    public List<Portage> getPortages(){
-        return portageDao.getPortages();
+    public List<Portage> getPortages(String token){
+        User user = Converter.fromJSON(Converter.fromBase64(token));
+        return portageDao.getPortages(user.getCompanyId());
     }
 
     public Portage getPortage(int portageId){

@@ -22,7 +22,7 @@ public class UserResource {
     }
 
     @RequestMapping(value = "/api/user/{userid}", method = RequestMethod.DELETE)
-    public @ResponseBody void deleteUser(@RequestParam(value="userid") int userId){
+    public @ResponseBody void deleteUser(@PathVariable(value="userid") int userId){
         userController.deleteUser(userId);
     }
 }

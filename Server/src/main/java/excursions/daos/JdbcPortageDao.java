@@ -53,7 +53,12 @@ public class JdbcPortageDao implements PortageDao {
         return portage;
 	}
 
-	@Override
+    @Override
+    public List<Portage> getPortages(int companyId) {
+        return null;
+    }
+
+    @Override
 	public List<Portage> getPortageByCruiseShipId(int cruiseShipId) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("cruise_ship_id",cruiseShipId);

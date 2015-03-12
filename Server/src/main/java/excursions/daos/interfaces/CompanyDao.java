@@ -10,5 +10,5 @@ public interface CompanyDao {
 	public Company updateCompany(Company company);
 	public void deleteCompany(int companyid);
 	public Company createCompany(Company company);
-    public List<Company> getCompanies();
+    public List<Company> getCompanies(int companyId);
 }

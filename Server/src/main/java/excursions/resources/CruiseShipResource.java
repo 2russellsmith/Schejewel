@@ -13,12 +13,12 @@ public class CruiseShipResource {
     private CruiseShipController cruiseShipController = new CruiseShipController();
 
     @RequestMapping(value = "/api/cruiseship", method = RequestMethod.GET)
-    public @ResponseBody List<CruiseShip> getCrusieShips(){
-        return cruiseShipController.getCruiseShips();
+    public @ResponseBody List<CruiseShip> getCrusieShips(@RequestHeader(value="X-AUTH-TOKEN") String token){
+        return cruiseShipController.getCruiseShips(token);
     }
 
     @RequestMapping(value = "/api/cruiseship/{cruiseshipid}", method = RequestMethod.GET)
-    public @ResponseBody CruiseShip getCruiseShip(@RequestParam(value="cruiseshipid")int cruiseShipId){
+    public @ResponseBody CruiseShip getCruiseShip(@PathVariable(value="cruiseshipid")int cruiseShipId){
         return cruiseShipController.getCruiseShip(cruiseShipId);
     }
 
@@ -28,7 +28,7 @@ public class CruiseShipResource {
     }
 
     @RequestMapping(value = "/api/cruiseship/{cruiseshipid}", method = RequestMethod.DELETE)
-    public @ResponseBody void deleteCruiseShip(@RequestParam(value="cruiseshipid") int cruiseShipId){
+    public @ResponseBody void deleteCruiseShip(@PathVariable(value="cruiseshipid") int cruiseShipId){
         cruiseShipController.deleteCruiseShip(cruiseShipId);
     }
 

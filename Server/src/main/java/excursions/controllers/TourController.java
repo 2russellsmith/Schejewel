@@ -4,6 +4,9 @@ import excursions.daos.JdbcTourDao;
 import excursions.daos.interfaces.TourDao;
 import excursions.models.Tour;
 import java.util.List;
+
+import excursions.models.User;
+import excursions.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -12,9 +15,9 @@ public class TourController {
     @Autowired
     private TourDao tourDao = new JdbcTourDao();
 	
-	public List<Tour> getTours() {
-		//need to get company id
-		return tourDao.getTours(0/*company id here*/);
+	public List<Tour> getTours(String token) {
+        User user = Converter.fromJSON(Converter.fromBase64(token));
+		return tourDao.getTours(user.getCompanyId());
 	}
 
 	public Tour getTour(int tourId) {

@@ -14,12 +14,12 @@ public class PortageResource {
 
     @RequestMapping(value = "/api/portage", method = RequestMethod.GET)
     public @ResponseBody
-    List<Portage> getPortages(){
-        return portageController.getPortages();
+    List<Portage> getPortages(@RequestHeader(value="X-AUTH-TOKEN") String token){
+        return portageController.getPortages(token);
     }
 
     @RequestMapping(value = "/api/portage/{portageid}", method = RequestMethod.GET)
-    public @ResponseBody Portage getPortage(@RequestParam(value="portageid")int portageId){
+    public @ResponseBody Portage getPortage(@PathVariable(value="portageid")int portageId){
         return portageController.getPortage(portageId);
     }
 
@@ -29,7 +29,7 @@ public class PortageResource {
     }
 
     @RequestMapping(value = "/api/portage/{portageid}", method = RequestMethod.DELETE)
-    public @ResponseBody void deletePortage(@RequestParam(value="portageid") int portageId){
+    public @ResponseBody void deletePortage(@PathVariable(value="portageid") int portageId){
         portageController.deletePortage(portageId);
     }
 

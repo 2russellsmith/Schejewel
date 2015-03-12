@@ -3,6 +3,8 @@ package excursions.controllers;
 import excursions.daos.JdbcTourGroupDao;
 import excursions.daos.interfaces.TourGroupDao;
 import excursions.models.TourGroup;
+import excursions.models.User;
+import excursions.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -13,8 +15,9 @@ public class TourGroupController {
     @Autowired
     private TourGroupDao tourGroupDao = new JdbcTourGroupDao();
 
-    public List<TourGroup> getTourGroups(){
-        return tourGroupDao.getTourGroups();
+    public List<TourGroup> getTourGroups(String token){
+        User user = Converter.fromJSON(Converter.fromBase64(token));
+        return tourGroupDao.getTourGroups(user.getCompanyId());
     }
 
     public TourGroup getTourGroup(int tourGroupId){
