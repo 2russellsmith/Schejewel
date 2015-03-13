@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('schejewelApp')
-    .controller('DashboardCtrl', function ($scope) {
+    .controller('DashboardCtrl', function ($scope, Auth) {
+        Auth.getResources();
         $scope.events = [{
             title: 'Pick up group',
             datetime: '1428333624006'

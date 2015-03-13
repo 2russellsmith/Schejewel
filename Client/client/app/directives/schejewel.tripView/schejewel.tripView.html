@@ -8,10 +8,15 @@
         </div>
     </div>
     <div ng-repeat='tour in tours | orderBy:events[0]["dateTime"] | limitTo:5' class='col-md-2 tour'>
-        <b class='title'>{{tour.title}}</b>
+        <b class='title' ng-style='titleStyle(tour.events)'>{{tour.title}}</b>
         <div class='event' ng-repeat='event in tour.events | orderBy:startTime' ng-style='fadeStyle($index, tour.events)'>
             {{event.title}}
             <br/> {{event.startTime | date:'shortTime'}} - {{event.endTime | date:'shortTime'}}
+            <br/>
+            <span ng-if='event.resources.length'>Needed resources:</span>
+            <span ng-repeat='resource in event.resources' class='resource'>
+                {{resource.name}}
+            </span>
         </div>
     </div>
 </div>
