@@ -13,6 +13,7 @@ public class CompanyResource {
     @Autowired
     private CompanyController companyController = new CompanyController();
 
+    //Todo: Check this endpoint it is returning no data
     @RequestMapping(value = "/api/company", method = RequestMethod.GET)
     public @ResponseBody List<Company> getCompanies(@RequestHeader(value="X-AUTH-TOKEN") String token){
         return companyController.getCompanies(token);
