@@ -5,6 +5,9 @@ angular.module('schejewelApp')
 		return {
 			templateUrl: 'app/directives/schejewel.tripView/schejewel.tripView.html',
 			restrict: 'EA',
+			scope: {
+				tours: '='
+			},
 			link: function ($scope) {
 				$scope.dayHours = ['6:00', '6:30', '7:00', '7:30', '8:00', '8:30', '9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '1:00', '1:30',
 					'2:00', '2:30', '3:00', '3:30', '4:00', '4:30', '5:00', '5:30', '6:00 pm', '6:30 pm', '7:00 pm'
@@ -95,122 +98,7 @@ angular.module('schejewelApp')
 				};
 
 
-				$scope.tours = [{
-					title: 'Crab Fishing Tour',
-					personCount: 58,
-					events: [{
-						title: 'Event 1',
-						startTime: new Date(2015, 3, 3, 6, 0, 0),
-						endTime: new Date(2015, 3, 3, 7, 0, 0),
-					}, {
-						title: 'Event 3',
-						startTime: new Date(2015, 3, 3, 7, 0, 0),
-						endTime: new Date(2015, 3, 3, 11, 0, 0),
-					}, {
-						title: 'Event 4',
-						startTime: new Date(2015, 3, 3, 11, 0, 0),
-						endTime: new Date(2015, 3, 3, 12, 0, 0),
-					}]
-				}, {
 
-					title: 'Crab Fishing Tour',
-					personCount: 58,
-					events: [{
-						title: 'Event 3',
-						startTime: new Date(2015, 3, 3, 9, 0, 0),
-						endTime: new Date(2015, 3, 3, 11, 0, 0),
-					}, {
-						title: 'Event 4',
-						startTime: new Date(2015, 3, 3, 11, 0, 0),
-						endTime: new Date(2015, 3, 3, 12, 0, 0),
-					}, {
-						title: 'Event 5',
-						startTime: new Date(2015, 3, 3, 12, 0, 0),
-						endTime: new Date(2015, 3, 3, 14, 0, 0),
-					}]
-				}, {
-
-					title: 'Crab Fishing Tour',
-					personCount: 58,
-					events: [{
-						title: 'Event 6',
-						startTime: new Date(2015, 3, 3, 14, 0, 0),
-						endTime: new Date(2015, 3, 3, 15, 0, 0),
-					}, {
-						title: 'Event 7',
-						startTime: new Date(2015, 3, 3, 15, 0, 0),
-						endTime: new Date(2015, 3, 3, 16, 0, 0),
-					}, {
-						title: 'Event 8',
-						startTime: new Date(2015, 3, 3, 16, 0, 0),
-						endTime: new Date(2015, 3, 3, 17, 0, 0),
-					}, {
-						title: 'Go fishing',
-						startTime: new Date(2015, 3, 3, 17, 0, 0),
-						endTime: new Date(2015, 3, 3, 21, 0, 0),
-						resources: [{
-							name: 'Blue bus',
-							id: 34523,
-							contactNumber: '(493)403-4930'
-						}]
-					}]
-				}, {
-
-					title: 'Crab Fishing Tour',
-					personCount: 58,
-					events: [{
-						title: 'Event 4',
-						startTime: new Date(2015, 3, 3, 11, 0, 0),
-						endTime: new Date(2015, 3, 3, 12, 0, 0),
-					}, {
-						title: 'Event 5',
-						startTime: new Date(2015, 3, 3, 12, 0, 0),
-						endTime: new Date(2015, 3, 3, 14, 0, 0),
-					}, {
-						title: 'Event 6',
-						startTime: new Date(2015, 3, 3, 14, 0, 0),
-						endTime: new Date(2015, 3, 3, 15, 0, 0),
-					}, {
-						title: 'Go fishing',
-						startTime: new Date(2015, 3, 3, 15, 0, 0),
-						endTime: new Date(2015, 3, 3, 17, 0, 0),
-						resources: [{
-							name: 'Blue bus',
-							id: 34523,
-							contactNumber: '(493)403-4930'
-						}]
-					}]
-				}, {
-
-					title: 'Crab Fishing Tour',
-					personCount: 58,
-					events: [{
-						title: 'Event 5',
-						startTime: new Date(2015, 3, 3, 12, 0, 0),
-						endTime: new Date(2015, 3, 3, 14, 0, 0),
-					}, {
-						title: 'Event 6',
-						startTime: new Date(2015, 3, 3, 14, 0, 0),
-						endTime: new Date(2015, 3, 3, 15, 0, 0),
-					}, {
-						title: 'Event 7',
-						startTime: new Date(2015, 3, 3, 15, 0, 0),
-						endTime: new Date(2015, 3, 3, 16, 0, 0),
-					}, {
-						title: 'Event 8',
-						startTime: new Date(2015, 3, 3, 16, 0, 0),
-						endTime: new Date(2015, 3, 3, 17, 0, 0),
-					}, {
-						title: 'Go fishing',
-						startTime: new Date(2015, 3, 3, 17, 0, 0),
-						endTime: new Date(2015, 3, 3, 23, 0, 0),
-						resources: [{
-							name: 'Blue bus',
-							id: 34523,
-							contactNumber: '(493)403-4930'
-						}]
-					}]
-				}];
 
 				formatRows();
 			}
