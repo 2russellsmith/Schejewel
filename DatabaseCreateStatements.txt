@@ -36,7 +36,7 @@ CREATE TABLE tour(
   owner_id INT(11) NOT NULL,
   start_time DATETIME NOT NULL,
   tour_type_id INT(11) NOT NULL,
-  status_id INT(11) NOT NULL,
+  status INT(11) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (tour_type_id) REFERENCES tour_type(id)
        ON DELETE CASCADE
