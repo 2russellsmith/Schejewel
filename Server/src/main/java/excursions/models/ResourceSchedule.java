@@ -1,7 +1,11 @@
 
 package excursions.models;
 
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class ResourceSchedule {
 	int resourceId;
@@ -24,17 +28,28 @@ public class ResourceSchedule {
 		this.tourId = tourId;
 	}
 	
-	public long getStartTime() {
+	public long getStartTimeInMillis() {
 		return startTime;
 	}
-	public Timestamp getStartTimeSQL() {
-		return new Timestamp(startTime);
-	}
+	public String getStartDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		calendar.setTimeInMillis(startTime);
+        return sdf.format(calendar.getTime());
+    }
+    public String getStartTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSSSSS");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		calendar.setTimeInMillis(startTime);
+        return sdf.format(calendar.getTime());
+    }
 	public void setStartTime(long startTime) {
 		this.startTime = startTime;
 	}
-	public void setStartTimeSQL(Timestamp ts) {
-		startTime = ts.getTime();
+	public void setStartTime(Date date, Time time) {
+		startTime = date.getTime() + timeToMillis(time);
 	}
 	
 	public int getDuration() {
@@ -49,5 +64,14 @@ public class ResourceSchedule {
 	}
 	public void setStatusId(int statusId) {
 		this.statusId = statusId;
+	}
+	
+	private long timeToMillis(Time time) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(time);
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int min = cal.get(Calendar.MINUTE);
+		int sec = cal.get(Calendar.SECOND);
+		return (long)(hour * 3600 + min * 60 + sec) * 1000;
 	}
 }

@@ -5,7 +5,10 @@ import excursions.models.Tour;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -36,11 +39,17 @@ public class JdbcTourDao implements TourDao {
 	
 	@Override
 	public List<Tour> getToursByDateRange(int companyid, long beginDate, long endDate) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		
 		MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("owner_id",companyid);
-		params.addValue("begin",new Timestamp(beginDate));
-		params.addValue("end", new Timestamp(endDate));
-		String sql = "SELECT * FROM tour WHERE owner_id = :owner_id AND start_time BETWEEN "
+		calendar.setTimeInMillis(beginDate);
+		params.addValue("begin",sdf.format(calendar.getTime()));
+		calendar.setTimeInMillis(endDate);
+		params.addValue("end", sdf.format(calendar.getTime()));
+		String sql = "SELECT * FROM tour WHERE owner_id = :owner_id AND start_date BETWEEN "
 			+ ":begin AND :end";
 		List<Tour> tours = jdbc.query(sql, params, new TourRowMapper());
 		return tours;
@@ -61,11 +70,12 @@ public class JdbcTourDao implements TourDao {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("id", tour.getTourId());
         params.addValue("owner_id",tour.getOwnerId());
-		params.addValue("start_time", tour.getStartTimeSQL());
+		params.addValue("start_date", tour.getStartDate());
+		params.addValue("start_time", tour.getStartTime());
 		params.addValue("tour_type_id", tour.getTourTypeId());
-		params.addValue("status_id", tour.getStatusId());
-		String sql = "UPDATE tour SET owner_id=:owner_id, start_time=:start_time, "
-			+ "tour_type_id=:tour_type_id, status_id=:status_id WHERE id=:id";
+		params.addValue("status", tour.getStatusId());
+		String sql = "UPDATE tour SET owner_id=:owner_id, start_date=:start_date, "
+			+ "start_time=:start_time, tour_type_id=:tour_type_id, status=:status WHERE id=:id";
 		jdbc.update(sql, params);
 		return tour;
 	}
@@ -83,11 +93,12 @@ public class JdbcTourDao implements TourDao {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("id", tour.getTourId());
         params.addValue("owner_id",tour.getOwnerId());
-		params.addValue("start_time", tour.getStartTimeSQL());
+		params.addValue("start_date", tour.getStartDate());
+		params.addValue("start_time", tour.getStartTime());
 		params.addValue("tour_type_id", tour.getTourTypeId());
-		params.addValue("status_id", tour.getStatusId());
-		String sql = "INSERT INTO tour(owner_id, start_time, tour_type_id, status_id)"
-			+ " VALUES(:owner_id, :start_time, :tour_type_id, :status_id)";
+		params.addValue("status", tour.getStatusId());
+		String sql = "INSERT INTO tour(owner_id, start_date, start_time, tour_type_id, status)"
+			+ " VALUES(:owner_id, :start_date, :start_time, :tour_type_id, :status)";
 		KeyHolder kh = new GeneratedKeyHolder();
 		jdbc.update(sql, params, kh);
 		tour.setTourId(kh.getKey().intValue());
@@ -96,12 +107,13 @@ public class JdbcTourDao implements TourDao {
 	
 	public class TourRowMapper implements RowMapper {
 		public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			Tour tour = new Tour();
 			tour.setTourId(rs.getInt("id"));
 			tour.setOwnerId(rs.getInt("owner_id"));
-			tour.setStartTimeSQL(rs.getTimestamp("start_time"));
+			tour.setStartTime(rs.getDate("start_date", cal), rs.getTime("start_time"));
 			tour.setTourTypeId(rs.getInt("tour_type_id"));
-			tour.setStatusId(rs.getInt("status_id"));
+			tour.setStatusId(rs.getInt("status"));
 			return tour;
 		}
 	}

@@ -5,6 +5,8 @@ import excursions.models.Resource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 
 import java.util.List;
+import java.util.TimeZone;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -83,16 +86,37 @@ public class JdbcResourceDao implements ResourceDao {
     }
 
 	@Override
-	public List<Resource> getResources(int companyId, long startTime, long endTime) {
+	public List<Resource> getResources(int companyId, long startDate, long endDate) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("owner_id", companyId);
-        params.addValue("startTime", new Timestamp(startTime));
-        params.addValue("endTime", new Timestamp(endTime));
+        calendar.setTimeInMillis(startDate);
+		params.addValue("begin",sdf.format(calendar.getTime()));
+		calendar.setTimeInMillis(endDate);
+		params.addValue("end", sdf.format(calendar.getTime()));
         String sql = "SELECT resource.* FROM resource JOIN resource_schedule ON resource.id = "
 			+ "resource_schedule.resource_id WHERE resource.owner_id = :owner_id AND "
-			+ "resource_schedule.start BETWEEN :startTime AND :endTime";
+			+ "resource_schedule.start_date BETWEEN :begin AND :end";
         List<Resource> resources = jdbc.query(sql, params, new ResourceRowMapper());
         return resources;
+		
+		/*
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		calendar.setTimeInMillis(beginDate);
+		params.addValue("begin",sdf.format(calendar.getTime()));
+		calendar.setTimeInMillis(endDate);
+		params.addValue("end", sdf.format(calendar.getTime()));
+		String sql = "SELECT * FROM portage WHERE arrival_date BETWEEN :begin AND :end";
+		List<Portage> portages = jdbc.query(sql, params, new PortageRowMapper());
+		return portages;
+		*/
 	}
 	
 	public class ResourceRowMapper implements RowMapper {

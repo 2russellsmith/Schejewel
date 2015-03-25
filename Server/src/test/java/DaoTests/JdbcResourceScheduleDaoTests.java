@@ -195,7 +195,7 @@ public class JdbcResourceScheduleDaoTests {
 		ResourceSchedule a = resourceSchedules.get(0);
 		assertEquals(resourceSchedule2.getResourceId(), a.getResourceId());
 		assertEquals(resourceSchedule2.getTourId(), a.getTourId());
-		assertEquals(resourceSchedule2.getStartTime(), a.getStartTime());
+		assertEquals(resourceSchedule2.getStartTimeInMillis(), a.getStartTimeInMillis());
 		assertEquals(resourceSchedule2.getDuration(), a.getDuration());
 		assertEquals(resourceSchedule2.getStatusId(), a.getStatusId());
 		
@@ -224,13 +224,13 @@ public class JdbcResourceScheduleDaoTests {
 		ResourceSchedule a = resourceSchedules.get(0);
 		assertEquals(resourceSchedule1.getResourceId(), a.getResourceId());
 		assertEquals(resourceSchedule1.getTourId(), a.getTourId());
-		assertEquals(resourceSchedule1.getStartTime(), a.getStartTime());
+		assertEquals(resourceSchedule1.getStartTimeInMillis(), a.getStartTimeInMillis());
 		assertEquals(resourceSchedule1.getDuration(), a.getDuration());
 		assertEquals(resourceSchedule1.getStatusId(), a.getStatusId());
 		ResourceSchedule b = resourceSchedules.get(1);
 		assertEquals(resourceSchedule3.getResourceId(), b.getResourceId());
 		assertEquals(resourceSchedule3.getTourId(), b.getTourId());
-		assertEquals(resourceSchedule3.getStartTime(), b.getStartTime());
+		assertEquals(resourceSchedule3.getStartTimeInMillis(), b.getStartTimeInMillis());
 		assertEquals(resourceSchedule3.getDuration(), b.getDuration());
 		assertEquals(resourceSchedule3.getStatusId(), b.getStatusId());
 		
@@ -261,13 +261,13 @@ public class JdbcResourceScheduleDaoTests {
 		ResourceSchedule a = resourceSchedules.get(0);
 		assertEquals(resourceSchedule1.getResourceId(), a.getResourceId());
 		assertEquals(resourceSchedule1.getTourId(), a.getTourId());
-		assertEquals(resourceSchedule1.getStartTime(), a.getStartTime());
+		assertEquals(resourceSchedule1.getStartTimeInMillis(), a.getStartTimeInMillis());
 		assertEquals(resourceSchedule1.getDuration(), a.getDuration());
 		assertEquals(resourceSchedule1.getStatusId(), a.getStatusId());
 		ResourceSchedule b = resourceSchedules.get(1);
 		assertEquals(resourceSchedule3.getResourceId(), b.getResourceId());
 		assertEquals(resourceSchedule3.getTourId(), b.getTourId());
-		assertEquals(resourceSchedule3.getStartTime(), b.getStartTime());
+		assertEquals(resourceSchedule3.getStartTimeInMillis(), b.getStartTimeInMillis());
 		assertEquals(resourceSchedule3.getDuration(), b.getDuration());
 		assertEquals(resourceSchedule3.getStatusId(), b.getStatusId());
 		

@@ -2,11 +2,9 @@ package excursions.daos;
 
 import excursions.daos.interfaces.PortageDao;
 import excursions.models.Portage;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -126,10 +124,16 @@ public class JdbcPortageDao implements PortageDao {
 		jdbc.update(sql, params);
 	}
 	
-	//I'm not sure what to do with this one.  I don't see a way to associate a portage with a companyId
 	@Override
 	public List<Portage> getPortages(int companyId) {
-		return null;
+		MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("owner_id",companyId);
+		String sql = "SELECT portage.* FROM tour_group " +
+			"JOIN tour ON tour_group.tour_id = tour.id " +
+			"JOIN portage ON tour_group.portage_id = portage.id " +
+			"WHERE owner_id = :owner_id;";
+		List<Portage> portages = jdbc.query(sql, params, new PortageRowMapper());
+		return portages;
 	}
 	
     public class PortageRowMapper implements RowMapper {
