@@ -45,7 +45,7 @@ CREATE TABLE tour(
   FOREIGN KEY (owner_id) REFERENCES company(id)
        ON DELETE CASCADE
        ON UPDATE CASCADE,
-  FOREIGN KEY (status_id) REFERENCES status(id)
+  FOREIGN KEY (status) REFERENCES status(id)
        ON DELETE CASCADE
        ON UPDATE CASCADE
 );
