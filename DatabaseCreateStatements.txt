@@ -111,7 +111,6 @@ CREATE TABLE resource_schedule(
 
 CREATE TABLE cruise_line(
   id INT(11) NOT NULL AUTO_INCREMENT,
-  cruise_line_id INT(11) NOT NULL,
   name VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
