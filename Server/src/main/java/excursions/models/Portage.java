@@ -1,17 +1,21 @@
 package excursions.models;
 
-import java.sql.Timestamp;
+import java.util.Date;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class Portage {
-	private int portageId;
+    private int portageId;
     private int cruiseShipId;
     private long arrival;
     private long departure;
-    private String Name;
     private Integer passengerCount = null;
     private Long allAboard = null;
     private Integer dock = null;
     private String voyage = null;
+    private String location = null;
    
     public void setPortageId(int PortageId){
     	this.portageId = PortageId;
@@ -44,34 +48,56 @@ public class Portage {
     public long getArrival() {
     	return arrival;
     }
-	public Timestamp getArrivalSQL() {
-		return new Timestamp(arrival);
-	}
+    public String getArrivalDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		calendar.setTimeInMillis(arrival);
+        return sdf.format(calendar.getTime());
+    }
+    public String getArrivalTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSSSSS");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		calendar.setTimeInMillis(arrival);
+        return sdf.format(calendar.getTime());
+    }
     public void setArrival(long millis) {
         arrival = millis;
     }
-	public void setArrivalSQL(Timestamp ts) {
-		arrival = ts.getTime();
-	}
+    public void setArrival(Date date, Time time) {
+        arrival = date.getTime() + timeToMillis(time);
+    }
 	
     public long getDeparture() {
     	return departure;
     }
-	public Timestamp getDepartureSQL() {
-		return new Timestamp(departure);
-	}
+    public String getDepartureDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		calendar.setTimeInMillis(departure);
+        return sdf.format(calendar.getTime());
+    }
+    public String getDepartureTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSSSSS");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		calendar.setTimeInMillis(departure);
+        return sdf.format(calendar.getTime());
+    }
     public void setDeparture(long millis) {
         departure = millis;
     }
-	public void setDepartureSQL(Timestamp ts) {
-		departure = ts.getTime();
-	}
-    
-    public String getName() {
-    	return Name;
+    public void setDeparture(Date date, Time time) {
+            departure = date.getTime() + timeToMillis(time);
     }
-    public void setName(String Name) {
-    	this.Name = Name;
+    
+    public String getLocation() {
+    	return location;
+    }
+    public void setLocation(String location) {
+    	this.location = location;
     }
 	
     public Integer getPassengerCount() {
@@ -84,18 +110,31 @@ public class Portage {
     public Long getAllAboard() {
     	return allAboard;
     }
-	public Timestamp getAllAboardSQL() {
-		if (allAboard == null)
-			return null;
-		return new Timestamp(allAboard);
-	}
+    public String getAllAboardTime() {
+        if (allAboard == null)
+            return null;
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSSSSS");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		calendar.setTimeInMillis(allAboard);
+        return sdf.format(calendar.getTime());
+    }
     public void setAllAboard(Long millis) {
     	allAboard = millis;
     }
-	public void setAllAboardSQL(Timestamp ts) {
-		if (ts == null)
-			allAboard = null;
-		else
-			allAboard = ts.getTime();
+    public void setAllAboardTime(Time time) {
+        if (time == null)
+            allAboard = null;
+		else 
+			allAboard = timeToMillis(time);
+    }
+	
+	private long timeToMillis(Time time) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(time);
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int min = cal.get(Calendar.MINUTE);
+		int sec = cal.get(Calendar.SECOND);
+		return (long)(hour * 3600 + min * 60 + sec) * 1000;
 	}
 }

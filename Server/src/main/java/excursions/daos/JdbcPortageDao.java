@@ -2,10 +2,15 @@ package excursions.daos;
 
 import excursions.daos.interfaces.PortageDao;
 import excursions.models.Portage;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -29,15 +34,19 @@ public class JdbcPortageDao implements PortageDao {
 	public Portage createPortage(Portage portage) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("cruise_ship_id", portage.getCruiseShipId());
-        params.addValue("arrival", portage.getArrivalSQL());
-		params.addValue("departure", portage.getDepartureSQL());
-		params.addValue("name", portage.getName());
+        params.addValue("arrival_date", portage.getArrivalDate());
+		params.addValue("arrival_time", portage.getArrivalTime());
+		params.addValue("departure_date", portage.getDepartureDate());
+		params.addValue("departure_time", portage.getDepartureTime());
 		params.addValue("passengers", portage.getPassengerCount());
-		params.addValue("AA", portage.getAllAboardSQL());
+		params.addValue("AA", portage.getAllAboardTime());
 		params.addValue("dock", portage.getDock());
 		params.addValue("voyage", portage.getVoyage());
-		String sql = "INSERT INTO portage(cruise_ship_id, arrival, departure, name, passengers, AA, dock, voyage)"
-			+ " VALUES(:cruise_ship_id, :arrival, :departure, :name, :passengers, :AA, :dock, :voyage)";
+		params.addValue("location", portage.getLocation());
+		String sql = "INSERT INTO portage(cruise_ship_id, arrival_date, arrival_time,"
+				+ " departure_date, departure_time, passengers, AA, dock, voyage, location)"
+			+ " VALUES(:cruise_ship_id, :arrival_date, :arrival_time, :departure_date,"
+				+ " :departure_time, :passengers, :AA, :dock, :voyage, :location)";
 		KeyHolder kh = new GeneratedKeyHolder();
 		jdbc.update(sql, params, kh);
 		portage.setPortageId(kh.getKey().intValue());
@@ -52,11 +61,6 @@ public class JdbcPortageDao implements PortageDao {
         Portage portage = (Portage)jdbc.queryForObject(sql, params, new PortageRowMapper());
         return portage;
 	}
-
-    @Override
-    public List<Portage> getPortages(int companyId) {
-        return null;
-    }
 
     @Override
 	public List<Portage> getPortageByCruiseShipId(int cruiseShipId) {
@@ -79,10 +83,16 @@ public class JdbcPortageDao implements PortageDao {
 
 	@Override
 	public List<Portage> getPortageByArrivalRange(long beginDate, long endDate) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("begin",new Timestamp(beginDate));
-		params.addValue("end", new Timestamp(endDate));
-		String sql = "SELECT * FROM portage WHERE arrival BETWEEN :begin AND :end";
+		calendar.setTimeInMillis(beginDate);
+		params.addValue("begin",sdf.format(calendar.getTime()));
+		calendar.setTimeInMillis(endDate);
+		params.addValue("end", sdf.format(calendar.getTime()));
+		String sql = "SELECT * FROM portage WHERE arrival_date BETWEEN :begin AND :end";
 		List<Portage> portages = jdbc.query(sql, params, new PortageRowMapper());
 		return portages;
 	}
@@ -92,16 +102,18 @@ public class JdbcPortageDao implements PortageDao {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("id", portage.getPortageId());
 		params.addValue("cruise_ship_id", portage.getCruiseShipId());
-        params.addValue("arrival", portage.getArrivalSQL());
-		params.addValue("departure", portage.getDepartureSQL());
-		params.addValue("name", portage.getName());
+        params.addValue("arrival_date", portage.getArrivalDate());
+		params.addValue("arrival_time", portage.getArrivalTime());
+		params.addValue("departure_date", portage.getDepartureDate());
+		params.addValue("departure_time", portage.getDepartureTime());
 		params.addValue("passengers", portage.getPassengerCount());
-		params.addValue("AA", portage.getAllAboardSQL());
+		params.addValue("AA", portage.getAllAboardTime());
 		params.addValue("dock", portage.getDock());
 		params.addValue("voyage", portage.getVoyage());
-		String sql = "UPDATE portage SET cruise_ship_id=:cruise_ship_id, arrival=:arrival, "
-			+ "departure=:departure, name=:name, passengers=:passengers, AA=:AA, dock=:dock,"
-			+ "voyage=:voyage WHERE id=:id";
+		params.addValue("location", portage.getLocation());
+		String sql = "UPDATE portage SET cruise_ship_id=:cruise_ship_id, arrival_date=:arrival_date, "
+			+ "arrival_time=:arrival_time, departure_date=:departure_date, departure_time=:departure_time, "
+			+ "passengers=:passengers, AA=:AA, dock=:dock, voyage=:voyage, location=:location WHERE id=:id";
 		jdbc.update(sql, params);
 		return portage;
 	}
@@ -114,14 +126,20 @@ public class JdbcPortageDao implements PortageDao {
 		jdbc.update(sql, params);
 	}
 	
+	//I'm not sure what to do with this one.  I don't see a way to associate a portage with a companyId
+	@Override
+	public List<Portage> getPortages(int companyId) {
+		return null;
+	}
+	
     public class PortageRowMapper implements RowMapper {
 		public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			Portage portage = new Portage();
 			portage.setPortageId(rs.getInt("id"));
 			portage.setCruiseShipId(rs.getInt("cruise_ship_id"));
-			portage.setArrivalSQL(rs.getTimestamp("arrival"));
-			portage.setDepartureSQL(rs.getTimestamp("departure"));
-			portage.setName(rs.getString("name"));
+			portage.setArrival(rs.getDate("arrival_date", cal), rs.getTime("arrival_time"));
+			portage.setDeparture(rs.getDate("departure_date", cal), rs.getTime("departure_time"));
 			
 			//deal with columns that may be null
 			int passengerCount = rs.getInt("passengers");
@@ -130,11 +148,12 @@ public class JdbcPortageDao implements PortageDao {
 			else
 				portage.setPassengerCount(passengerCount);
 			
-			Timestamp ts = rs.getTimestamp("AA");
+			Time time = rs.getTime("AA");
+			
 			if (rs.wasNull())
-				portage.setAllAboardSQL(null);
+				portage.setAllAboardTime(null);
 			else
-				portage.setAllAboardSQL(ts);
+				portage.setAllAboardTime(time);
 			
 			int dock = rs.getInt("dock");
 			if (rs.wasNull())
@@ -147,6 +166,12 @@ public class JdbcPortageDao implements PortageDao {
 				portage.setVoyage(null);
 			else
 				portage.setVoyage(voyage);
+			
+			String location = rs.getString("location");
+			if (rs.wasNull())
+				portage.setLocation(null);
+			else
+				portage.setLocation(location);
 			
 			return portage;
 		}

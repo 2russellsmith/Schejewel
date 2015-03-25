@@ -160,9 +160,8 @@ public class JdbcTourGroupDaoTests {
 		portage1.setCruiseShipId(cruiseShip1.getCruiseShipId());
 		portage1.setArrival(1000000000);
 		portage1.setDeparture(2000000000);
-		portage1.setName("portage1");
 		portage1.setPassengerCount(50);
-		portage1.setAllAboard(1900000000l);
+		portage1.setAllAboard(190000l);
 		portage1.setDock(1);
 		portage1.setVoyage("voyage1");
 		portage1 = portageDao.createPortage(portage1);
@@ -171,7 +170,6 @@ public class JdbcTourGroupDaoTests {
 		portage2.setCruiseShipId(cruiseShip2.getCruiseShipId());
 		portage2.setArrival(3000000000l);
 		portage2.setDeparture(4000000000l);
-		portage2.setName("portage1");
 		portage2 = portageDao.createPortage(portage2);
 		
 		//set up tourGroups

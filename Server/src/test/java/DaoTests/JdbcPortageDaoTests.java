@@ -14,6 +14,7 @@ import excursions.daos.interfaces.CruiseShipDao;
 import excursions.models.CruiseLine;
 import excursions.models.Portage;
 import excursions.models.CruiseShip;
+import java.util.Calendar;
 import java.util.List;
 import javax.sql.DataSource;
 import org.junit.After;
@@ -85,17 +86,16 @@ public class JdbcPortageDaoTests {
 		portage1.setCruiseShipId(cruiseShip1.getCruiseShipId());
 		portage1.setArrival(1000000000);
 		portage1.setDeparture(2000000000);
-		portage1.setName("portage1");
 		portage1.setPassengerCount(50);
-		portage1.setAllAboard(1900000000l);
+		portage1.setAllAboard(5000l);
 		portage1.setDock(1);
 		portage1.setVoyage("voyage1");
+		portage1.setLocation("location1");
 		
 		portage2 = new Portage();
 		portage2.setCruiseShipId(cruiseShip2.getCruiseShipId());
 		portage2.setArrival(3000000000l);
 		portage2.setDeparture(4000000000l);
-		portage2.setName("portage1");
 		
 		badPortage = new Portage();
 	}
@@ -115,11 +115,11 @@ public class JdbcPortageDaoTests {
 		assertEquals(portage1.getCruiseShipId(), newPortage.getCruiseShipId());
 		assertEquals(portage1.getArrival(), newPortage.getArrival());
 		assertEquals(portage1.getDeparture(), newPortage.getDeparture());
-		assertEquals(portage1.getName(), newPortage.getName());
 		assertEquals(portage1.getPassengerCount(), newPortage.getPassengerCount());
 		assertEquals(portage1.getAllAboard(), newPortage.getAllAboard());
 		assertEquals(portage1.getDock(), newPortage.getDock());
 		assertEquals(portage1.getVoyage(), newPortage.getVoyage());
+		assertEquals(portage1.getLocation(), newPortage.getLocation());
 		
 		//try creating portages in various stages of incompleteness
 		thrown.expect(DataIntegrityViolationException.class);
@@ -134,10 +134,6 @@ public class JdbcPortageDaoTests {
 		portageDao.createPortage(badPortage);
 		
 		portage1.setDeparture(2000000000);
-		thrown.expect(DataIntegrityViolationException.class);
-		portageDao.createPortage(badPortage);
-		
-		portage1.setName("portage1");
 		badPortage = portageDao.createPortage(badPortage);
 		
 		newPortage = portageDao.getPortage(portage1.getPortageId());
@@ -145,11 +141,11 @@ public class JdbcPortageDaoTests {
 		assertEquals(portage1.getCruiseShipId(), newPortage.getCruiseShipId());
 		assertEquals(portage1.getArrival(), newPortage.getArrival());
 		assertEquals(portage1.getDeparture(), newPortage.getDeparture());
-		assertEquals(portage1.getName(), newPortage.getName());
 		assertEquals(portage1.getPassengerCount(), newPortage.getPassengerCount());
 		assertEquals(portage1.getAllAboard(), newPortage.getAllAboard());
 		assertEquals(portage1.getDock(), newPortage.getDock());
 		assertEquals(portage1.getVoyage(), newPortage.getVoyage());
+		assertEquals(portage1.getLocation(), newPortage.getLocation());
 	}
 	
 	@Test
@@ -164,7 +160,7 @@ public class JdbcPortageDaoTests {
 		assertEquals(portage2.getCruiseShipId(), newPortage.getCruiseShipId());
 		assertEquals(portage2.getArrival(), newPortage.getArrival());
 		assertEquals(portage2.getDeparture(), newPortage.getDeparture());
-		assertEquals(portage2.getName(), newPortage.getName());
+		assertEquals(portage2.getLocation(), newPortage.getLocation());
 		assertEquals(portage2.getPassengerCount(), newPortage.getPassengerCount());
 		assertEquals(portage2.getAllAboard(), newPortage.getAllAboard());
 		assertEquals(portage2.getDock(), newPortage.getDock());
@@ -190,7 +186,7 @@ public class JdbcPortageDaoTests {
 		assertEquals(portage2.getCruiseShipId(), newPortage.getCruiseShipId());
 		assertEquals(portage2.getArrival(), newPortage.getArrival());
 		assertEquals(portage2.getDeparture(), newPortage.getDeparture());
-		assertEquals(portage2.getName(), newPortage.getName());
+		assertEquals(portage2.getLocation(), newPortage.getLocation());
 		assertEquals(portage2.getPassengerCount(), newPortage.getPassengerCount());
 		assertEquals(portage2.getAllAboard(), newPortage.getAllAboard());
 		assertEquals(portage2.getDock(), newPortage.getDock());
@@ -211,7 +207,7 @@ public class JdbcPortageDaoTests {
 		assertEquals(portage1.getCruiseShipId(), newPortage.getCruiseShipId());
 		assertEquals(portage1.getArrival(), newPortage.getArrival());
 		assertEquals(portage1.getDeparture(), newPortage.getDeparture());
-		assertEquals(portage1.getName(), newPortage.getName());
+		assertEquals(portage1.getLocation(), newPortage.getLocation());
 		assertEquals(portage1.getPassengerCount(), newPortage.getPassengerCount());
 		assertEquals(portage1.getAllAboard(), newPortage.getAllAboard());
 		assertEquals(portage1.getDock(), newPortage.getDock());
@@ -222,7 +218,7 @@ public class JdbcPortageDaoTests {
 		assertEquals(portage2.getCruiseShipId(), newPortage.getCruiseShipId());
 		assertEquals(portage2.getArrival(), newPortage.getArrival());
 		assertEquals(portage2.getDeparture(), newPortage.getDeparture());
-		assertEquals(portage2.getName(), newPortage.getName());
+		assertEquals(portage2.getLocation(), newPortage.getLocation());
 		assertEquals(portage2.getPassengerCount(), newPortage.getPassengerCount());
 		assertEquals(portage2.getAllAboard(), newPortage.getAllAboard());
 		assertEquals(portage2.getDock(), newPortage.getDock());
@@ -242,9 +238,9 @@ public class JdbcPortageDaoTests {
 		portage3.setCruiseShipId(cruiseShip1.getCruiseShipId());
 		portage3.setArrival(1000000000);
 		portage3.setDeparture(2200000000l);
-		portage3.setName("portage3");
+		portage3.setLocation("location3");
 		portage3.setPassengerCount(55);
-		portage3.setAllAboard(2100000000l);
+		portage3.setAllAboard(210000l);
 		portage3.setDock(2);
 		portage3.setVoyage("voyage3");
 		portage3 = portageDao.createPortage(portage3);
@@ -256,7 +252,7 @@ public class JdbcPortageDaoTests {
 		assertEquals(portage1.getCruiseShipId(), newPortage.getCruiseShipId());
 		assertEquals(portage1.getArrival(), newPortage.getArrival());
 		assertEquals(portage1.getDeparture(), newPortage.getDeparture());
-		assertEquals(portage1.getName(), newPortage.getName());
+		assertEquals(portage1.getLocation(), newPortage.getLocation());
 		assertEquals(portage1.getPassengerCount(), newPortage.getPassengerCount());
 		assertEquals(portage1.getAllAboard(), newPortage.getAllAboard());
 		assertEquals(portage1.getDock(), newPortage.getDock());
@@ -266,7 +262,7 @@ public class JdbcPortageDaoTests {
 		assertEquals(portage3.getCruiseShipId(), newPortage.getCruiseShipId());
 		assertEquals(portage3.getArrival(), newPortage.getArrival());
 		assertEquals(portage3.getDeparture(), newPortage.getDeparture());
-		assertEquals(portage3.getName(), newPortage.getName());
+		assertEquals(portage3.getLocation(), newPortage.getLocation());
 		assertEquals(portage3.getPassengerCount(), newPortage.getPassengerCount());
 		assertEquals(portage3.getAllAboard(), newPortage.getAllAboard());
 		assertEquals(portage3.getDock(), newPortage.getDock());
@@ -289,9 +285,9 @@ public class JdbcPortageDaoTests {
 		portage3.setCruiseShipId(cruiseShip3.getCruiseShipId());
 		portage3.setArrival(1000000000);
 		portage3.setDeparture(2200000000l);
-		portage3.setName("portage3");
+		portage3.setLocation("location3");
 		portage3.setPassengerCount(55);
-		portage3.setAllAboard(2100000000l);
+		portage3.setAllAboard(210000l);
 		portage3.setDock(2);
 		portage3.setVoyage("voyage3");
 		portage3 = portageDao.createPortage(portage3);
@@ -304,7 +300,7 @@ public class JdbcPortageDaoTests {
 		assertEquals(portage1.getCruiseShipId(), newPortage.getCruiseShipId());
 		assertEquals(portage1.getArrival(), newPortage.getArrival());
 		assertEquals(portage1.getDeparture(), newPortage.getDeparture());
-		assertEquals(portage1.getName(), newPortage.getName());
+		assertEquals(portage1.getLocation(), newPortage.getLocation());
 		assertEquals(portage1.getPassengerCount(), newPortage.getPassengerCount());
 		assertEquals(portage1.getAllAboard(), newPortage.getAllAboard());
 		assertEquals(portage1.getDock(), newPortage.getDock());
@@ -315,7 +311,7 @@ public class JdbcPortageDaoTests {
 		assertEquals(portage3.getCruiseShipId(), newPortage.getCruiseShipId());
 		assertEquals(portage3.getArrival(), newPortage.getArrival());
 		assertEquals(portage3.getDeparture(), newPortage.getDeparture());
-		assertEquals(portage3.getName(), newPortage.getName());
+		assertEquals(portage3.getLocation(), newPortage.getLocation());
 		assertEquals(portage3.getPassengerCount(), newPortage.getPassengerCount());
 		assertEquals(portage3.getAllAboard(), newPortage.getAllAboard());
 		assertEquals(portage3.getDock(), newPortage.getDock());
@@ -331,9 +327,9 @@ public class JdbcPortageDaoTests {
 		portage3.setCruiseShipId(cruiseShip1.getCruiseShipId());
 		portage3.setArrival(2000000000);
 		portage3.setDeparture(2200000000l);
-		portage3.setName("portage3");
+		portage3.setLocation("location3");
 		portage3.setPassengerCount(55);
-		portage3.setAllAboard(2100000000l);
+		portage3.setAllAboard(210000l);
 		portage3.setDock(2);
 		portage3.setVoyage("voyage3");
 		portage3 = portageDao.createPortage(portage3);
@@ -346,7 +342,7 @@ public class JdbcPortageDaoTests {
 		assertEquals(portage1.getCruiseShipId(), newPortage.getCruiseShipId());
 		assertEquals(portage1.getArrival(), newPortage.getArrival());
 		assertEquals(portage1.getDeparture(), newPortage.getDeparture());
-		assertEquals(portage1.getName(), newPortage.getName());
+		assertEquals(portage1.getLocation(), newPortage.getLocation());
 		assertEquals(portage1.getPassengerCount(), newPortage.getPassengerCount());
 		assertEquals(portage1.getAllAboard(), newPortage.getAllAboard());
 		assertEquals(portage1.getDock(), newPortage.getDock());
@@ -357,7 +353,7 @@ public class JdbcPortageDaoTests {
 		assertEquals(portage3.getCruiseShipId(), newPortage.getCruiseShipId());
 		assertEquals(portage3.getArrival(), newPortage.getArrival());
 		assertEquals(portage3.getDeparture(), newPortage.getDeparture());
-		assertEquals(portage3.getName(), newPortage.getName());
+		assertEquals(portage3.getLocation(), newPortage.getLocation());
 		assertEquals(portage3.getPassengerCount(), newPortage.getPassengerCount());
 		assertEquals(portage3.getAllAboard(), newPortage.getAllAboard());
 		assertEquals(portage3.getDock(), newPortage.getDock());
