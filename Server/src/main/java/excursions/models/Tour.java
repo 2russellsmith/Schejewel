@@ -3,7 +3,6 @@ package excursions.models;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;

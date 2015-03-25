@@ -3,7 +3,6 @@ package excursions.models;
 public class CruiseShip {
 	private int id;
 	private String name;
-	private int capacity;
 	private int cruise_line_id;
 	
 	public void setCruiseShipId(int CruiseShipId){
@@ -18,13 +17,6 @@ public class CruiseShip {
 	}
 	public String getName() {
 		return name;
-	}
-	
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
-	}
-	public int getCapacity() {
-		return capacity;
 	}
 	
 	public void setCruiseLineId(int CruiseLineId){

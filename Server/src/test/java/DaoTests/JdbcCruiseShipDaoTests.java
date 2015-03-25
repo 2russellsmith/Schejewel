@@ -63,12 +63,10 @@ public class JdbcCruiseShipDaoTests {
 		cruiseShip1 = new CruiseShip();
 		cruiseShip1.setCruiseShipId(-1);
 		cruiseShip1.setName("cruiseShip1");
-		cruiseShip1.setCapacity(1000);
 		cruiseShip1.setCruiseLineId(cruiseLine1.getCruiseLineId());
 		
 		cruiseShip2 = new CruiseShip();
 		cruiseShip2.setName("cruiseShip2");
-		cruiseShip2.setCapacity(2000);
 		cruiseShip2.setCruiseLineId(cruiseLine2.getCruiseLineId());
 		
 		badCruiseShip = new CruiseShip();
@@ -109,7 +107,6 @@ public class JdbcCruiseShipDaoTests {
 		CruiseShip cruiseShip3 = cruiseShipDao.updateCruiseShip(cruiseShip2);
 		assertEquals(cruiseShip2.getCruiseShipId(), cruiseShip3.getCruiseShipId());
 		assertEquals(cruiseShip3.getName(), "cruiseShip2");
-		assertEquals(cruiseShip3.getCapacity(), cruiseShip2.getCapacity());
 		
 		//test update on cruiseShip that doesn't exist
 		badCruiseShip.setCruiseShipId(-1);
@@ -149,12 +146,10 @@ public class JdbcCruiseShipDaoTests {
 		CruiseShip a = cruiseShipDao.getCruiseShip(cruiseShip1.getCruiseShipId());
 		assertEquals(cruiseShip1.getCruiseShipId(), a.getCruiseShipId());
 		assertEquals(cruiseShip1.getName(), a.getName());
-		assertEquals(cruiseShip1.getCapacity(), a.getCapacity());
 		assertEquals(cruiseShip1.getCruiseLineId(), a.getCruiseLineId());
 		CruiseShip b = cruiseShipDao.getCruiseShip(cruiseShip2.getCruiseShipId());
 		assertEquals(cruiseShip2.getCruiseShipId(), b.getCruiseShipId());
 		assertEquals(cruiseShip2.getName(), b.getName());
-		assertEquals(cruiseShip2.getCapacity(), b.getCapacity());
 		assertEquals(cruiseShip2.getCruiseLineId(), b.getCruiseLineId());
 		
 		//test getCruiseShip on cruiseShip that doesn't exist
@@ -171,12 +166,10 @@ public class JdbcCruiseShipDaoTests {
 		CruiseShip a = cruiseShipDao.getCruiseShipByName("cruiseShip1");
 		assertEquals(cruiseShip1.getCruiseShipId(), a.getCruiseShipId());
 		assertEquals(cruiseShip1.getName(), a.getName());
-		assertEquals(cruiseShip1.getCapacity(), a.getCapacity());
 		assertEquals(cruiseShip1.getCruiseLineId(), a.getCruiseLineId());
 		CruiseShip b = cruiseShipDao.getCruiseShipByName("cruiseShip2");
 		assertEquals(cruiseShip2.getCruiseShipId(), b.getCruiseShipId());
 		assertEquals(cruiseShip2.getName(), b.getName());
-		assertEquals(cruiseShip2.getCapacity(), b.getCapacity());
 		assertEquals(cruiseShip2.getCruiseLineId(), b.getCruiseLineId());
 		
 		//test getCruiseShipByName on cruiseShip that doesn't exist
@@ -190,7 +183,6 @@ public class JdbcCruiseShipDaoTests {
 		cruiseShip2 = cruiseShipDao.createCruiseShip(cruiseShip2);
 		CruiseShip cruiseShip3 = new CruiseShip();
 		cruiseShip3.setName("cruiseShip3");
-		cruiseShip3.setCapacity(3000);
 		cruiseShip3.setCruiseLineId(cruiseLine1.getCruiseLineId());
 		cruiseShip3 = cruiseShipDao.createCruiseShip(cruiseShip3);
 		
@@ -200,12 +192,10 @@ public class JdbcCruiseShipDaoTests {
 		CruiseShip a = ships.get(0);
 		assertEquals(cruiseShip1.getCruiseShipId(), a.getCruiseShipId());
 		assertEquals(cruiseShip1.getName(), a.getName());
-		assertEquals(cruiseShip1.getCapacity(), a.getCapacity());
 		assertEquals(cruiseShip1.getCruiseLineId(), a.getCruiseLineId());
 		CruiseShip b = ships.get(1);
 		assertEquals(cruiseShip3.getCruiseShipId(), b.getCruiseShipId());
 		assertEquals(cruiseShip3.getName(), b.getName());
-		assertEquals(cruiseShip3.getCapacity(), b.getCapacity());
 		assertEquals(cruiseShip3.getCruiseLineId(), b.getCruiseLineId());
 		
 		//test getCruiseShips on cruiseShip that doesn't exist

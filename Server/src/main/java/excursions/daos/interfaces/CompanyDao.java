@@ -2,7 +2,6 @@ package excursions.daos.interfaces;
 
 import excursions.models.Company;
 import javax.sql.DataSource;
-import java.util.List;
 
 public interface CompanyDao {
 	public void setDataSource(DataSource ds);
@@ -10,5 +9,4 @@ public interface CompanyDao {
 	public Company updateCompany(Company company);
 	public void deleteCompany(int companyid);
 	public Company createCompany(Company company);
-    public List<Company> getCompanies(int companyId);
 }

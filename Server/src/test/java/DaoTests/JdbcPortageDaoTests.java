@@ -101,13 +101,11 @@ public class JdbcPortageDaoTests {
 		
 		cruiseShip1 = new CruiseShip();
 		cruiseShip1.setName("cruiseShip1");
-		cruiseShip1.setCapacity(1000);
 		cruiseShip1.setCruiseLineId(cruiseLine1.getCruiseLineId());
 		cruiseShip1 = cruiseShipDao.createCruiseShip(cruiseShip1);
 		
 		cruiseShip2 = new CruiseShip();
 		cruiseShip2.setName("cruiseShip2");
-		cruiseShip2.setCapacity(2000);
 		cruiseShip2.setCruiseLineId(cruiseLine2.getCruiseLineId());
 		cruiseShip2 = cruiseShipDao.createCruiseShip(cruiseShip2);
 		
@@ -303,7 +301,6 @@ public class JdbcPortageDaoTests {
 		CruiseShip cruiseShip3 = new CruiseShip();
 		cruiseShip3 = new CruiseShip();
 		cruiseShip3.setName("cruiseShip3");
-		cruiseShip3.setCapacity(3000);
 		cruiseShip3.setCruiseLineId(cruiseLine1.getCruiseLineId());
 		cruiseShip3 = cruiseShipDao.createCruiseShip(cruiseShip3);
 		

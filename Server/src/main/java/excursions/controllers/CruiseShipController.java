@@ -3,8 +3,6 @@ package excursions.controllers;
 import excursions.daos.JdbcCruiseShipDao;
 import excursions.daos.interfaces.CruiseShipDao;
 import excursions.models.CruiseShip;
-import excursions.models.User;
-import excursions.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -15,9 +13,8 @@ public class CruiseShipController {
     @Autowired
     private CruiseShipDao cruiseShipDao = new JdbcCruiseShipDao();
 
-    public List<CruiseShip> getCruiseShips(String token){
-        User user = Converter.fromJSON(Converter.fromBase64(token));
-        return cruiseShipDao.getCruiseShips(user.getCompanyId());
+    public List<CruiseShip> getCruiseShips(int cruiseLineId){
+        return cruiseShipDao.getCruiseShips(cruiseLineId);
     }
 
     public CruiseShip getCruiseShip(int cruiseShipId){

@@ -7,6 +7,7 @@ import TestSuite.TestDatabaseInfo;
 import excursions.daos.JdbcCruiseLineDao;
 import excursions.daos.interfaces.CruiseLineDao;
 import excursions.models.CruiseLine;
+import java.util.List;
 import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -126,6 +127,21 @@ public class JdbcCruiseLineDaoTests {
 		//test getCruiseLine on cruiseLine that doesn't exist
 		thrown.expect(EmptyResultDataAccessException.class);
 		CruiseLine c = cruiseLineDao.getCruiseLine(cruiseLine2.getCruiseLineId() + 1);
+	}
+	
+	@Test
+	public void testGetCruiseLines() {
+		cruiseLine1 = cruiseLineDao.createCruiseLine(cruiseLine1);
+		cruiseLine2 = cruiseLineDao.createCruiseLine(cruiseLine2);
 		
+		//test getCruiseLine on cruiseLines that exist
+		List<CruiseLine> cruiseLines = cruiseLineDao.getCruiseLines();
+		assertEquals(2, cruiseLines.size());
+		CruiseLine a = cruiseLines.get(0);
+		assertEquals(cruiseLine1.getCruiseLineId(), a.getCruiseLineId());
+		assertEquals(cruiseLine1.getName(), a.getName());
+		CruiseLine b = cruiseLines.get(1);
+		assertEquals(cruiseLine2.getCruiseLineId(), b.getCruiseLineId());
+		assertEquals(cruiseLine2.getName(), b.getName());
 	}
 }

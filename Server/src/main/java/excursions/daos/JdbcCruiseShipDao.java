@@ -55,9 +55,8 @@ public class JdbcCruiseShipDao implements CruiseShipDao {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("id",cruiseShip.getCruiseShipId());
         params.addValue("name",cruiseShip.getName());
-		params.addValue("capacity", cruiseShip.getCapacity());
 		params.addValue("cruise_line_id", cruiseShip.getCruiseLineId());
-		String sql = "UPDATE cruise_ship SET name=:name, capacity=:capacity, cruise_line_id=:cruise_line_id WHERE id=:id";
+		String sql = "UPDATE cruise_ship SET name=:name, cruise_line_id=:cruise_line_id WHERE id=:id";
 		jdbc.update(sql, params);
 		return cruiseShip;
 	}
@@ -74,10 +73,9 @@ public class JdbcCruiseShipDao implements CruiseShipDao {
 	public CruiseShip createCruiseShip(CruiseShip cruiseShip) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("name",cruiseShip.getName());
-		params.addValue("capacity", cruiseShip.getCapacity());
 		params.addValue("cruise_line_id", cruiseShip.getCruiseLineId());
-		String sql = "INSERT INTO cruise_ship(name, capacity, cruise_line_id)"
-			+ " VALUES(:name, :capacity, :cruise_line_id)";
+		String sql = "INSERT INTO cruise_ship(name, cruise_line_id)"
+			+ " VALUES(:name, :cruise_line_id)";
 		KeyHolder kh = new GeneratedKeyHolder();
 		jdbc.update(sql, params, kh);
 		cruiseShip.setCruiseShipId(kh.getKey().intValue());
@@ -89,7 +87,6 @@ public class JdbcCruiseShipDao implements CruiseShipDao {
 			CruiseShip cruiseShip = new CruiseShip();
 			cruiseShip.setCruiseShipId(rs.getInt("id"));
 			cruiseShip.setName(rs.getString("name"));
-			cruiseShip.setCapacity(rs.getInt("capacity"));
 			cruiseShip.setCruiseLineId(rs.getInt("cruise_line_id"));
 			return cruiseShip;
 		}

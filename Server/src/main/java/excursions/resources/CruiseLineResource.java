@@ -12,10 +12,9 @@ public class CruiseLineResource {
     @Autowired
     private CruiseLineController cruiseLineController = new CruiseLineController();
 
-    //Todo: This endpoint is not returning any data
     @RequestMapping(value = "/api/cruiseline", method = RequestMethod.GET)
-    public @ResponseBody List<CruiseLine> getCrusieLines(@RequestHeader(value="X-AUTH-TOKEN") String token){
-        return cruiseLineController.getCruiseLines(token);
+    public @ResponseBody List<CruiseLine> getCrusieLines(){
+        return cruiseLineController.getCruiseLines();
     }
 
     @RequestMapping(value = "/api/cruiseline/{cruiselineid}", method = RequestMethod.GET)
