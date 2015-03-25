@@ -29,7 +29,7 @@ public class ResourceResource {
     public @ResponseBody Resource updateResource(@RequestBody Resource toUpdate){
         return resourceController.updateResource(toUpdate);
     }
-    @RequestMapping(value = "/api/resource{resourceId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/resource/{resourceId}", method = RequestMethod.DELETE)
     public @ResponseBody Resource deleteResource(@PathVariable(value = "resourceId") int ResourceId){
         return resourceController.deleteResource(ResourceId);//this is null as of now.  don't try to access what this returns
     }
