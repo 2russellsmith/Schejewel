@@ -56,6 +56,7 @@ public class JdbcCruiseShipDao implements CruiseShipDao {
 		params.addValue("id",cruiseShip.getCruiseShipId());
         params.addValue("name",cruiseShip.getName());
 		params.addValue("cruise_line_id", cruiseShip.getCruiseLineId());
+        params.addValue("passengerCount",cruiseShip.getPassengerCount());
 		String sql = "UPDATE cruise_ship SET name=:name, cruise_line_id=:cruise_line_id WHERE id=:id";
 		jdbc.update(sql, params);
 		return cruiseShip;

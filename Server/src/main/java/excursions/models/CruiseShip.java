@@ -4,6 +4,7 @@ public class CruiseShip {
 	private int id;
 	private String name;
 	private int cruise_line_id;
+	private int passengerCount;
 	
 	public void setCruiseShipId(int CruiseShipId){
 		this.id = CruiseShipId;
@@ -24,5 +25,12 @@ public class CruiseShip {
 	}
 	public int getCruiseLineId(){
 		return cruise_line_id;
+	}
+	
+	public int getPassengerCount() {
+		return passengerCount;
+	}
+	public void setPassengerCount(int passengerCount) {
+		this.passengerCount = passengerCount;
 	}
 }
