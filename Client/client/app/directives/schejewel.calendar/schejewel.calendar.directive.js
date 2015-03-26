@@ -14,9 +14,9 @@ angular.module('schejewelApp')
 					dayClick: function (date, allDay, jsEvent, view) {
 						var epoch = date.unix();
 						console.log(epoch);
-						//angular.element($('#buttonNav')).scope().setVisible('resource');
-						$scope.visibleDirective = 'resource';
-						//$scope.$apply();
+						angular.element($('#buttonNav')).scope().setVisible('resource');
+						//$scope.visibleDirective = 'resource';
+						$scope.$apply();
 					}
 				});
 			}

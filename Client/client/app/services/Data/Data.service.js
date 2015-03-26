@@ -10,7 +10,6 @@ angular.module('schejewelApp')
                 var deferred = $q.defer();
                 if(milliseconds === undefined){
                   $http.defaults.headers.common['X-AUTH-TOKEN'] = mockToken;
-                  console.log(url + 'resource');
                   $http.get(url + 'resource').success(function (data, status, headers, config) {
                       deferred.resolve(data);
                   })
@@ -19,6 +18,20 @@ angular.module('schejewelApp')
                   $http.defaults.headers.common['X-AUTH-TOKEN'] = mockToken;
                   console.log(url + 'resource'+'/'+milliseconds.getTime());
                   $http.get(url + 'resource'+'/1437350400'/*+milliseconds.getTime()*/).success(function (data, status, headers, config) {
+                      deferred.resolve(data);
+                  })
+                }
+
+                return deferred.promise
+            },
+            addTour: function (tourData) {
+                var deferred = $q.defer();
+                if(tourData === undefined){
+                    return;
+                }
+                else{
+                  $http.defaults.headers.common['X-AUTH-TOKEN'] = mockToken;
+                  $http.post(url + 'tour/'+tourData).success(function (data, status, headers, config) {
                       deferred.resolve(data);
                   })
                 }
