@@ -17,7 +17,7 @@ public class ResourceResource {
         return resourceController.getResources(token);
     }
 
-    @RequestMapping(value = "/api/resource/{startTime}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/resource/starttime/{startTime}", method = RequestMethod.GET)
     public @ResponseBody List<Resource> getResources(@RequestHeader(value="X-AUTH-TOKEN") String token, @PathVariable(value = "startTime") long startTime){
         return resourceController.getResources(token, startTime);
     }
@@ -29,7 +29,7 @@ public class ResourceResource {
     public @ResponseBody Resource updateResource(@RequestBody Resource toUpdate){
         return resourceController.updateResource(toUpdate);
     }
-    @RequestMapping(value = "/api/resource{resourceId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/resource/{resourceId}", method = RequestMethod.DELETE)
     public @ResponseBody Resource deleteResource(@PathVariable(value = "resourceId") int ResourceId){
         return resourceController.deleteResource(ResourceId);//this is null as of now.  don't try to access what this returns
     }

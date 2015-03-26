@@ -1,7 +1,11 @@
 package excursions.models;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class Tour {
 	private int id;
@@ -14,16 +18,26 @@ public class Tour {
     public void setStartTime(long millis){
         start_time = millis;
     }
-	public void setStartTimeSQL(Timestamp ts) {
-		start_time = ts.getTime();
+	public void setStartTime(Date date, Time time) {
+		start_time = date.getTime() + timeToMillis(time);
 	}
-    public long getStartTime(){
+    public long getStartTimeInMillis(){
         return start_time;
     }
-	public Timestamp getStartTimeSQL() {
-		Timestamp ts = new Timestamp(start_time);
-		return ts;
-	}
+	public String getStartDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		calendar.setTimeInMillis(start_time);
+        return sdf.format(calendar.getTime());
+    }
+    public String getStartTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSSSSS");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		calendar.setTimeInMillis(start_time);
+        return sdf.format(calendar.getTime());
+    }
     
     public void setTourTypeId(int id){
         tour_type_id = id;
@@ -61,4 +75,13 @@ public class Tour {
     public void setResources(List<Resource> resources) {
         this.resources = resources;
     }
+	
+	private long timeToMillis(Time time) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(time);
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int min = cal.get(Calendar.MINUTE);
+		int sec = cal.get(Calendar.SECOND);
+		return (long)(hour * 3600 + min * 60 + sec) * 1000;
+	}
 }

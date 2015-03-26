@@ -121,7 +121,7 @@ public class JdbcTourDaoTests {
 		Tour newTour = tourDao.getTour(tour1.getTourId());
 		assertEquals(tour1.getTourId(), newTour.getTourId());
 		assertEquals(tour1.getOwnerId(), newTour.getOwnerId());
-		assertEquals(tour1.getStartTime(), newTour.getStartTime());
+		assertEquals(tour1.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour1.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour1.getStatusId(), newTour.getStatusId());
 		
@@ -147,7 +147,7 @@ public class JdbcTourDaoTests {
 		newTour = tourDao.getTour(badTour.getTourId());
 		assertEquals(badTour.getTourId(), newTour.getTourId());
 		assertEquals(badTour.getOwnerId(), newTour.getOwnerId());
-		assertEquals(badTour.getStartTime(), newTour.getStartTime());
+		assertEquals(badTour.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(badTour.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(badTour.getStatusId(), newTour.getStatusId());
 	}
@@ -162,7 +162,7 @@ public class JdbcTourDaoTests {
 		Tour newTour = tourDao.getTour(tour1.getTourId());
 		assertEquals(tour2.getTourId(), newTour.getTourId());
 		assertEquals(tour2.getOwnerId(), newTour.getOwnerId());
-		assertEquals(tour2.getStartTime(), newTour.getStartTime());
+		assertEquals(tour2.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour2.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour2.getStatusId(), newTour.getStatusId());
 		
@@ -191,7 +191,7 @@ public class JdbcTourDaoTests {
 		Tour newTour = tourDao.getTour(tour2id);
 		assertEquals(tour2.getTourId(), newTour.getTourId());
 		assertEquals(tour2.getOwnerId(), newTour.getOwnerId());
-		assertEquals(tour2.getStartTime(), newTour.getStartTime());
+		assertEquals(tour2.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour2.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour2.getStatusId(), newTour.getStatusId());
 		
@@ -208,13 +208,13 @@ public class JdbcTourDaoTests {
 		Tour newTour = tourDao.getTour(tour1.getTourId());
 		assertEquals(tour1.getTourId(), newTour.getTourId());
 		assertEquals(tour1.getOwnerId(), newTour.getOwnerId());
-		assertEquals(tour1.getStartTime(), newTour.getStartTime());
+		assertEquals(tour1.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour1.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour1.getStatusId(), newTour.getStatusId());
 		newTour = tourDao.getTour(tour2.getTourId());
 		assertEquals(tour2.getTourId(), newTour.getTourId());
 		assertEquals(tour2.getOwnerId(), newTour.getOwnerId());
-		assertEquals(tour2.getStartTime(), newTour.getStartTime());
+		assertEquals(tour2.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour2.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour2.getStatusId(), newTour.getStatusId());
 		
@@ -240,13 +240,13 @@ public class JdbcTourDaoTests {
 		Tour newTour = tours.get(0);
 		assertEquals(tour1.getTourId(), newTour.getTourId());
 		assertEquals(tour1.getOwnerId(), newTour.getOwnerId());
-		assertEquals(tour1.getStartTime(), newTour.getStartTime());
+		assertEquals(tour1.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour1.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour1.getStatusId(), newTour.getStatusId());
 		newTour = tours.get(1);
 		assertEquals(tour3.getTourId(), newTour.getTourId());
 		assertEquals(tour3.getOwnerId(), newTour.getOwnerId());
-		assertEquals(tour3.getStartTime(), newTour.getStartTime());
+		assertEquals(tour3.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour3.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour3.getStatusId(), newTour.getStatusId());
 	}
@@ -272,23 +272,23 @@ public class JdbcTourDaoTests {
 		tour4 = tourDao.createTour(tour4);
 		
 		List<Tour> tours = tourDao.getToursByDateRange(company2.getCompanyId(), 1000000000, 2000000000);
-		assertEquals(tours.size(), 3);
+		assertEquals(3, tours.size());
 		Tour newTour = tours.get(0);
 		assertEquals(tour2.getTourId(), newTour.getTourId());
 		assertEquals(tour2.getOwnerId(), newTour.getOwnerId());
-		assertEquals(tour2.getStartTime(), newTour.getStartTime());
+		assertEquals(tour2.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour2.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour2.getStatusId(), newTour.getStatusId());
 		newTour = tours.get(1);
 		assertEquals(tour3.getTourId(), newTour.getTourId());
 		assertEquals(tour3.getOwnerId(), newTour.getOwnerId());
-		assertEquals(tour3.getStartTime(), newTour.getStartTime());
+		assertEquals(tour3.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour3.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour3.getStatusId(), newTour.getStatusId());
 		newTour = tours.get(2);
 		assertEquals(tour4.getTourId(), newTour.getTourId());
 		assertEquals(tour4.getOwnerId(), newTour.getOwnerId());
-		assertEquals(tour4.getStartTime(), newTour.getStartTime());
+		assertEquals(tour4.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour4.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour4.getStatusId(), newTour.getStatusId());
 	}

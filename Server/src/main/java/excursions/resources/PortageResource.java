@@ -12,20 +12,17 @@ public class PortageResource {
     @Autowired
     private PortageController portageController = new PortageController();
 
-    //Todo: Sql out of date
     @RequestMapping(value = "/api/portage", method = RequestMethod.GET)
     public @ResponseBody
     List<Portage> getPortages(@RequestHeader(value="X-AUTH-TOKEN") String token){
         return portageController.getPortages(token);
     }
 
-    //Todo: Sql out of date
     @RequestMapping(value = "/api/portage/{portageid}", method = RequestMethod.GET)
     public @ResponseBody Portage getPortage(@PathVariable(value="portageid")int portageId){
         return portageController.getPortage(portageId);
     }
 
-    //Todo: Sql out of date
     @RequestMapping(value = "/api/portage", method = RequestMethod.PUT)
     public @ResponseBody Portage updatePortage(@RequestBody Portage portage){
         return portageController.updatePortage(portage);
@@ -37,8 +34,7 @@ public class PortageResource {
         portageController.deletePortage(portageId);
     }
 
-    //Todo: Sql out of date
-    @RequestMapping(value = "/api/Portage", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/portage", method = RequestMethod.POST)
     public @ResponseBody Portage createPortage(@RequestBody Portage portage){
         return portageController.createPortage(portage);
     }

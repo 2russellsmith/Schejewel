@@ -8,7 +8,7 @@ public interface ResourceDao {
 	public void setDataSource(DataSource ds);
 	public List<Resource> getResources(int companyId);
 	public Resource getResource(int resourceId);
-	public List<Resource> getResources(int companyId, long startTime, long endTime);
+	public List<Resource> getResources(int companyId, long startDate, long endDate);
 	public Resource updateResource(Resource toUpdate);
 	public Resource deleteResource(int resourceId);
 	public Resource createResource(Resource toCreate);

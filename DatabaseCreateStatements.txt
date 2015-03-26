@@ -34,9 +34,10 @@ CREATE TABLE status(
 CREATE TABLE tour(
   id INT(11) NOT NULL AUTO_INCREMENT,
   owner_id INT(11) NOT NULL,
-  start_time DATETIME NOT NULL,
+  start_date DATE NOT NULL,
+  start_time TIME NOT NULL,
   tour_type_id INT(11) NOT NULL,
-  status_id INT(11) NOT NULL,
+  status INT(11) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (tour_type_id) REFERENCES tour_type(id)
        ON DELETE CASCADE
@@ -44,7 +45,7 @@ CREATE TABLE tour(
   FOREIGN KEY (owner_id) REFERENCES company(id)
        ON DELETE CASCADE
        ON UPDATE CASCADE,
-  FOREIGN KEY (status_id) REFERENCES status(id)
+  FOREIGN KEY (status) REFERENCES status(id)
        ON DELETE CASCADE
        ON UPDATE CASCADE
 );
@@ -93,7 +94,8 @@ CREATE TABLE tour_type_resource(
 CREATE TABLE resource_schedule(
   resource_id INT(11) NOT NULL,
   tour_id INT(11) NOT NULL,
-  start DATETIME NOT NULL,
+  start_date DATE NOT NULL,
+  start_time TIME NOT NULL,
   duration INT(11) NOT NULL,
   status INT(11) NOT NULL,
   FOREIGN KEY (resource_id) REFERENCES resource(id)
@@ -116,7 +118,6 @@ CREATE TABLE cruise_line(
 CREATE TABLE cruise_ship(
   id INT(11) NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
-  capacity INT(11),
   cruise_line_id INT(11) NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY (cruise_line_id) REFERENCES cruise_line(id)
@@ -127,13 +128,15 @@ CREATE TABLE cruise_ship(
 CREATE TABLE portage(
   id INT(11) NOT NULL AUTO_INCREMENT,
   cruise_ship_id INT(11) NOT NULL,
-  arrival DATETIME NOT NULL,
-  departure DATETIME NOT NULL,
-  name VARCHAR(255) NOT NULL,
+  arrival_date DATE NOT NULL,
+  arrival_time TIME NOT NULL,
+  departure_date DATE NOT NULL,
+  departure_time TIME NOT NULL,
   passengers INT(11),
-  AA DATETIME,
+  AA TIME,
   dock INT(11),
   voyage VARCHAR(255),
+  location VARCHAR(255),
   PRIMARY KEY (id),
   FOREIGN KEY (cruise_ship_id) REFERENCES cruise_ship(id)
        ON DELETE CASCADE

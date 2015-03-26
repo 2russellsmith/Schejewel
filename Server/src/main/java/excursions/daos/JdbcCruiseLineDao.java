@@ -2,6 +2,9 @@ package excursions.daos;
 
 import excursions.daos.interfaces.CruiseLineDao;
 import excursions.models.CruiseLine;
+import excursions.models.CruiseShip;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -12,6 +15,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import org.springframework.jdbc.core.RowMapper;
 
 @Repository
 public class JdbcCruiseLineDao implements CruiseLineDao {
@@ -63,7 +67,18 @@ public class JdbcCruiseLineDao implements CruiseLineDao {
 	}
 
     @Override
-    public List<CruiseLine> getCruiseLines(int companyId) {
-        return null;
+    public List<CruiseLine> getCruiseLines() {
+        String sql = "SELECT * FROM cruise_line";
+        List<CruiseLine> cruiseLines = jdbc.query(sql, new CruiseLineRowMapper());
+        return cruiseLines;
     }
+	
+	public class CruiseLineRowMapper implements RowMapper {
+		public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+			CruiseLine cruiseLine = new CruiseLine();
+			cruiseLine.setCruiseLineId(rs.getInt("id"));
+			cruiseLine.setName(rs.getString("name"));
+			return cruiseLine;
+		}
+	}
 }

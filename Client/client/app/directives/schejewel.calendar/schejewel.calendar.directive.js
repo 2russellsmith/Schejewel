@@ -12,7 +12,10 @@ angular.module('schejewelApp')
 				$('#calendar').fullCalendar({
 					allDaySlot: false,
 					dayClick: function (date, allDay, jsEvent, view) {
+						var epoch = date.unix();
+						console.log(epoch);
 						angular.element($('#buttonNav')).scope().setVisible('resource');
+						//$scope.visibleDirective = 'resource';
 						$scope.$apply();
 					}
 				});

@@ -2,7 +2,7 @@
 
 angular.module('schejewelApp')
     .controller('DashboardCtrl', function ($scope, Auth, Data) {
-        Data.getResources().then(function(data) {
+        Data.getResources(new Date()).then(function(data) {
             console.log('data', data);
         });
 
@@ -159,8 +159,6 @@ angular.module('schejewelApp')
                 }]
             }]
         }];
-
-        $scope.value = "LOLZERS";
 
         $scope.visibleDirective = 'calendar';
 

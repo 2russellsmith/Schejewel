@@ -10,5 +10,5 @@ public interface CruiseLineDao {
 	public CruiseLine updateCruiseLine(CruiseLine cruiseLine);
 	public void deleteCruiseLine(int cruiseLineId);
 	public CruiseLine createCruiseLine(CruiseLine cruiseLine);
-    public List<CruiseLine> getCruiseLines(int companyId);
+    public List<CruiseLine> getCruiseLines();
 }
