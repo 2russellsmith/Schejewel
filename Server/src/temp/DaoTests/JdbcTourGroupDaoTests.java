@@ -124,14 +124,14 @@ public class JdbcTourGroupDaoTests {
 		
 		tour1 = new Tour();
 		tour1.setOwnerId(company1.getCompanyId());
-		tour1.setStartTime(5000000000l);
+		tour1.setStartTime("2015-2-25");
 		tour1.setTourTypeId(tourType1.getTourTypeId());
 		tour1.setStatusId(status1.getStatusId());
 		tour1 = tourDao.createTour(tour1);
 		
 		tour2 = new Tour();
 		tour2.setOwnerId(company2.getCompanyId());
-		tour2.setStartTime(1000000000);
+		tour2.setStartTime("2015-2-25");
 		tour2.setTourTypeId(tourType2.getTourTypeId());
 		tour2.setStatusId(status2.getStatusId());
 		tour2 = tourDao.createTour(tour2);
@@ -173,13 +173,13 @@ public class JdbcTourGroupDaoTests {
 		//set up tourGroups
 		tourGroup1 = new TourGroup();
 		tourGroup1.setPortageId(portage1.getPortageId());
-		tourGroup1.setTourId(tour1.getTourId());
+		tourGroup1.setTourId(tour1.getId());
 		tourGroup1.setGroupSize(10);
 		tourGroup1.setSettled(true);
 		
 		tourGroup2 = new TourGroup();
 		tourGroup2.setPortageId(portage2.getPortageId());
-		tourGroup2.setTourId(tour2.getTourId());
+		tourGroup2.setTourId(tour2.getId());
 		tourGroup2.setGroupSize(20);
 		tourGroup2.setSettled(false);
 		
@@ -197,12 +197,12 @@ public class JdbcTourGroupDaoTests {
 	public void testCreateTourGroup() {
 		tourGroup1 = tourGroupDao.createTourGroup(tourGroup1);
 		
-		TourGroup newTourGroup = tourGroupDao.getTourGroup(tourGroup1.getTourGroupId());
-		assertEquals(tourGroup1.getTourGroupId(), newTourGroup.getTourGroupId());
+		TourGroup newTourGroup = tourGroupDao.getTourGroup(tourGroup1.getId());
+		assertEquals(tourGroup1.getId(), newTourGroup.getId());
 		assertEquals(tourGroup1.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(tourGroup1.getTourId(), newTourGroup.getTourId());
+		assertEquals(tourGroup1.getId(), newTourGroup.getId());
 		assertEquals(tourGroup1.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(tourGroup1.getSettled(), newTourGroup.getSettled());
+		assertEquals(tourGroup1.isSettled(), newTourGroup.isSettled());
 		
 		//try creating tourGroup in various stages of incompleteness
 		thrown.expect(DataIntegrityViolationException.class);
@@ -212,7 +212,7 @@ public class JdbcTourGroupDaoTests {
 		thrown.expect(DataIntegrityViolationException.class);
 		tourGroupDao.createTourGroup(badTourGroup);
 		
-		badTourGroup.setTourId(tour1.getTourId());
+		badTourGroup.setTourId(tour1.getId());
 		thrown.expect(DataIntegrityViolationException.class);
 		tourGroupDao.createTourGroup(badTourGroup);
 		
@@ -220,28 +220,28 @@ public class JdbcTourGroupDaoTests {
 		thrown.expect(DataIntegrityViolationException.class);
 		tourGroupDao.createTourGroup(badTourGroup);
 		
-		newTourGroup = tourGroupDao.getTourGroup(tourGroup1.getTourGroupId());
-		assertEquals(badTourGroup.getTourGroupId(), newTourGroup.getTourGroupId());
+		newTourGroup = tourGroupDao.getTourGroup(tourGroup1.getId());
+		assertEquals(badTourGroup.getId(), newTourGroup.getId());
 		assertEquals(badTourGroup.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(badTourGroup.getTourId(), newTourGroup.getTourId());
+		assertEquals(badTourGroup.getId(), newTourGroup.getId());
 		assertEquals(badTourGroup.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(badTourGroup.getSettled(), newTourGroup.getSettled());
+		assertEquals(badTourGroup.isSettled(), newTourGroup.isSettled());
 	}
 	
 	@Test
 	public void testUpdateTourGroup() {
 		tourGroup1 = tourGroupDao.createTourGroup(tourGroup1);
-		tourGroup2.setTourGroupId(tourGroup1.getTourGroupId());
+		tourGroup2.setId(tourGroup1.getId());
 		
 		//test that update works
 		tourGroupDao.updateTourGroup(tourGroup2);
 		
-		TourGroup newTourGroup = tourGroupDao.getTourGroup(tourGroup2.getTourGroupId());
-		assertEquals(tourGroup2.getTourGroupId(), newTourGroup.getTourGroupId());
+		TourGroup newTourGroup = tourGroupDao.getTourGroup(tourGroup2.getId());
+		assertEquals(tourGroup2.getId(), newTourGroup.getId());
 		assertEquals(tourGroup2.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(tourGroup2.getTourId(), newTourGroup.getTourId());
+		assertEquals(tourGroup2.getId(), newTourGroup.getId());
 		assertEquals(tourGroup2.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(tourGroup2.getSettled(), newTourGroup.getSettled());
+		assertEquals(tourGroup2.isSettled(), newTourGroup.isSettled());
 	}
 	
 	@Test
@@ -257,12 +257,12 @@ public class JdbcTourGroupDaoTests {
 		tourGroup1 = tourGroupDao.getTourGroup(tg1id);
 		
 		//try to get non-deleted tourGroup
-		TourGroup newTourGroup = tourGroupDao.getTourGroup(tourGroup2.getTourGroupId());
-		assertEquals(tourGroup2.getTourGroupId(), newTourGroup.getTourGroupId());
+		TourGroup newTourGroup = tourGroupDao.getTourGroup(tourGroup2.getId());
+		assertEquals(tourGroup2.getId(), newTourGroup.getId());
 		assertEquals(tourGroup2.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(tourGroup2.getTourId(), newTourGroup.getTourId());
+		assertEquals(tourGroup2.getId(), newTourGroup.getId());
 		assertEquals(tourGroup2.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(tourGroup2.getSettled(), newTourGroup.getSettled());
+		assertEquals(tourGroup2.isSettled(), newTourGroup.isSettled());
 		
 		//try to delete already deleted tourGroup - this doesn't throw an exception
 		portageDao.deletePortage(tg1id);
@@ -274,23 +274,23 @@ public class JdbcTourGroupDaoTests {
 		tourGroup2 = tourGroupDao.createTourGroup(tourGroup2);
 		
 		//test getTourGroup on tourGroups that exist
-		TourGroup newTourGroup = tourGroupDao.getTourGroup(tourGroup1.getTourGroupId());
-		assertEquals(tourGroup1.getTourGroupId(), newTourGroup.getTourGroupId());
+		TourGroup newTourGroup = tourGroupDao.getTourGroup(tourGroup1.getId());
+		assertEquals(tourGroup1.getId(), newTourGroup.getId());
 		assertEquals(tourGroup1.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(tourGroup1.getTourId(), newTourGroup.getTourId());
+		assertEquals(tourGroup1.getId(), newTourGroup.getId());
 		assertEquals(tourGroup1.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(tourGroup1.getSettled(), newTourGroup.getSettled());
+		assertEquals(tourGroup1.isSettled(), newTourGroup.isSettled());
 		
-		newTourGroup = tourGroupDao.getTourGroup(tourGroup2.getTourGroupId());
-		assertEquals(tourGroup2.getTourGroupId(), newTourGroup.getTourGroupId());
+		newTourGroup = tourGroupDao.getTourGroup(tourGroup2.getId());
+		assertEquals(tourGroup2.getId(), newTourGroup.getId());
 		assertEquals(tourGroup2.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(tourGroup2.getTourId(), newTourGroup.getTourId());
+		assertEquals(tourGroup2.getId(), newTourGroup.getId());
 		assertEquals(tourGroup2.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(tourGroup2.getSettled(), newTourGroup.getSettled());
+		assertEquals(tourGroup2.isSettled(), newTourGroup.isSettled());
 		
 		//test getTourGroup on tourGroup that doesn't exist
 		thrown.expect(EmptyResultDataAccessException.class);
-		newTourGroup = tourGroupDao.getTourGroup(tourGroup2.getTourGroupId() + 1);
+		newTourGroup = tourGroupDao.getTourGroup(tourGroup2.getId() + 1);
 	}
 	
 	@Test
@@ -300,7 +300,7 @@ public class JdbcTourGroupDaoTests {
 		
 		TourGroup tourGroup3 = new TourGroup();
 		tourGroup3.setPortageId(portage1.getPortageId());
-		tourGroup3.setTourId(tour1.getTourId());
+		tourGroup3.setTourId(tour1.getId());
 		tourGroup3.setGroupSize(30);
 		tourGroup3.setSettled(true);
 		tourGroup3 = tourGroupDao.createTourGroup(tourGroup3);
@@ -308,18 +308,18 @@ public class JdbcTourGroupDaoTests {
 		List<TourGroup> tourGroups = tourGroupDao.getTourGroups(company1.getCompanyId());
 		assertEquals(tourGroups.size(), 2);
 		TourGroup newTourGroup = tourGroups.get(0);
-		assertEquals(tourGroup1.getTourGroupId(), newTourGroup.getTourGroupId());
+		assertEquals(tourGroup1.getId(), newTourGroup.getId());
 		assertEquals(tourGroup1.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(tourGroup1.getTourId(), newTourGroup.getTourId());
+		assertEquals(tourGroup1.getId(), newTourGroup.getId());
 		assertEquals(tourGroup1.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(tourGroup1.getSettled(), newTourGroup.getSettled());
+		assertEquals(tourGroup1.isSettled(), newTourGroup.isSettled());
 		
 		newTourGroup = tourGroups.get(1);
-		assertEquals(tourGroup3.getTourGroupId(), newTourGroup.getTourGroupId());
+		assertEquals(tourGroup3.getId(), newTourGroup.getId());
 		assertEquals(tourGroup3.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(tourGroup3.getTourId(), newTourGroup.getTourId());
+		assertEquals(tourGroup3.getId(), newTourGroup.getId());
 		assertEquals(tourGroup3.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(tourGroup3.getSettled(), newTourGroup.getSettled());
+		assertEquals(tourGroup3.isSettled(), newTourGroup.isSettled());
 	}
 	
 	@Test
@@ -329,26 +329,26 @@ public class JdbcTourGroupDaoTests {
 		
 		TourGroup tourGroup3 = new TourGroup();
 		tourGroup3.setPortageId(portage1.getPortageId());
-		tourGroup3.setTourId(tour1.getTourId());
+		tourGroup3.setTourId(tour1.getId());
 		tourGroup3.setGroupSize(30);
 		tourGroup3.setSettled(true);
 		tourGroup3 = tourGroupDao.createTourGroup(tourGroup3);
 		
-		List<TourGroup> tourGroups = tourGroupDao.getTourGroupsByTourId(company1.getCompanyId(), tour1.getTourId());
+		List<TourGroup> tourGroups = tourGroupDao.getTourGroupsByTourId(company1.getCompanyId(), tour1.getId());
 		assertEquals(tourGroups.size(), 2);
 		TourGroup newTourGroup = tourGroups.get(0);
-		assertEquals(tourGroup1.getTourGroupId(), newTourGroup.getTourGroupId());
+		assertEquals(tourGroup1.getId(), newTourGroup.getId());
 		assertEquals(tourGroup1.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(tourGroup1.getTourId(), newTourGroup.getTourId());
+		assertEquals(tourGroup1.getId(), newTourGroup.getId());
 		assertEquals(tourGroup1.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(tourGroup1.getSettled(), newTourGroup.getSettled());
+		assertEquals(tourGroup1.isSettled(), newTourGroup.isSettled());
 		
 		newTourGroup = tourGroups.get(1);
-		assertEquals(tourGroup3.getTourGroupId(), newTourGroup.getTourGroupId());
+		assertEquals(tourGroup3.getId(), newTourGroup.getId());
 		assertEquals(tourGroup3.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(tourGroup3.getTourId(), newTourGroup.getTourId());
+		assertEquals(tourGroup3.getId(), newTourGroup.getId());
 		assertEquals(tourGroup3.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(tourGroup3.getSettled(), newTourGroup.getSettled());
+		assertEquals(tourGroup3.isSettled(), newTourGroup.isSettled());
 	}
 	
 	@Test
@@ -358,7 +358,7 @@ public class JdbcTourGroupDaoTests {
 		
 		TourGroup tourGroup3 = new TourGroup();
 		tourGroup3.setPortageId(portage1.getPortageId());
-		tourGroup3.setTourId(tour1.getTourId());
+		tourGroup3.setTourId(tour1.getId());
 		tourGroup3.setGroupSize(30);
 		tourGroup3.setSettled(true);
 		tourGroup3 = tourGroupDao.createTourGroup(tourGroup3);
@@ -366,27 +366,27 @@ public class JdbcTourGroupDaoTests {
 		List<TourGroup> tourGroups = tourGroupDao.getTourGroupsBySettledStatus(company1.getCompanyId(), true);
 		assertEquals(tourGroups.size(), 2);
 		TourGroup newTourGroup = tourGroups.get(0);
-		assertEquals(tourGroup1.getTourGroupId(), newTourGroup.getTourGroupId());
+		assertEquals(tourGroup1.getId(), newTourGroup.getId());
 		assertEquals(tourGroup1.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(tourGroup1.getTourId(), newTourGroup.getTourId());
+		assertEquals(tourGroup1.getId(), newTourGroup.getId());
 		assertEquals(tourGroup1.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(tourGroup1.getSettled(), newTourGroup.getSettled());
+		assertEquals(tourGroup1.isSettled(), newTourGroup.isSettled());
 		
 		newTourGroup = tourGroups.get(1);
-		assertEquals(tourGroup3.getTourGroupId(), newTourGroup.getTourGroupId());
+		assertEquals(tourGroup3.getId(), newTourGroup.getId());
 		assertEquals(tourGroup3.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(tourGroup3.getTourId(), newTourGroup.getTourId());
+		assertEquals(tourGroup3.getId(), newTourGroup.getId());
 		assertEquals(tourGroup3.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(tourGroup3.getSettled(), newTourGroup.getSettled());
+		assertEquals(tourGroup3.isSettled(), newTourGroup.isSettled());
 		
 		tourGroups = tourGroupDao.getTourGroupsBySettledStatus(company2.getCompanyId(), false);
 		assertEquals(tourGroups.size(), 1);
 		newTourGroup = tourGroups.get(0);
-		assertEquals(tourGroup2.getTourGroupId(), newTourGroup.getTourGroupId());
+		assertEquals(tourGroup2.getId(), newTourGroup.getId());
 		assertEquals(tourGroup2.getPortageId(), newTourGroup.getPortageId());
-		assertEquals(tourGroup2.getTourId(), newTourGroup.getTourId());
+		assertEquals(tourGroup2.getId(), newTourGroup.getId());
 		assertEquals(tourGroup2.getGroupSize(), newTourGroup.getGroupSize());
-		assertEquals(tourGroup2.getSettled(), newTourGroup.getSettled());
+		assertEquals(tourGroup2.isSettled(), newTourGroup.isSettled());
 	}
 	
 }

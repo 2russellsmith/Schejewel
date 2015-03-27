@@ -2,6 +2,7 @@ package excursions.models;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,65 +10,59 @@ import java.util.TimeZone;
 
 public class Tour {
 	private int id;
-	private int owner_id;
-	private long start_time;
-    private int tour_type_id;
-	private int status_id;
+	private int ownerId;
+    private String startDate;
+	private String startTime;
+    private int tourTypeId;
+	private int statusId;
     private List<Resource> resources;
-    
-    public void setStartTime(long millis){
-        start_time = millis;
-    }
-	public void setStartTime(Date date, Time time) {
-		start_time = date.getTime() + timeToMillis(time);
-	}
-    public long getStartTimeInMillis(){
-        return start_time;
-    }
-	public String getStartDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-		calendar.setTimeInMillis(start_time);
-        return sdf.format(calendar.getTime());
-    }
-    public String getStartTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSSSSS");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-		calendar.setTimeInMillis(start_time);
-        return sdf.format(calendar.getTime());
-    }
-    
-    public void setTourTypeId(int id){
-        tour_type_id = id;
-    }
-    public int getTourTypeId(){
-        return tour_type_id;
-    }
-    
-    public void setOwnerId(int id){
-    	owner_id = id;
-    }
-    public int getOwnerId(){
-    	return owner_id;
-    }
-    
-    public void setTourId(int TourId){
-    	this.id = TourId;
-    }
-    public int getTourId(){
-    	return id;
+    private List<TourGroup> tourGroups;
+
+    public Tour(){
+        resources = new ArrayList<>();
+        tourGroups = new ArrayList<>();
     }
 
-	public int getStatusId() {
-		return status_id;
-	}
-	
-	public void setStatusId(int id) {
-		status_id = id;
-	}
-	
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getTourTypeId() {
+        return tourTypeId;
+    }
+
+    public void setTourTypeId(int tourTypeId) {
+        this.tourTypeId = tourTypeId;
+    }
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
     public List<Resource> getResources() {
         return resources;
     }
@@ -75,13 +70,28 @@ public class Tour {
     public void setResources(List<Resource> resources) {
         this.resources = resources;
     }
-	
-	private long timeToMillis(Time time) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(time);
-		int hour = cal.get(Calendar.HOUR_OF_DAY);
-		int min = cal.get(Calendar.MINUTE);
-		int sec = cal.get(Calendar.SECOND);
-		return (long)(hour * 3600 + min * 60 + sec) * 1000;
-	}
+
+    public List<TourGroup> getTourGroups() {
+        return tourGroups;
+    }
+
+    public void setTourGroups(List<TourGroup> tourGroups) {
+        this.tourGroups = tourGroups;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public void addResource(Resource resource){
+        this.resources.add(resource);
+    }
+
+    public void addTourGroup(TourGroup tourGroup){
+        this.tourGroups.add(tourGroup);
+    }
 }

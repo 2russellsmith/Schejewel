@@ -30,12 +30,12 @@ public class JdbcTourGroupDao implements TourGroupDao {
         params.addValue("portage_id",tourGroup.getPortageId());
 		params.addValue("tour_id", tourGroup.getTourId());
 		params.addValue("group_size", tourGroup.getGroupSize());
-		params.addValue("settled", tourGroup.getSettled());
+		params.addValue("settled", tourGroup.isSettled());
 		String sql = "INSERT INTO tour_group(portage_id, tour_id, group_size, settled)"
 			+ " VALUES(:portage_id, :tour_id, :group_size, :settled)";
 		KeyHolder kh = new GeneratedKeyHolder();
 		jdbc.update(sql, params, kh);
-		tourGroup.setTourGroupId(kh.getKey().intValue());
+		tourGroup.setId(kh.getKey().intValue());
 		return tourGroup;
 	}
 
@@ -85,11 +85,11 @@ public class JdbcTourGroupDao implements TourGroupDao {
 	@Override
 	public TourGroup updateTourGroup(TourGroup tourGroup) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("id", tourGroup.getTourGroupId());
+		params.addValue("id", tourGroup.getId());
         params.addValue("portage_id",tourGroup.getPortageId());
 		params.addValue("tour_id", tourGroup.getTourId());
 		params.addValue("group_size", tourGroup.getGroupSize());
-		params.addValue("settled", tourGroup.getSettled());
+		params.addValue("settled", tourGroup.isSettled());
 		String sql = "UPDATE tour_group SET portage_id=:portage_id, tour_id=:tour_id, "
 			+ "group_size=:group_size, settled=:settled WHERE id=:id";
 		jdbc.update(sql, params);
@@ -107,7 +107,7 @@ public class JdbcTourGroupDao implements TourGroupDao {
     public class TourGroupRowMapper implements RowMapper {
 		public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 			TourGroup tourGroup = new TourGroup();
-			tourGroup.setTourGroupId(rs.getInt("id"));
+			tourGroup.setId(rs.getInt("id"));
 			tourGroup.setPortageId(rs.getInt("portage_id"));
 			tourGroup.setTourId(rs.getInt("tour_id"));
 			tourGroup.setGroupSize(rs.getInt("group_size"));

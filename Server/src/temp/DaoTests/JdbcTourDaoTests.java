@@ -3,33 +3,9 @@ package DaoTests;
 
 import TestSuite.JdbcTestDao;
 import TestSuite.TestDatabaseInfo;
-import excursions.daos.JdbcCompanyDao;
-import excursions.daos.JdbcStatusDao;
-import excursions.daos.JdbcTourDao;
-import excursions.daos.JdbcTourTypeDao;
-import excursions.daos.interfaces.CompanyDao;
-import excursions.daos.interfaces.StatusDao;
-import excursions.daos.interfaces.TourDao;
-import excursions.daos.interfaces.TourTypeDao;
-import excursions.models.Company;
-import excursions.models.Status;
-import excursions.models.Tour;
-import excursions.models.TourType;
-import java.util.List;
-import javax.sql.DataSource;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 
 public class JdbcTourDaoTests {
-	static TourDao tourDao;
+	/*static TourDao tourDao;
 	static TourTypeDao tourTypeDao;
 	static CompanyDao companyDao;
 	static StatusDao statusDao;
@@ -118,8 +94,8 @@ public class JdbcTourDaoTests {
 	@Test
 	public void testCreateTour() {
 		tour1 = tourDao.createTour(tour1);
-		Tour newTour = tourDao.getTour(tour1.getTourId());
-		assertEquals(tour1.getTourId(), newTour.getTourId());
+		Tour newTour = tourDao.getTour(tour1.getId());
+		assertEquals(tour1.getId(), newTour.getId());
 		assertEquals(tour1.getOwnerId(), newTour.getOwnerId());
 		assertEquals(tour1.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour1.getTourTypeId(), newTour.getTourTypeId());
@@ -144,8 +120,8 @@ public class JdbcTourDaoTests {
 		badTour.setStatusId(status1.getStatusId());
 		badTour = tourDao.createTour(badTour);
 		
-		newTour = tourDao.getTour(badTour.getTourId());
-		assertEquals(badTour.getTourId(), newTour.getTourId());
+		newTour = tourDao.getTour(badTour.getId());
+		assertEquals(badTour.getId(), newTour.getId());
 		assertEquals(badTour.getOwnerId(), newTour.getOwnerId());
 		assertEquals(badTour.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(badTour.getTourTypeId(), newTour.getTourTypeId());
@@ -155,12 +131,12 @@ public class JdbcTourDaoTests {
 	@Test
 	public void testUpdateTour() {
 		tour1 = tourDao.createTour(tour1);
-		tour2.setTourId(tour1.getTourId());
+		tour2.setTourId(tour1.getId());
 		
 		//test that update works
 		tourDao.updateTour(tour2);
-		Tour newTour = tourDao.getTour(tour1.getTourId());
-		assertEquals(tour2.getTourId(), newTour.getTourId());
+		Tour newTour = tourDao.getTour(tour1.getId());
+		assertEquals(tour2.getId(), newTour.getId());
 		assertEquals(tour2.getOwnerId(), newTour.getOwnerId());
 		assertEquals(tour2.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour2.getTourTypeId(), newTour.getTourTypeId());
@@ -178,10 +154,10 @@ public class JdbcTourDaoTests {
 	public void testDeleteTour() {
 		//test for successful deletion
 		tour1 = tourDao.createTour(tour1);
-		int tour1id = tour1.getTourId();
+		int tour1id = tour1.getId();
 		tour2 = tourDao.createTour(tour2);
-		int tour2id = tour2.getTourId();
-		tourDao.deleteTour(tour1.getTourId());
+		int tour2id = tour2.getId();
+		tourDao.deleteTour(tour1.getId());
 		
 		//try to get deleted tour
 		thrown.expect(EmptyResultDataAccessException.class);
@@ -189,7 +165,7 @@ public class JdbcTourDaoTests {
 		
 		//try to get non-deleted tour
 		Tour newTour = tourDao.getTour(tour2id);
-		assertEquals(tour2.getTourId(), newTour.getTourId());
+		assertEquals(tour2.getId(), newTour.getId());
 		assertEquals(tour2.getOwnerId(), newTour.getOwnerId());
 		assertEquals(tour2.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour2.getTourTypeId(), newTour.getTourTypeId());
@@ -205,14 +181,14 @@ public class JdbcTourDaoTests {
 		tour2 = tourDao.createTour(tour2);
 		
 		//test getTour on tours that exist
-		Tour newTour = tourDao.getTour(tour1.getTourId());
-		assertEquals(tour1.getTourId(), newTour.getTourId());
+		Tour newTour = tourDao.getTour(tour1.getId());
+		assertEquals(tour1.getId(), newTour.getId());
 		assertEquals(tour1.getOwnerId(), newTour.getOwnerId());
 		assertEquals(tour1.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour1.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour1.getStatusId(), newTour.getStatusId());
-		newTour = tourDao.getTour(tour2.getTourId());
-		assertEquals(tour2.getTourId(), newTour.getTourId());
+		newTour = tourDao.getTour(tour2.getId());
+		assertEquals(tour2.getId(), newTour.getId());
 		assertEquals(tour2.getOwnerId(), newTour.getOwnerId());
 		assertEquals(tour2.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour2.getTourTypeId(), newTour.getTourTypeId());
@@ -220,7 +196,7 @@ public class JdbcTourDaoTests {
 		
 		//test getTour on tour that doesn't exist
 		thrown.expect(EmptyResultDataAccessException.class);
-		newTour = tourDao.getTour(tour2.getTourId() + 1);
+		newTour = tourDao.getTour(tour2.getId() + 1);
 	}
 	
 	@Test
@@ -238,13 +214,13 @@ public class JdbcTourDaoTests {
 		List<Tour> tours = tourDao.getTours(company1.getCompanyId());
 		assertEquals(tours.size(), 2);
 		Tour newTour = tours.get(0);
-		assertEquals(tour1.getTourId(), newTour.getTourId());
+		assertEquals(tour1.getId(), newTour.getId());
 		assertEquals(tour1.getOwnerId(), newTour.getOwnerId());
 		assertEquals(tour1.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour1.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour1.getStatusId(), newTour.getStatusId());
 		newTour = tours.get(1);
-		assertEquals(tour3.getTourId(), newTour.getTourId());
+		assertEquals(tour3.getId(), newTour.getId());
 		assertEquals(tour3.getOwnerId(), newTour.getOwnerId());
 		assertEquals(tour3.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour3.getTourTypeId(), newTour.getTourTypeId());
@@ -274,22 +250,23 @@ public class JdbcTourDaoTests {
 		List<Tour> tours = tourDao.getToursByDateRange(company2.getCompanyId(), 1000000000, 2000000000);
 		assertEquals(3, tours.size());
 		Tour newTour = tours.get(0);
-		assertEquals(tour2.getTourId(), newTour.getTourId());
+		assertEquals(tour2.getId(), newTour.getId());
 		assertEquals(tour2.getOwnerId(), newTour.getOwnerId());
 		assertEquals(tour2.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour2.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour2.getStatusId(), newTour.getStatusId());
 		newTour = tours.get(1);
-		assertEquals(tour3.getTourId(), newTour.getTourId());
+		assertEquals(tour3.getId(), newTour.getId());
 		assertEquals(tour3.getOwnerId(), newTour.getOwnerId());
 		assertEquals(tour3.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour3.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour3.getStatusId(), newTour.getStatusId());
 		newTour = tours.get(2);
-		assertEquals(tour4.getTourId(), newTour.getTourId());
+		assertEquals(tour4.getId(), newTour.getId());
 		assertEquals(tour4.getOwnerId(), newTour.getOwnerId());
 		assertEquals(tour4.getStartTimeInMillis(), newTour.getStartTimeInMillis());
 		assertEquals(tour4.getTourTypeId(), newTour.getTourTypeId());
 		assertEquals(tour4.getStatusId(), newTour.getStatusId());
 	}
+*/
 }
