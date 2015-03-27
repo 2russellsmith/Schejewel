@@ -18,7 +18,7 @@ public class ResourceResource {
     }
 
     @RequestMapping(value = "/api/resource/starttime/{startTime}", method = RequestMethod.GET)
-    public @ResponseBody List<Resource> getResources(@RequestHeader(value="X-AUTH-TOKEN") String token, @PathVariable(value = "startTime") long startTime){
+    public @ResponseBody List<Resource> getResources(@RequestHeader(value="X-AUTH-TOKEN") String token, @PathVariable(value = "startTime") String startTime){
         return resourceController.getResources(token, startTime);
     }
     @RequestMapping(value = "/api/resource/{resourceId}", method = RequestMethod.GET)
