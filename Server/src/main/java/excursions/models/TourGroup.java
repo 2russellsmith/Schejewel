@@ -1,44 +1,49 @@
 package excursions.models;
 
 public class TourGroup {
-	private int TourGroupId;
-	private int PortageId;
-	private int TourId;
-    private int GroupSize;
-    private Boolean Settled = null;
-    
-    public void setTourGroupId(int TourGroupId){
-    	this.TourGroupId = TourGroupId;
+	private int id;
+	private int portageId;
+	private int tourId;
+    private int groupSize;
+    private boolean settled;
+
+    public int getId() {
+        return id;
     }
-    public int getTourGroupId(){
-    	return TourGroupId;
+
+    public void setId(int id) {
+        this.id = id;
     }
-	
-    public void setPortageId(int PortageId){
-    	this.PortageId = PortageId;
+
+    public int getPortageId() {
+        return portageId;
     }
-    public int getPortageId(){
-    	return PortageId;
+
+    public void setPortageId(int portageId) {
+        this.portageId = portageId;
     }
-    
-    public void setTourId(int TourId){
-    	this.TourId = TourId;
+
+    public int getTourId() {
+        return tourId;
     }
-    public int getTourId(){
-    	return TourId;
+
+    public void setTourId(int tourId) {
+        this.tourId = tourId;
     }
-    
-	public void setGroupSize(int GroupSize){
-	    this.GroupSize = GroupSize;
-	}
-	public int getGroupSize(){
-	    return GroupSize;
-	}
-	
-    public Boolean getSettled() {
-    	return Settled;
+
+    public int getGroupSize() {
+        return groupSize;
     }
-    public void setSettled(Boolean Settled) {
-    	this.Settled = Settled;
+
+    public void setGroupSize(int groupSize) {
+        this.groupSize = groupSize;
+    }
+
+    public boolean isSettled() {
+        return settled;
+    }
+
+    public void setSettled(boolean settled) {
+        this.settled = settled;
     }
 }

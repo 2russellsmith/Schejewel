@@ -1,6 +1,7 @@
 package excursions.daos;
 
 import excursions.daos.interfaces.TourDao;
+import excursions.models.Resource;
 import excursions.models.Tour;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +11,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 import javax.sql.DataSource;
+
+import excursions.models.TourGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -31,9 +35,33 @@ public class JdbcTourDao implements TourDao {
 	@Override
 	public List<Tour> getTours(int companyid) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("owner_id",companyid);
-		String sql = "SELECT * FROM tour WHERE owner_id = :owner_id";
-		List<Tour> tours = jdbc.query(sql, params, new TourRowMapper());
+        params.addValue("companyId",companyid);
+		String sql = "SELECT id, owner_id AS ownerId, start_date AS startDate, start_time AS startTime, tour_type_id AS tourTypeId, status AS statusId FROM tour WHERE owner_id = :companyId";
+        List<Tour> tours = jdbc.query(sql, params, new BeanPropertyRowMapper<>(Tour.class));
+
+        sql = "SELECT id, name, start_time AS startTime, capacity, owner_id AS ownerId, tour_id AS tourId, duration, status AS statusId " +
+                "FROM resource r, resource_schedule rs WHERE r.id = rs.resource_id AND r.owner_id = :companyId";
+        List<Resource> resources = jdbc.query(sql, params, new BeanPropertyRowMapper<>(Resource.class));
+
+        sql = "SELECT id, portage_id AS portageId, tour_id AS tourId, group_size AS groupSize, settled FROM tour_group WHERE id IN(SELECT id FROM tour WHERE owner_id = :companyId)";
+        List<TourGroup> tourGroups = jdbc.query(sql, params, new BeanPropertyRowMapper<>(TourGroup.class));
+
+        for(Tour tour : tours){
+            //Assign resources to tours
+            for(Resource resource : resources){
+                if(resource.getTourId() == tour.getId()){
+                    tour.addResource(resource);
+                }
+            }
+
+            //Assign tour groups to tours
+            for(TourGroup tourGroup : tourGroups){
+                if(tourGroup.getTourId() == tour.getId()){
+                    tour.addTourGroup(tourGroup);
+                }
+            }
+        }
+
 		return tours;
 	}
 	
@@ -61,14 +89,14 @@ public class JdbcTourDao implements TourDao {
         params.addValue("id",tourid);
         String sql = "SELECT * FROM tour WHERE id = :id";
         Tour tour = (Tour)jdbc.queryForObject(sql, params, new TourRowMapper());
-		tour.setTourId(tourid);
+		tour.setId(tourid);
         return tour;
 	}
 
 	@Override
 	public Tour updateTour(Tour tour) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("id", tour.getTourId());
+		params.addValue("id", tour.getId());
         params.addValue("owner_id",tour.getOwnerId());
 		params.addValue("start_date", tour.getStartDate());
 		params.addValue("start_time", tour.getStartTime());
@@ -91,7 +119,7 @@ public class JdbcTourDao implements TourDao {
 	@Override
 	public Tour createTour(Tour tour) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("id", tour.getTourId());
+		params.addValue("id", tour.getId());
         params.addValue("owner_id",tour.getOwnerId());
 		params.addValue("start_date", tour.getStartDate());
 		params.addValue("start_time", tour.getStartTime());
@@ -101,7 +129,7 @@ public class JdbcTourDao implements TourDao {
 			+ " VALUES(:owner_id, :start_date, :start_time, :tour_type_id, :status)";
 		KeyHolder kh = new GeneratedKeyHolder();
 		jdbc.update(sql, params, kh);
-		tour.setTourId(kh.getKey().intValue());
+		tour.setId(kh.getKey().intValue());
 		return tour;
 	}
 	
@@ -109,9 +137,9 @@ public class JdbcTourDao implements TourDao {
 		public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			Tour tour = new Tour();
-			tour.setTourId(rs.getInt("id"));
+			tour.setId(rs.getInt("id"));
 			tour.setOwnerId(rs.getInt("owner_id"));
-			tour.setStartTime(rs.getDate("start_date", cal), rs.getTime("start_time"));
+			tour.setStartTime(rs.getString("start_date") + " " + rs.getString("start_time"));
 			tour.setTourTypeId(rs.getInt("tour_type_id"));
 			tour.setStatusId(rs.getInt("status"));
 			return tour;

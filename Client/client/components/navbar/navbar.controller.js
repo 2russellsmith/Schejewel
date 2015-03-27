@@ -13,14 +13,14 @@ angular.module('schejewelApp')
             'title': 'Dashboard',
             'link': '/dashboard'
         }, {
+            'title': 'Tours',
+            'link': '/tours'
+        }, {
+            'title': 'Resources',
+            'link': '/resources'
+        }, {
             'title': 'Admin',
             'link': '/admin'
-        }, {
-            'title': 'Item 3',
-            'link': '/item3'
-        }, {
-            'title': 'Item 4',
-            'link': '/item4'
         }];
 
         $scope.isCollapsed = true;

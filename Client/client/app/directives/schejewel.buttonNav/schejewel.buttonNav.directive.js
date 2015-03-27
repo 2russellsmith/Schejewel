@@ -12,15 +12,6 @@ angular.module('schejewelApp')
 				$scope.setVisible = function (directiveName) {
 					$scope.visibleDirective = directiveName;
 				};
-                $("#dialog").dialog({
-                    autoOpen: false,
-                    appendTo: "#Modal",
-                    modal: "true",
-                    open: function( event, ui ) {}
-                });
-                $( "#Modal" ).on("click", function() {
-                    $("#dialog").dialog("open");
-                });
 			}
 		};
 	});

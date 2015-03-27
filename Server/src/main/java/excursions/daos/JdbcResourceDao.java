@@ -52,7 +52,7 @@ public class JdbcResourceDao implements ResourceDao {
     @Override
     public Resource updateResource(Resource toUpdate) {
         MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("id", toUpdate.getResourceId());
+		params.addValue("id", toUpdate.getId());
 		params.addValue("name", toUpdate.getName());
 		params.addValue("capacity", toUpdate.getCapacity());
         params.addValue("owner_id", toUpdate.getOwnerId());
@@ -81,7 +81,7 @@ public class JdbcResourceDao implements ResourceDao {
 		
 		KeyHolder kh = new GeneratedKeyHolder();
 		jdbc.update(sql, params, kh);
-		toCreate.setResourceId(kh.getKey().intValue());
+		toCreate.setId(kh.getKey().intValue());
 		return toCreate;
     }
 
@@ -122,13 +122,9 @@ public class JdbcResourceDao implements ResourceDao {
 	public class ResourceRowMapper implements RowMapper {
 		public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Resource resource = new Resource();
-			resource.setResourceId(rs.getInt("id"));
+			resource.setId(rs.getInt("id"));
 			resource.setName(rs.getString("name"));
-			int capacity = rs.getInt("capacity");
-			if (rs.wasNull())
-				resource.setCapacity(null);
-			else
-				resource.setCapacity(capacity);
+			resource.setCapacity(rs.getInt("capacity"));
 			resource.setOwnerId(rs.getInt("owner_id"));
 			return resource;
 		}

@@ -1,27 +1,12 @@
 
 package DaoTests;
 
-import static DaoTests.JdbcResourceTypeDaoTests.resourceTypeDao;
-import static DaoTests.JdbcResourceTypeDaoTests.testDao;
+
 import TestSuite.JdbcTestDao;
 import TestSuite.TestDatabaseInfo;
-import excursions.daos.JdbcResourceTypeDao;
-import excursions.daos.interfaces.ResourceTypeDao;
-import excursions.models.ResourceType;
-import javax.sql.DataSource;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 
 public class JdbcResourceTypeDaoTests {
-	static ResourceTypeDao resourceTypeDao;
+	/*static ResourceTypeDao resourceTypeDao;
 	static JdbcTestDao testDao;
 	ResourceType resourceType1, resourceType2, badResourceType;
 	
@@ -127,4 +112,5 @@ public class JdbcResourceTypeDaoTests {
 		ResourceType c = resourceTypeDao.getResourceType(resourceType2.getResourceTypeId() + 1);
 		
 	}
+*/
 }
