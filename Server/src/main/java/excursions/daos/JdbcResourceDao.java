@@ -2,6 +2,7 @@ package excursions.daos;
 
 import excursions.daos.interfaces.ResourceDao;
 import excursions.models.Resource;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -17,6 +18,8 @@ import javax.sql.DataSource;
 
 import java.util.List;
 import java.util.TimeZone;
+
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -90,10 +93,10 @@ public class JdbcResourceDao implements ResourceDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("owner_id", companyId);
 		params.addValue("begin", startDate);
-        String sql = "SELECT resource.* FROM resource JOIN resource_schedule ON resource.id = "
+        String sql = "SELECT id, name, start_time AS startTime, capacity, owner_id AS ownerId, tour_id AS tourId, duration, status AS statusId FROM resource JOIN resource_schedule ON resource.id = "
 			+ "resource_schedule.resource_id WHERE resource.owner_id = :owner_id AND "
 			+ "resource_schedule.start_date =:begin";
-        List<Resource> resources = jdbc.query(sql, params, new ResourceRowMapper());
+        List<Resource> resources = jdbc.query(sql, params, new BeanPropertyRowMapper<>(Resource.class));
         return resources;
 	}
 	
@@ -102,6 +105,7 @@ public class JdbcResourceDao implements ResourceDao {
 			Resource resource = new Resource();
 			resource.setId(rs.getInt("id"));
 			resource.setName(rs.getString("name"));
+			//resource.setStartTime(rs.getString("StartTime"));
 			resource.setCapacity(rs.getInt("capacity"));
 			resource.setOwnerId(rs.getInt("owner_id"));
 			return resource;
