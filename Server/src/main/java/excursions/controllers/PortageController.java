@@ -1,38 +1,19 @@
 package excursions.controllers;
 
-import excursions.daos.JdbcPortageDao;
-import excursions.daos.interfaces.PortageDao;
+import excursions.daos.PortageDao;
 import excursions.models.Portage;
-import excursions.models.User;
-import excursions.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class PortageController {
     @Autowired
-    private PortageDao portageDao = new JdbcPortageDao();
+    private PortageDao portageDao;
 
-    public List<Portage> getPortages(String token){
-        User user = Converter.fromJSON(Converter.fromBase64(token));
-        return portageDao.getPortages(user.getCompanyId());
-    }
-
-    public Portage getPortage(int portageId){
-        return portageDao.getPortage(portageId);
-    }
-
-    public Portage updatePortage(Portage portage){
-        return portageDao.updatePortage(portage);
-    }
-
-    public void deletePortage(int portageId){
-        portageDao.deletePortage(portageId);
-    }
-
-    public Portage createPortage(Portage portage){
-        return portageDao.createPortage(portage);
+    @RequestMapping(value = "/api/portages", method = RequestMethod.GET)
+    public @ResponseBody List<Portage> getPortages(@RequestHeader(value="X-AUTH-TOKEN") String token){
+        return portageDao.getPortages();
     }
 }

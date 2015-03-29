@@ -1,25 +1,17 @@
 package excursions.controllers;
 
-import excursions.daos.interfaces.UserDao;
-import excursions.daos.JdbcUserDao;
+import excursions.daos.UserDao;
 import excursions.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class UserController {
     @Autowired
-    private UserDao userDao = new JdbcUserDao();
+    private UserDao userDao;
 
-    public User createUser(User user){
+    @RequestMapping(value = "/api/user", method = RequestMethod.POST)
+    public @ResponseBody User createUser(@RequestBody User user){
         return userDao.createUser(user);
-    }
-
-    public User updateUser(User user){
-        return userDao.updateUser(user);
-    }
-
-    public void deleteUser(int userId){
-        userDao.deleteUser(userId);
     }
 }

@@ -7,9 +7,9 @@ package DaoTests;
 
 import TestSuite.JdbcTestDao;
 import TestSuite.TestDatabaseInfo;
-import excursions.daos.JdbcCompanyDao;
-import excursions.daos.interfaces.CompanyDao;
-import excursions.models.Company;
+import legacy.daos.JdbcCompanyDao;
+import legacy.daos.interfaces.CompanyDao;
+import legacy.models.Company;
 import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.AfterClass;

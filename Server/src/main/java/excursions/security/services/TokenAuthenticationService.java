@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
@@ -31,9 +30,6 @@ public class TokenAuthenticationService {
         response.addHeader(AUTH_HEADER_NAME, tokenHandler.createTokenForUser(user));
     }
 
-    //Todo: See if I am able to separate the logic from users and userdetails.... I dont want a password on my user I pass back.
-    //Todo: I can refactor this to make a user authentication not be authenticated until true.  If the token handler
-    //Todo: cannot find the user then it returns an un-authenticated user???
     public Authentication getAuthentication(HttpServletRequest request) {
         final String token = request.getHeader(AUTH_HEADER_NAME);
         if (token != null) {

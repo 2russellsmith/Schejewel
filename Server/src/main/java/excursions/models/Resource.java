@@ -4,6 +4,7 @@ public class Resource {
     private int id;
     private String name;
     private String startTime;
+    private String startDate;
     private int capacity;
     private int ownerId;
     private int tourId;
@@ -72,5 +73,13 @@ public class Resource {
 
     public void setStatusId(int statusId) {
         this.statusId = statusId;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 }

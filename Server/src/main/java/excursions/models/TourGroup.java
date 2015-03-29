@@ -1,9 +1,9 @@
 package excursions.models;
 
 public class TourGroup {
-	private int id;
-	private int portageId;
-	private int tourId;
+    private int id;
+    private int portageId;
+    private int tourId;
     private int groupSize;
     private boolean settled;
 

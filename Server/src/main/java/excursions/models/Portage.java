@@ -1,140 +1,103 @@
 package excursions.models;
 
-import java.util.Date;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;
-
 public class Portage {
-    private int portageId;
+    private int id;
     private int cruiseShipId;
-    private long arrival;
-    private long departure;
-    private Integer passengerCount = null;
-    private Long allAboard = null;
-    private Integer dock = null;
-    private String voyage = null;
-    private String location = null;
-   
-    public void setPortageId(int PortageId){
-    	this.portageId = PortageId;
+    private int passengerCount;
+    private int dock;
+    private String arrivalDate;
+    private String arrivalTime;
+    private String departureDate;
+    private String departureTime;
+    private String allAboard;
+    private String voyage;
+    private String location;
+
+    public int getId() {
+        return id;
     }
-    public int getPortageId(){
-    	return portageId;
+
+    public void setId(int id) {
+        this.id = id;
     }
-    
-    public void setCruiseShipId(int CruiseShipId){
-    	this.cruiseShipId = CruiseShipId;
+
+    public int getCruiseShipId() {
+        return cruiseShipId;
     }
-    public int getCruiseShipId(){
-    	return cruiseShipId;
+
+    public void setCruiseShipId(int cruiseShipId) {
+        this.cruiseShipId = cruiseShipId;
     }
-    
-    public void setDock(Integer Dock){
-    	this.dock = Dock;
+
+    public int getPassengerCount() {
+        return passengerCount;
     }
-    public Integer getDock(){
-    	return dock;
+
+    public void setPassengerCount(int passengerCount) {
+        this.passengerCount = passengerCount;
     }
-    
-    public void setVoyage(String Voyage){
-    	this.voyage = Voyage;
+
+    public int getDock() {
+        return dock;
     }
-    public String getVoyage(){
-    	return voyage;
+
+    public void setDock(int dock) {
+        this.dock = dock;
     }
-    
-    public long getArrival() {
-    	return arrival;
-    }
+
     public String getArrivalDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-		calendar.setTimeInMillis(arrival);
-        return sdf.format(calendar.getTime());
+        return arrivalDate;
     }
+
+    public void setArrivalDate(String arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
+
     public String getArrivalTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSSSSS");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-		calendar.setTimeInMillis(arrival);
-        return sdf.format(calendar.getTime());
+        return arrivalTime;
     }
-    public void setArrival(long millis) {
-        arrival = millis;
+
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
-    public void setArrival(Date date, Time time) {
-        arrival = date.getTime() + timeToMillis(time);
-    }
-	
-    public long getDeparture() {
-    	return departure;
-    }
+
     public String getDepartureDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-		calendar.setTimeInMillis(departure);
-        return sdf.format(calendar.getTime());
+        return departureDate;
     }
+
+    public void setDepartureDate(String departureDate) {
+        this.departureDate = departureDate;
+    }
+
     public String getDepartureTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSSSSS");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-		calendar.setTimeInMillis(departure);
-        return sdf.format(calendar.getTime());
+        return departureTime;
     }
-    public void setDeparture(long millis) {
-        departure = millis;
+
+    public void setDepartureTime(String departureTime) {
+        this.departureTime = departureTime;
     }
-    public void setDeparture(Date date, Time time) {
-            departure = date.getTime() + timeToMillis(time);
+
+    public String getAllAboard() {
+        return allAboard;
     }
-    
+
+    public void setAllAboard(String allAboard) {
+        this.allAboard = allAboard;
+    }
+
+    public String getVoyage() {
+        return voyage;
+    }
+
+    public void setVoyage(String voyage) {
+        this.voyage = voyage;
+    }
+
     public String getLocation() {
-    	return location;
+        return location;
     }
+
     public void setLocation(String location) {
-    	this.location = location;
+        this.location = location;
     }
-	
-    public Integer getPassengerCount() {
-    	return passengerCount;
-    }
-    public void setPassengerCount(Integer PassengerCount) {
-    	this.passengerCount = PassengerCount;
-    }
-	
-    public Long getAllAboard() {
-    	return allAboard;
-    }
-    public String getAllAboardTime() {
-        if (allAboard == null)
-            return null;
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSSSSS");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-		calendar.setTimeInMillis(allAboard);
-        return sdf.format(calendar.getTime());
-    }
-    public void setAllAboard(Long millis) {
-    	allAboard = millis;
-    }
-    public void setAllAboardTime(Time time) {
-        if (time == null)
-            allAboard = null;
-		else 
-			allAboard = timeToMillis(time);
-    }
-	
-	private long timeToMillis(Time time) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(time);
-		int hour = cal.get(Calendar.HOUR_OF_DAY);
-		int min = cal.get(Calendar.MINUTE);
-		int sec = cal.get(Calendar.SECOND);
-		return (long)(hour * 3600 + min * 60 + sec) * 1000;
-	}
 }

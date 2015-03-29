@@ -7,12 +7,12 @@ package DaoTests;
 
 import TestSuite.JdbcTestDao;
 import TestSuite.TestDatabaseInfo;
-import excursions.daos.JdbcCompanyDao;
-import excursions.daos.JdbcUserDao;
-import excursions.daos.interfaces.CompanyDao;
-import excursions.daos.interfaces.UserDao;
-import excursions.models.Company;
-import excursions.models.User;
+import legacy.daos.JdbcCompanyDao;
+import legacy.daos.JdbcUserDao;
+import legacy.daos.interfaces.CompanyDao;
+import legacy.daos.interfaces.UserDao;
+import legacy.models.Company;
+import legacy.models.User;
 import java.util.List;
 import javax.sql.DataSource;
 import org.junit.After;

@@ -1,20 +1,15 @@
 package excursions.models;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 public class Tour {
-	private int id;
-	private int ownerId;
+    private int id;
+    private int ownerId;
     private String startDate;
-	private String startTime;
+    private String startTime;
     private int tourTypeId;
-	private int statusId;
+    private int statusId;
     private List<Resource> resources;
     private List<TourGroup> tourGroups;
 

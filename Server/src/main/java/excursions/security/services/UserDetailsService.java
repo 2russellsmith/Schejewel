@@ -1,6 +1,6 @@
 package excursions.security.services;
 
-import excursions.daos.interfaces.UserDao;
+import excursions.daos.UserDao;
 import excursions.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
@@ -20,7 +20,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         final User user = userDao.findUserByUsername(username);
 
         if(user == null){
-            throw new UsernameNotFoundException("user not found");
+            throw new UsernameNotFoundException("User not found");
         }
 
         detailsChecker.check(user);
