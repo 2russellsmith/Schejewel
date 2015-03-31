@@ -119,7 +119,6 @@ angular.module('schejewelApp')
 
 				var splitToken = token.split('.')[0];
 				var decoded = Base64.decode(splitToken);
-				console.log('decoded', decoded);
 				currentUser = JSON.parse(decoded);
 			}
 		};
@@ -133,7 +132,6 @@ angular.module('schejewelApp')
 			}).
 			success(function (data, status, headers, config) {
 				var token = headers()['x-auth-token'];
-				console.log('token', token);
 				setupCookie(token);
 				deferred.resolve(currentUser);
 			}).
