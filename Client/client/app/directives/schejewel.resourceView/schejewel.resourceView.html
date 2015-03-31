@@ -1,19 +1,4 @@
-<div id="resourceTable" style="position: absolute">
-    <div>
-        <div class='cell'>
-            Time
-            <div style="width: 300px; height: 835px; border-style: solid; border-width: 1px; float: left">
-                <div ng-repeat="n in dummyData">
-                    <div style=" line-height: 27px; border-bottom:  dotted 1px; height: 29px;" :data-ng-model="modal.data.answer[n].text">{{n}}</div>
-                </div>
-            </div>
-        </div>
-        <div style="float: left" ng-repeat="m in Columns">
-            <div style="width: 300px; text-align:center" data-ng-model="modal.data.answer[m].text"> {{m.resourceType}} </div>
-            <div style="width: 300px; height: 835px; border-style: solid; border-width: 1px;">
-                <div ng-repeat="n in dummyData" style=" border-bottom:  dotted 1px; height: 29px;" :data-ng-model="modal.data.answer[n].text"></div>
-            </div>
-            <div style="background-color: blue; height: 30px; position: absolute; top: 30px" ng-style="{{getStyle(r.startTime, r.endTime)}}" ng-repeat="r in m.useTimes"> {{r.startTime}} </div>
-        </div>
-    </div>
+<div style="position: absolute; top: 118px; left: 50px; height: 100px; width: 50px;"class="buttonHolder"></div>
+<div style="width: 80%; margin-left: auto; margin-right: auto;">
+<div id='calendar'></div>
 </div>

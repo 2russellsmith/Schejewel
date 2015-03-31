@@ -17,7 +17,7 @@ angular.module('schejewelApp')
                 else{
                   $http.defaults.headers.common['X-AUTH-TOKEN'] = mockToken;
                   console.log(url + 'resource'+'/'+milliseconds.getTime());
-                  $http.get(url + 'resource'+'/1437350400'/*+milliseconds.getTime()*/).success(function (data, status, headers, config) {
+                  $http.get(url + 'resources'+''/*+milliseconds.getTime()*/).success(function (data, status, headers, config) {
                       deferred.resolve(data);
                   })
                 }
