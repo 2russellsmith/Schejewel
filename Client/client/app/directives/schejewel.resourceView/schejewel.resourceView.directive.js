@@ -9,7 +9,7 @@ angular.module('schejewelApp')
 				$scope.rawResourceData;
 				var dateString = "2015-05-05"; //TODO: getToday
 				Data.getResources(dateString).then(function(data) {
-					console.log(data);
+					//console.log(data);
 					$scope.rawResourceData = data;
 					$scope.convertDataToCalendar();
 					$scope.loadResourceButtons();
@@ -95,7 +95,6 @@ angular.module('schejewelApp')
 					$scope.eventList = {events: []};
 					for(var j = 0; j < events.length; j++){
 						for(var i = 0; i < $scope.resourceData.length; i++){
-							console.log($scope.resourceData[i].title + " "+ events[j].name);
 							if($scope.resourceData[i].title === events[j].name){
 								var event = $scope.resourceData[i];
 								event.backgroundColor = $scope.colors[events[j].color];
@@ -106,13 +105,11 @@ angular.module('schejewelApp')
 					$('#calendar').fullCalendar('removeEvents')
 					$('#calendar').fullCalendar('removeEventSource', $scope.eventList);
 					$('#calendar').fullCalendar('addEventSource', $scope.eventList);
-					console.log($scope.eventList);
 					$('#calendar').fullCalendar('refetchEvents');
 				}
 
 				$scope.loadResourceButtons = function(){
 					for(var i = 0; i < $scope.resourceData.length; i++){
-						console.log($scope.resourceData[i]);
 						var newResource = true;
 						for(var j = 0; j < $scope.resourceList.length; j++){
 							if($scope.resourceData[i].title === $scope.resourceList[j]){
