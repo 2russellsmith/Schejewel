@@ -17,8 +17,9 @@ public class JdbcPortageDao implements PortageDao{
     @Override
     public List<Portage> getPortages() {
         MapSqlParameterSource params = new MapSqlParameterSource();
-        String sql = "SELECT id, cruise_ship_id AS cruiseShipId, arrival_date AS arrivalDate, arrival_time AS arrivalTime, departure_date AS departureDate, " +
-        "departure_time AS departureTime, passengers AS passengerCount, aa AS allAboard, dock, voyage, location FROM portage";
+        String sql = "SELECT p.id, s.name, p.cruise_ship_id AS cruiseShipId, p.arrival_date AS arrivalDate, p.arrival_time AS arrivalTime, p.departure_date AS departureDate, " +
+                "p.departure_time AS departureTime, p.passengers AS passengerCount, p.aa AS allAboard, p.dock, p.voyage, p.location FROM portage p, cruise_ship s WHERE " +
+                "s.id = p.cruise_ship_id";
         List<Portage> portages = jdbc.query(sql, params, new BeanPropertyRowMapper<>(Portage.class));
         return portages;
     }

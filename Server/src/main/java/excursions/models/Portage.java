@@ -5,6 +5,7 @@ public class Portage {
     private int cruiseShipId;
     private int passengerCount;
     private int dock;
+    private String name;
     private String arrivalDate;
     private String arrivalTime;
     private String departureDate;
@@ -99,5 +100,13 @@ public class Portage {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
