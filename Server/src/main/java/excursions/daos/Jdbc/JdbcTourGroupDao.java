@@ -1,4 +1,4 @@
-package excursions.daos;
+package excursions.daos.Jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
+import excursions.daos.TourGroupDao;
 import excursions.models.TourGroup;
 
 public class JdbcTourGroupDao implements TourGroupDao{

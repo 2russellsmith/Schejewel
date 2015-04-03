@@ -1,8 +1,10 @@
-package excursions.daos;
+package excursions.daos.Jdbc;
 
+import excursions.daos.UserDao;
 import excursions.models.User;
 import excursions.security.UserAuthority;
 import excursions.utils.DuplicateUserException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -13,6 +15,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 @Repository

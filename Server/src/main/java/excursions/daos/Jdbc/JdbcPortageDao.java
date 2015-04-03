@@ -1,5 +1,6 @@
-package excursions.daos;
+package excursions.daos.Jdbc;
 
+import excursions.daos.PortageDao;
 import excursions.models.Portage;
 
 import org.springframework.beans.factory.annotation.Autowired;

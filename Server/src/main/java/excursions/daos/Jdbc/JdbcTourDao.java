@@ -1,5 +1,6 @@
-package excursions.daos;
+package excursions.daos.Jdbc;
 
+import excursions.daos.TourDao;
 import excursions.models.Resource;
 import excursions.models.Tour;
 import excursions.models.TourGroup;
