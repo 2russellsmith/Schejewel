@@ -16,4 +16,18 @@ public class PortageController {
     public @ResponseBody List<Portage> getPortages(@RequestHeader(value="X-AUTH-TOKEN") String token){
         return portageDao.getPortages();
     }
+    
+    @RequestMapping(value = "/api/portage", method = RequestMethod.PUT)
+    public @ResponseBody Portage updatePortage(@RequestBody Portage portage){
+    	Portage temp = portageDao.updatePortage(portage);
+        //TODO: call conflictDetection here
+    	return temp;
+    }
+
+    //TODO: Sql out of date; 4/3/2015 not sure what this is here for
+    @RequestMapping(value = "/api/portage/{portageid}", method = RequestMethod.DELETE)
+    public @ResponseBody void deletePortage(@PathVariable(value="portageid") int portageId){
+        portageDao.deletePortage(portageId);
+        //TODO: call conflictDetection here
+    }
 }
