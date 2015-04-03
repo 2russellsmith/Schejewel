@@ -3,10 +3,13 @@ package excursions.daos;
 import excursions.models.Resource;
 import excursions.models.Tour;
 import excursions.models.TourGroup;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -48,4 +51,47 @@ public class JdbcTourDao implements TourDao{
 
         return tours;
     }
+
+	@Override
+	public Tour updateTour(Tour tour) {
+		//TODO: is update allowed to change resources and tourGroups?
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("id", tour.getId());
+        params.addValue("owner_id",tour.getOwnerId());
+		params.addValue("start_date", tour.getStartDate());
+		params.addValue("start_time", tour.getStartTime());
+		params.addValue("tour_type_id", tour.getTourTypeId());
+		params.addValue("status", tour.getStatusId());
+		String sql = "UPDATE tour SET owner_id=:owner_id, start_date=:start_date, "
+			+ "start_time=:start_time, tour_type_id=:tour_type_id, status=:status WHERE id=:id";
+		jdbc.update(sql, params);
+		return tour;
+	}
+
+	@Override
+	public void deleteTour(int tourid) {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id",tourid);
+		String sql = "DELETE FROM tour WHERE id=:id";
+		jdbc.update(sql, params);
+		return;
+	}
+
+	@Override
+	public Tour createTour(Tour tour) {
+		//TODO: is create allowed to set resources and tourGroups?
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("id", tour.getId());
+        params.addValue("owner_id",tour.getOwnerId());
+		params.addValue("start_date", tour.getStartDate());
+		params.addValue("start_time", tour.getStartTime());
+		params.addValue("tour_type_id", tour.getTourTypeId());
+		params.addValue("status", tour.getStatusId());
+		String sql = "INSERT INTO tour(owner_id, start_date, start_time, tour_type_id, status)"
+			+ " VALUES(:owner_id, :start_date, :start_time, :tour_type_id, :status)";
+		KeyHolder kh = new GeneratedKeyHolder();
+		jdbc.update(sql, params, kh);
+		tour.setId(kh.getKey().intValue());
+		return tour;
+	}
 }
