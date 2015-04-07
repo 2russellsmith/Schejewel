@@ -205,6 +205,7 @@ angular.module('schejewelApp')
 				return $cookieStore.get('token');
 			},
 
+
 			/**
 			 * Check if a user is logged in
 			 *

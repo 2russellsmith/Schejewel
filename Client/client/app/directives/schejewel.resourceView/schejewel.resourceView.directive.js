@@ -6,14 +6,37 @@ angular.module('schejewelApp')
 			templateUrl: 'app/directives/schejewel.resourceView/schejewel.resourceView.html',
 			restrict: 'EA',
 			link: function ($scope) {
+
+				$scope.formatDate = function(n){
+					return n<10? '0'+n:''+n;
+				}
+
+				$scope.manageDateString = function(){
+					$scope.dateString = Data.getDisplayDate();
+					if($scope.dateString === undefined){
+						var today = new Date();
+						//console.log(today.getMonth());
+						//console.log(today.getDay());
+						$scope.dateString = today.getFullYear()+'-'+$scope.formatDate(today.getMonth()+1)+'-'+$scope.formatDate(today.getDate()+1);
+						//console.log($scope.dateString);
+						Data.setDisplayDate($scope.dateString);
+					}
+				}
+
 				$scope.rawResourceData;
-				var dateString = "2015-05-05"; //TODO: getToday
-				Data.getResources(dateString).then(function(data) {
-					//console.log(data);
-					$scope.rawResourceData = data;
-					$scope.convertDataToCalendar();
-					$scope.loadResourceButtons();
-        });
+				$scope.dateString; //"2015-05-05"; //TODO: getToday
+				$scope.manageDateString();
+
+				$scope.fetchResources = function(){
+					Data.getResources($scope.dateString).then(function(data) {
+						//console.log(data);
+						$scope.rawResourceData = data;
+						$scope.convertDataToCalendar();
+						$scope.loadResourceButtons();
+	        });
+				}
+
+
 
 				$scope.resourceData =
 				[
@@ -35,41 +58,7 @@ angular.module('schejewelApp')
 				$scope.colors = ['#0099CC', '#378006', '#ff0000', '#40e0d0', '#008000', '#468499', '#800000', '#0000ff', '#333333']
 				//$scope.calendarData = {start:2015-03-29T20:41:02+00:00, end:2015-03-29T20:41:06+00:0};
 				$scope.eventList = {events:[]}
-		    $scope.events =
-				{
-					events: [
-				        {
-				            title  : 'Bus1',
-										start  : '2015-03-29T18:30:00',
-										end  : '2015-03-29T20:30:00'
-				        },
-				        {
-				            title  : 'Bus1',
-										start  : '2015-03-29T06:30:00',
-										end  : '2015-03-29T08:30:00'
-				        },
-				        {
-				            title  : 'Bus1',
-				            start  : '2015-03-29T12:30:00',
-										end  : '2015-03-29T16:30:00'
-				        },
-								{
-				            title  : 'Bus2',
-				            start  : '2015-03-29T12:30:00',
-										end  : '2015-03-29T17:00:00',
-				        },
-								{
-				            title  : 'Bus2',
-				            start  : '2015-03-29T08:30:00',
-										end  : '2015-03-29T09:30:00',
-				        },
-								{
-				            title  : 'Bus2',
-				            start  : '2015-03-29T17:30:00',
-										end  : '2015-03-29T18:00:00',
-				        }
-							]
-				}
+		    $scope.events = {}
 
 				$scope.addMinutes = function (time, minsToAdd) {
 				function D(J){ return (J<10? '0':'') + J;};
@@ -142,6 +131,22 @@ angular.module('schejewelApp')
 					$scope.createNewEventList($scope.activeResources);
 				});
 
+				$(document).on( "click", '.fc-next-button', function () {
+					var nextDay = new Date($scope.dateString);
+					nextDay.setDate(nextDay.getDate() + 1);
+					$scope.dateString = nextDay.getFullYear()+'-'+$scope.formatDate(nextDay.getMonth()+1)+'-'+$scope.formatDate(nextDay.getDate()+1);
+					//console.log($scope.dateString);
+					$scope.fetchResources();
+				});
+
+				$(document).on( "click", '.fc-prev-button', function () {
+					var nextDay = new Date($scope.dateString);
+					nextDay.setDate(nextDay.getDate() - 1);
+					$scope.dateString = nextDay.getFullYear()+'-'+$scope.formatDate(nextDay.getMonth()+1)+'-'+$scope.formatDate(nextDay.getDate()+1);
+					//console.log($scope.dateString);
+					$scope.fetchResources();
+				});
+
 				$('#calendar').fullCalendar({
 					allDaySlot: false,
 					defaultView: 'agendaDay',
@@ -149,6 +154,7 @@ angular.module('schejewelApp')
 					minTime: "06:00:00",
 					events: $scope.eventList
 				});
+				$scope.fetchResources();
 			}
 		};
 	});

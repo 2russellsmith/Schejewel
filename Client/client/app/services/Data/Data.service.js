@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('schejewelApp')
-    .service('Data', function($q, $http, Auth) {
+    .service('Data', function($q, $http, $cookieStore, Auth) {
         var url = 'http://Default-Environment-69yjsdh6ez.elasticbeanstalk.com/api/';
         var Token = Auth.getToken();
 
@@ -37,7 +37,13 @@ angular.module('schejewelApp')
                 }
 
                 return deferred.promise
-            }
+            },
+            getDisplayDate: function () {  //YYYY-MM-DD
+      				return $cookieStore.get('date');
+      			},
+            setDisplayDate: function (dateString) { //YYYY-MM-DD
+        			$cookieStore.put('date', dateString);
+      			}
 
         };
     });
