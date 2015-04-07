@@ -1,7 +1,9 @@
 package excursions.controllers;
 
 import excursions.daos.PortageDao;
+import excursions.daos.ScheduleConflictDao;
 import excursions.models.Portage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +13,9 @@ import java.util.List;
 public class PortageController {
     @Autowired
     private PortageDao portageDao;
+    
+    @Autowired
+    private ScheduleConflictDao scheduleConflictDao;
 
     @RequestMapping(value = "/api/portages", method = RequestMethod.GET)
     public @ResponseBody List<Portage> getPortages(@RequestHeader(value="X-AUTH-TOKEN") String token){
@@ -20,7 +25,7 @@ public class PortageController {
     @RequestMapping(value = "/api/portage", method = RequestMethod.PUT)
     public @ResponseBody Portage updatePortage(@RequestBody Portage portage){
     	Portage temp = portageDao.updatePortage(portage);
-        //TODO: call conflictDetection here
+    	scheduleConflictDao.detect();
     	return temp;
     }
 
@@ -28,6 +33,6 @@ public class PortageController {
     @RequestMapping(value = "/api/portage/{portageid}", method = RequestMethod.DELETE)
     public @ResponseBody void deletePortage(@PathVariable(value="portageid") int portageId){
         portageDao.deletePortage(portageId);
-        //TODO: call conflictDetection here
+        scheduleConflictDao.detect();
     }
 }
