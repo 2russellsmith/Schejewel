@@ -13,19 +13,17 @@ angular.module('schejewelApp')
 
 				$scope.manageDateString = function(){
 					$scope.dateString = Data.getDisplayDate();
+					//console.log($scope.dateString);
 					if($scope.dateString === undefined){
 						var today = new Date();
-						//console.log(today.getMonth());
-						//console.log(today.getDay());
-						$scope.dateString = today.getFullYear()+'-'+$scope.formatDate(today.getMonth()+1)+'-'+$scope.formatDate(today.getDate()+1);
-						//console.log($scope.dateString);
+						$scope.dateString = today.getFullYear()+'-'+$scope.formatDate(today.getMonth()+1)+'-'+$scope.formatDate(today.getDate());
 						Data.setDisplayDate($scope.dateString);
 					}
+					$('#calendar').fullCalendar('gotoDate', $scope.dateString);
 				}
 
 				$scope.rawResourceData;
 				$scope.dateString; //"2015-05-05"; //TODO: getToday
-				$scope.manageDateString();
 
 				$scope.fetchResources = function(){
 					Data.getResources($scope.dateString).then(function(data) {
@@ -33,10 +31,11 @@ angular.module('schejewelApp')
 						$scope.rawResourceData = data;
 						$scope.convertDataToCalendar();
 						$scope.loadResourceButtons();
+						$scope.InitAllValues();
 	        });
 				}
 
-
+				$scope.resourceNameList = []; //This stores all name and color combinations for the data fetched.
 
 				$scope.resourceData =
 				[
@@ -60,6 +59,14 @@ angular.module('schejewelApp')
 				$scope.eventList = {events:[]}
 		    $scope.events = {}
 
+				$scope.InitAllValues = function(){
+					//console.log($scope.resourceNameList);
+					for(var i = 0; i < $scope.resourceNameList.length; i++){
+						$scope.activeResources.push($scope.resourceNameList[i]);
+					}
+					$scope.createNewEventList($scope.activeResources);
+				}
+
 				$scope.addMinutes = function (time, minsToAdd) {
 				function D(J){ return (J<10? '0':'') + J;};
 				var piece = time.split(':');
@@ -80,7 +87,8 @@ angular.module('schejewelApp')
 					}
 				}
 
-				$scope.createNewEventList = function(events, colorIndex){
+				$scope.createNewEventList = function(events){
+					//console.log(events);
 					$scope.eventList = {events: []};
 					for(var j = 0; j < events.length; j++){
 						for(var i = 0; i < $scope.resourceData.length; i++){
@@ -98,6 +106,8 @@ angular.module('schejewelApp')
 				}
 
 				$scope.loadResourceButtons = function(){
+					$('.resourceButton').remove();
+					$scope.resourceList = [];
 					for(var i = 0; i < $scope.resourceData.length; i++){
 						var newResource = true;
 						for(var j = 0; j < $scope.resourceList.length; j++){
@@ -110,6 +120,8 @@ angular.module('schejewelApp')
 						}
 					}
 					for(var i = 0; i < $scope.resourceList.length; i++){
+						var resourceData = {name: $scope.resourceList[i], color : i};
+						$scope.resourceNameList.push(resourceData);
 						$('.buttonHolder').append('<button style="margin-bottom: 20px;" title = "' + i + '"class="resourceButton" value="'+ $scope.resourceList[i] +'">'+ $scope.resourceList[i] +'</button>');
 					}
 				}
@@ -131,20 +143,62 @@ angular.module('schejewelApp')
 					$scope.createNewEventList($scope.activeResources);
 				});
 
-				$(document).on( "click", '.fc-next-button', function () {
-					var nextDay = new Date($scope.dateString);
-					nextDay.setDate(nextDay.getDate() + 1);
-					$scope.dateString = nextDay.getFullYear()+'-'+$scope.formatDate(nextDay.getMonth()+1)+'-'+$scope.formatDate(nextDay.getDate()+1);
-					//console.log($scope.dateString);
+				/*$(document).on( "click", '.fc-today-button', function () {
+					console.log("Testing");
+					$scope.resourceData = [];
+					$scope.eventList = {events: []};
+					$scope.activeResources = [];
+					var nextDay = new Date();
+					$scope.dateString = nextDay.getFullYear()+'-'+$scope.formatDate(nextDay.getMonth()+1)+'-'+$scope.formatDate(nextDay.getDate());
+					Data.setDisplayDate($scope.dateString);
+					$scope.manageDateString();
 					$scope.fetchResources();
+					$('#calendar').fullCalendar('removeEvents')
+					$('#calendar').fullCalendar('removeEventSource', $scope.eventList);
+					$('#calendar').fullCalendar('addEventSource', $scope.eventList);
+					$('#calendar').fullCalendar('refetchEvents');
+					$('#calendar').fullCalendar('gotoDate', $scope.dateString);
+					console.log($scope.dateString);
+				});*/
+
+
+				$(document).on( "click", '.fc-next-button', function () {
+					$scope.resourceData = [];
+					$scope.eventList = {events: []};
+					$scope.activeResources = [];
+					var nextDay = new Date($scope.dateString);
+					nextDay.setDate(nextDay.getDate() + 2);
+					$scope.dateString = nextDay.getFullYear()+'-'+$scope.formatDate(nextDay.getMonth()+1)+'-'+$scope.formatDate(nextDay.getDate());
+					Data.setDisplayDate($scope.dateString);
+					//console.log($scope.dateString);
+					$scope.manageDateString();
+					$scope.fetchResources();
+					$('#calendar').fullCalendar('removeEvents')
+					$('#calendar').fullCalendar('removeEventSource', $scope.eventList);
+					$('#calendar').fullCalendar('addEventSource', $scope.eventList);
+					$('#calendar').fullCalendar('refetchEvents');
+					var today = new Date();
+					$('#calendar').fullCalendar('gotoDate', $scope.dateString);
 				});
 
 				$(document).on( "click", '.fc-prev-button', function () {
+					$scope.resourceData = [];
+					$scope.eventList = {events: []};
+					$scope.activeResources = [];
 					var nextDay = new Date($scope.dateString);
-					nextDay.setDate(nextDay.getDate() - 1);
-					$scope.dateString = nextDay.getFullYear()+'-'+$scope.formatDate(nextDay.getMonth()+1)+'-'+$scope.formatDate(nextDay.getDate()+1);
+					nextDay.setDate(nextDay.getDate());
+					$scope.dateString = nextDay.getFullYear()+'-'+$scope.formatDate(nextDay.getMonth()+1)+'-'+$scope.formatDate(nextDay.getDate());
+					Data.setDisplayDate($scope.dateString);
 					//console.log($scope.dateString);
+					$scope.manageDateString();
 					$scope.fetchResources();
+					$('#calendar').fullCalendar('removeEvents')
+					$('#calendar').fullCalendar('removeEventSource', $scope.eventList);
+					$('#calendar').fullCalendar('addEventSource', $scope.eventList);
+					$('#calendar').fullCalendar('refetchEvents');
+					var today = new Date();
+					//console.log("Test: " + today.getFullYear());
+					$('#calendar').fullCalendar('gotoDate', $scope.dateString);
 				});
 
 				$('#calendar').fullCalendar({
@@ -154,6 +208,7 @@ angular.module('schejewelApp')
 					minTime: "06:00:00",
 					events: $scope.eventList
 				});
+				$scope.manageDateString();
 				$scope.fetchResources();
 			}
 		};
