@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('schejewelApp')
-    .directive('schejewel.tripView', function () {
+    .directive('schejewel.tripView', function (Data) {
         return {
             templateUrl: 'app/directives/schejewel.tripView/schejewel.tripView.html',
             restrict: 'EA',
@@ -9,6 +9,8 @@ angular.module('schejewelApp')
                 tours: '='
             },
             link: function ($scope) {
+                $scope.displayDate = Data.getDisplayDate();
+
                 $scope.dayHours = ['6:00am', '6:30am', '7:00am',
                     '7:30am', '8:00am', '8:30am', '9:00am',
                     '9:30am', '10:00am', '10:30am', '11:00am',
@@ -27,6 +29,26 @@ angular.module('schejewelApp')
                     return Math.abs((e - d)) / 1000 / 60;
                 }
 
+                Date.prototype.addDays = function (days) {
+                    this.setDate(this.getDate() + days);
+                    return this;
+                };
+
+                $scope.nextDay = function () {
+                    $scope.displayDate.addDays(1);
+                    Data.setDisplayDate($scope.displayDate);
+                };
+
+                $scope.prevDay = function () {
+                    $scope.displayDate.addDays(-1);
+                    Data.setDisplayDate($scope.displayDate);
+                };
+
+                $scope.currentDay = function () {
+                    $scope.displayDate = new Date();
+                    Data.setDisplayDate($scope.displayDate);
+                };
+
                 $scope.currentTimeStyle = function () {
                     var top = getMinutesSince6(new Date()) + 83; //this 83 is the offset that the line needs to line up with the top of the page.  Probably not the best way to do it :/
                     return {
@@ -44,12 +66,12 @@ angular.module('schejewelApp')
                     g = g >= 0 ? g : 0;
                     b = b >= 0 ? b : 0;
 
-                    var height = Math.abs(events[index].startTime -
-                        events[index].endTime) / 1000 / 60;
+                    var height = events[index].duration;
 
-                    var top = getMinutesSince6(new Date(events[
-                        index].startTime)) + 30;
+                    var startDate = new Date(events[index].startDate +
+                        ' ' + events[index].startTime);
 
+                    var top = getMinutesSince6(startDate) + 40;
                     return {
                         position: 'absolute',
                         top: top + 'px',
@@ -61,28 +83,6 @@ angular.module('schejewelApp')
                         height: height + 'px'
                     };
                 };
-
-                $scope.titleStyle = function (events) {
-                    var top;
-                    var firstEvent = events[0];
-                    for (var i in events) {
-                        var ev = events[i];
-                        if (firstEvent && firstEvent.startTime) {
-                            if (firstEvent.startTime > ev.startTime) {
-                                firstEvent = ev;
-                            }
-                        }
-
-                    }
-                    if (events && events[0]) {
-                        top = getMinutesSince6(new Date(firstEvent.startTime));
-                    }
-                    return {
-                        position: 'absolute',
-                        top: top + 'px'
-                    };
-                };
-
 
                 $scope.hourStyle = function (index) {
                     var top = (index * 30);
@@ -110,5 +110,23 @@ angular.module('schejewelApp')
 
                 formatRows();
             }
+        };
+    }).filter('day', function () {
+        return function (input, wantedDate) {
+            var wantedEvents = [];
+            for (var i in input) {
+                var current = input[i];
+                var eventDate = new Date(current.startDate);
+                var isSameDay = (eventDate.getDate() === wantedDate.getDate() &&
+                    eventDate.getMonth() === wantedDate.getMonth() &&
+                    eventDate.getFullYear() === wantedDate.getFullYear()
+                );
+                if (isSameDay) {
+                    wantedEvents.push(current);
+                }
+            }
+
+
+            return wantedEvents;
         };
     });
