@@ -11,23 +11,22 @@ angular.module('schejewelApp')
 					return n<10? '0'+n:''+n;
 				}
 
-				$scope.manageDateString = function(){
-					$scope.dateString = Data.getDisplayDate();
-					//console.log($scope.dateString);
-					if($scope.dateString === undefined){
+				$scope.ViewDate;
+
+				$scope.getDateString = function(){
+					$scope.ViewDate = Data.getDisplayDate();
+					if($scope.ViewDate === undefined){
 						var today = new Date();
-						$scope.dateString = today.getFullYear()+'-'+$scope.formatDate(today.getMonth()+1)+'-'+$scope.formatDate(today.getDate());
-						Data.setDisplayDate($scope.dateString);
+						$scope.ViewDate = today;
+						Data.setDisplayDate($scope.ViewDate);
 					}
-					$('#calendar').fullCalendar('gotoDate', $scope.dateString);
 				}
 
 				$scope.rawResourceData;
-				$scope.dateString; //"2015-05-05"; //TODO: getToday
+
 
 				$scope.fetchResources = function(){
-					Data.getResources($scope.dateString).then(function(data) {
-						//console.log(data);
+					Data.getResources($scope.ViewDate).then(function(data) {
 						$scope.rawResourceData = data;
 						$scope.convertDataToCalendar();
 						$scope.loadResourceButtons();
@@ -60,7 +59,7 @@ angular.module('schejewelApp')
 		    $scope.events = {}
 
 				$scope.InitAllValues = function(){
-					//console.log($scope.resourceNameList);
+					$scope.activeResources = [];
 					for(var i = 0; i < $scope.resourceNameList.length; i++){
 						$scope.activeResources.push($scope.resourceNameList[i]);
 					}
@@ -88,7 +87,6 @@ angular.module('schejewelApp')
 				}
 
 				$scope.createNewEventList = function(events){
-					//console.log(events);
 					$scope.eventList = {events: []};
 					for(var j = 0; j < events.length; j++){
 						for(var i = 0; i < $scope.resourceData.length; i++){
@@ -108,6 +106,7 @@ angular.module('schejewelApp')
 				$scope.loadResourceButtons = function(){
 					$('.resourceButton').remove();
 					$scope.resourceList = [];
+					$scope.resourceNameList = [];
 					for(var i = 0; i < $scope.resourceData.length; i++){
 						var newResource = true;
 						for(var j = 0; j < $scope.resourceList.length; j++){
@@ -122,94 +121,49 @@ angular.module('schejewelApp')
 					for(var i = 0; i < $scope.resourceList.length; i++){
 						var resourceData = {name: $scope.resourceList[i], color : i};
 						$scope.resourceNameList.push(resourceData);
-						$('.buttonHolder').append('<button style="margin-bottom: 20px;" title = "' + i + '"class="resourceButton" value="'+ $scope.resourceList[i] +'">'+ $scope.resourceList[i] +'</button>');
+						$('.buttonHolder').append('<button style="margin-bottom: 20px;"  value= "' + i + '"class="resourceButton" title="'+ $scope.resourceList[i] +'">'+ $scope.resourceList[i] +'</button>');
 					}
 				}
 
 				$(document).on( "click", '.resourceButton', function () {
 					var alreadyIn = false;
 					for(var i = 0; i < $scope.activeResources.length; i++){
-						if($scope.activeResources[i].name === this.value){
+						if($scope.activeResources[i].name === this.title){
 							$scope.activeResources.splice(i, 1);
 							alreadyIn = true;
 						}
 					}
 					if(!alreadyIn){
 						var nameColorPair = {name: "", color:-1};
-						nameColorPair.name = this.value;
-						nameColorPair.color = this.title;
+						nameColorPair.name = this.title;
+						nameColorPair.color = this.value;
 						$scope.activeResources.push(nameColorPair);
 					}
 					$scope.createNewEventList($scope.activeResources);
 				});
-
-				/*$(document).on( "click", '.fc-today-button', function () {
-					console.log("Testing");
-					$scope.resourceData = [];
-					$scope.eventList = {events: []};
-					$scope.activeResources = [];
-					var nextDay = new Date();
-					$scope.dateString = nextDay.getFullYear()+'-'+$scope.formatDate(nextDay.getMonth()+1)+'-'+$scope.formatDate(nextDay.getDate());
-					Data.setDisplayDate($scope.dateString);
-					$scope.manageDateString();
-					$scope.fetchResources();
-					$('#calendar').fullCalendar('removeEvents')
-					$('#calendar').fullCalendar('removeEventSource', $scope.eventList);
-					$('#calendar').fullCalendar('addEventSource', $scope.eventList);
-					$('#calendar').fullCalendar('refetchEvents');
-					$('#calendar').fullCalendar('gotoDate', $scope.dateString);
-					console.log($scope.dateString);
-				});*/
-
-
-				$(document).on( "click", '.fc-next-button', function () {
-					$scope.resourceData = [];
-					$scope.eventList = {events: []};
-					$scope.activeResources = [];
-					var nextDay = new Date($scope.dateString);
-					nextDay.setDate(nextDay.getDate() + 2);
-					$scope.dateString = nextDay.getFullYear()+'-'+$scope.formatDate(nextDay.getMonth()+1)+'-'+$scope.formatDate(nextDay.getDate());
-					Data.setDisplayDate($scope.dateString);
-					//console.log($scope.dateString);
-					$scope.manageDateString();
-					$scope.fetchResources();
-					$('#calendar').fullCalendar('removeEvents')
-					$('#calendar').fullCalendar('removeEventSource', $scope.eventList);
-					$('#calendar').fullCalendar('addEventSource', $scope.eventList);
-					$('#calendar').fullCalendar('refetchEvents');
-					var today = new Date();
-					$('#calendar').fullCalendar('gotoDate', $scope.dateString);
-				});
-
-				$(document).on( "click", '.fc-prev-button', function () {
-					$scope.resourceData = [];
-					$scope.eventList = {events: []};
-					$scope.activeResources = [];
-					var nextDay = new Date($scope.dateString);
-					nextDay.setDate(nextDay.getDate());
-					$scope.dateString = nextDay.getFullYear()+'-'+$scope.formatDate(nextDay.getMonth()+1)+'-'+$scope.formatDate(nextDay.getDate());
-					Data.setDisplayDate($scope.dateString);
-					//console.log($scope.dateString);
-					$scope.manageDateString();
-					$scope.fetchResources();
-					$('#calendar').fullCalendar('removeEvents')
-					$('#calendar').fullCalendar('removeEventSource', $scope.eventList);
-					$('#calendar').fullCalendar('addEventSource', $scope.eventList);
-					$('#calendar').fullCalendar('refetchEvents');
-					var today = new Date();
-					//console.log("Test: " + today.getFullYear());
-					$('#calendar').fullCalendar('gotoDate', $scope.dateString);
-				});
-
+				$scope.getDateString();
+				$scope.fetchResources();
+				var date = $scope.ViewDate;
 				$('#calendar').fullCalendar({
 					allDaySlot: false,
 					defaultView: 'agendaDay',
 					aspectRatio: 1.5,
 					minTime: "06:00:00",
-					events: $scope.eventList
+					events: $scope.eventList,
+					viewRender: function (element) {
+						$scope.resourceData = [];
+						$scope.eventList = {events: []};
+						$scope.activeResources = [];
+						$scope.ViewDate = (element.end.toDate());
+						Data.setDisplayDate($scope.ViewDate);
+						$scope.fetchResources();
+						$('#calendar').fullCalendar('removeEvents')
+						$('#calendar').fullCalendar('removeEventSource', $scope.eventList);
+						$('#calendar').fullCalendar('addEventSource', $scope.eventList);
+						$('#calendar').fullCalendar('refetchEvents');
+    			}
 				});
-				$scope.manageDateString();
-				$scope.fetchResources();
+				$('#calendar').fullCalendar( 'gotoDate', date);
 			}
 		};
 	});

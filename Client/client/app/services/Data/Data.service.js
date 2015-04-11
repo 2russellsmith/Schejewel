@@ -26,23 +26,19 @@ angular.module('schejewelApp')
                 // This formats the dateString like 2015-03-02
                 var dateString = '' +
                     (date.getYear() + 1900) + '-' +
-                    (date.getMonth() > 9 ? date.getMonth() : '0' + date
-                        .getMonth()) + '-' +
-                    (date.getDay() > 9 ? date.getDay() : '0' + date.getDay());
+                    (date.getMonth() > 9 ? (parseInt(date.getMonth())+1).toString() : '0' + (parseInt(date.getMonth())+1).toString()) + '-' +
+                    (date.getDate() > 9 ? date.getDate() : '0' + date.getDate());
 
 
                 // This formats the dateString in milliseconds.  ie 1431561600000
                 // I thought this one should work, but it doesn't seem to be
-                dateString = date.getTime();
-
-
-
+                //dateString = date.getTime();
                 console.log('dateString', dateString);
                 var deferred = $q.defer();
                 if (dateString === undefined) {
                     $http.defaults.headers.common['X-AUTH-TOKEN'] =
                         Token;
-                    $http.get(url + 'resources').success(function (data) {
+                    $http.get(url + 'resources').success(function (data, status, headers, config) {
                         deferred.resolve(data);
                     });
                 } else {
@@ -51,7 +47,7 @@ angular.module('schejewelApp')
                     console.log(url + 'resources/' + dateString);
                     $http.get(url + 'resources/' + dateString /*+milliseconds.getTime()*/ )
                         .success(
-                            function (data) {
+                            function (data, status, headers, config) {
                                 deferred.resolve(data);
                             });
                 }
