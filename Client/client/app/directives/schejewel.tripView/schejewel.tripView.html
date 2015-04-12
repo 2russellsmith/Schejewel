@@ -19,7 +19,7 @@
             {{hour}}
         </div>
     </div>
-    <div ng-repeat='tour in tours | day: displayDate | orderBy:events[0]["dateTime"] | limitTo:5' class='col-md-1 tour'>
+    <div ng-repeat='tour in tours | day: displayDate | orderBy:events[0]["dateTime"] | limitTo:8' class='col-md-1 tour'>
         <div class='event' ng-repeat='event in tour.resources | orderBy:startTime' ng-style='fadeStyle($index, tour.resources)'>
             {{event.name}}
             <br/> {{event.startTime}} - {{event.duration}} minutes
